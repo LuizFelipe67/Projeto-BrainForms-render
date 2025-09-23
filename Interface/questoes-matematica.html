@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- Título da aba do navegador -->
+    <title>Questões - BrainForms</title>
+   
+    <style>
+        /* Estilos para o corpo da página */
+        body {
+            font-family: 'Roboto', sans-serif; /* Fonte da página */
+            background-color: #775085; /* Fundo roxo */
+            display: flex; /* Usando flexbox para centralizar conteúdo */
+            justify-content: center; /* Centraliza horizontalmente */
+            align-items: center; /* Centraliza verticalmente */
+            min-height: 100vh; /* Altura da tela inteira */
+            margin: 0; /* Remove margens padrão */
+            padding-bottom: 200px; /* Espaço EXTRA abaixo da box */
+            overflow-y: auto; /* Permite rolar verticalmente */
+        }
+
+            /* LOGO E TEXTO NO CANTO SUPERIOR ESQUERDO DO FUNDO */
+            .background-logo-container {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            z-index: 0;
+            }
+
+            .background-logo-container img {
+            width: 100px;
+            height: auto;
+            }
+
+            .background-logo-container span {
+            color: white;
+            font-size: 48px;
+            font-weight: bold;
+            font-family: 'Inter', sans-serif;
+            }
+
+        /* Container principal que envolve todo o conteúdo */
+        .container {
+            background-color: #fff; /* Fundo branco */
+            border-radius: 12px; /* Cantos arredondados */
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.2); /* Sombra leve */
+            top: 120px;
+            width: 400px;
+            height: 600px;
+            display: flex; /* Flexbox para organização */
+            flex-direction: column; /* Itens em coluna */
+            overflow: hidden; /* Esconde overflow */
+            position: relative; /* Necessário para posicionar o rodapé */
+        }
+
+                /* Cabeçalho dentro do container */
+        .header-container {
+            display: flex; /* Alinha logo e texto horizontalmente */
+            align-items: center; /* Alinha verticalmente */
+            background: linear-gradient(to bottom, #000000 0%, #3A024E 80%);
+            padding: 15px 20px;
+            border-radius: 12px 12px 0 0;
+            color: white;
+            width: 100%;
+            margin-bottom: 30px;
+        }
+
+        /* Estilo da imagem do logo */
+        .header-container img {
+            width: 65px;
+            margin-right: 10px;
+        }
+
+        /* Estilo do texto no cabeçalho */
+        .header-container h3 {
+            margin: 0;
+            font-size: 20px;
+        }
+
+        /* Link no h3 do cabeçalho */
+        .header-container h3 a {
+            text-decoration: none;
+            color: white;
+        }
+
+
+        /* Área de conteúdo principal */
+        .content {
+            padding: 40px 20px; /* Espaçamento interno */
+            display: flex; /* Flexbox para estruturar os botões */
+            flex-direction: column; /* Itens em coluna */
+            align-items: center; /* Centraliza horizontalmente */
+            gap: 15px; /* Espaçamento vertical entre botões */
+        }
+
+        .questionario-header {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px; /* Espaço entre texto e imagem */
+            margin-top: -40px;
+            margin-bottom: 8px;
+            width: 100%;
+        }
+
+        .questionario-header h2 {
+            color: #5E097E;
+            margin: 0;
+            font-size: 24px;
+        }
+
+        .questionario-header img {
+            width: 60px; /* Ajuste conforme necessário */
+            height: auto;
+        }
+
+
+        /* Estilo dos botões para escolha de questão */
+        .content button {
+            background-color: #F2F3FD; /* Fundo claro */
+            border: 2px solid #19178A; /* Borda roxa escura */
+            border-radius: 12px; /* Cantos arredondados */
+            padding: 15px 25px; /* Espaçamento interno */
+            font-size: 16px; /* Tamanho da fonte */
+            cursor: pointer; /* Cursor tipo mãozinha ao passar em cima */
+            font-weight: bold; /* Texto em negrito */
+            width: 100%; /* Botão ocupa toda largura do container */
+            max-width: 300px; /* Máximo 300px para limitar tamanho */
+            box-shadow: 0 4px 8px rgba(48, 10, 62, 0.4); /* Sombra para profundidade */
+            transition: background-color 0.3s, color 0.3s, box-shadow 0.3s; /* Transição suave ao passar o mouse */
+        }
+
+        /* Estilo dos botões quando o mouse passa por cima */
+        .content button:hover {
+            background-color: #6771cd; /* Fundo claro */
+            box-shadow: 0 4px 12px rgba(48, 10, 62, 0.6); /* Sombra mais forte */
+        }
+
+            /* Rodapé fixo na parte inferior do container */
+        .footer {
+            background-color: #300A3E; /* Cor do rodapé */
+            display: flex; /* Flexbox */
+            justify-content: center; /* Centraliza os ícones */
+            align-items: center; /* Centraliza verticalmente */
+            position: absolute; /* Posicionamento absoluto dentro do container */
+            bottom: 0; /* Fixa na parte inferior */
+            width: 100%; /* Ocupa toda a largura */
+            height: 80px; /* Altura aumentada do rodapé */
+            gap: 30px; /* Espaço entre os ícones */
+        }
+
+        /* Estilo das imagens do rodapé */
+        .footer img {
+            width: 65px; /* Largura aumentada */
+            height: 60px; /* Altura aumentada */
+            padding: 25PX; /* Remove padding para não cortar imagens */
+        }
+
+
+            @media (max-width: 480px) {
+        body {
+          margin: 0;
+          bottom: 0;
+          padding-bottom: 0;
+          flex-direction: column;
+        }
+
+        .background-logo-container {
+          display: none; /* Remove logo do fundo */
+        }
+
+        .container {
+        top: -1px;
+        position: relative;
+        margin: 0 auto;
+        width: 95%;
+        height: 98vh; /* altura total visível */
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between; /* empurra o rodapé para o fim */
+        box-sizing: border-box;
+      }
+
+          .questionario-header {
+            margin-top: -640px; /* reduz distância entre o cabeçalho e o h2+img */
+            gap: 8px; /* ajusta espaçamento entre h2 e imagem */
+            margin-bottom: 20px;
+        }
+
+        
+      
+
+    }
+
+
+                /* Responsivo para telas grandes */
+    @media (min-width: 1440px) {
+        .background-logo-container img {
+        width: 150px;
+        height: auto;
+        }
+
+        .background-logo-container span {
+        font-size: 58px;
+
+        }
+
+      .container {
+        top: 5px;
+        width: 500px;
+        height: 700px;
+        display: flex;
+        flex-direction: column;
+        padding-bottom: 0;
+        position: relative;
+        transform: translateX(-1px); /*GARANTE CENTRALIZAÇÃO IGUAL LOGIN*/
+      }
+
+      .boas-vindas {
+        font-size: 56px;
+      }
+
+            /* Estilo da imagem do logo no cabeçalho */
+        .header-container img {
+            width: 75px; /* Largura da imagem */
+            margin-right: 15px; /* Espaço à direita da imagem */
+        }
+
+        /* Estilo do título dentro do cabeçalho */
+        .header-container h3 {
+            font-size: 24px; /* Tamanho da fonte menor */
+        }
+
+
+        .questionario-header h2 {
+            margin-bottom: -10px;
+            font-size: 28px;
+        }
+
+        .questionario-header img {
+           margin-bottom: -10px;
+            width: 85px; /* Ajuste conforme necessário */
+            height: auto;
+        }
+
+         .content button { 
+            margin-bottom: -3px;
+            font-size: 20px; /* Tamanho da fonte */
+            max-width: 400px; /* Máximo 300px para limitar tamanho */
+            height: 60px;
+          
+        }
+
+        .footer img {
+        width: 70px; /* Largura aumentada */
+        height: 65px; /* Altura aumentada */
+        padding: 45px; /* Remove padding para não cortar imagens */
+    }
+
+       
+
+      
+    }
+
+
+        
+    </style>
+</head>
+<body>
+
+          <!-- LOGO E TEXTO NO BACKGROUND -->
+        <div class="background-logo-container">
+            <img src="Imagens/Logo sem Fundo.png" alt="Logo BrainForms Fundo">
+            <span>BrainForms</span>
+        </div>
+
+    <!-- Container principal que centraliza o conteúdo na tela -->
+    <div class="container">
+        <!-- Cabeçalho com título clicável e logo -->
+        <div class="header-container">
+            <img src="Imagens/Logo sem Fundo.png" alt="Logo BrainForms">
+            <h3><a href="menu-questoes.html">BrainForms</a></h3>
+        </div>
+
+        <!-- Área onde são listadas as questões para escolher -->
+        <div class="content">
+            <div class="questionario-header">
+                <h2>Questões de Matemática</h2>
+                <img src="Imagens/qMat.png" alt="Ícone Questionário">
+            </div>
+
+            <button onclick="location.href='qEquacoes.html'">Equações</button>
+            <button onclick="location.href='qGeometria.html'">Geometria</button>
+            <button onclick="location.href='qTrigonometria.html'">Trigonometria</button>
+            
+
+        </div>
+
+         <!-- Rodapé com ícones -->
+        <div class="footer">
+            <a href="menu.html">
+            <img src="Imagens/inicio.png" alt="inicio">
+            </a>
+            <img src="Imagens/conquistas.png" alt="conquista">
+            <img src="Imagens/menu.png" alt="menu">
+        </div>
+
+    </div>
+</body>
+</html>

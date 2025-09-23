@@ -1,0 +1,556 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Questões de Equações - BrainForms</title>
+  <style>
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: #775085;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh; /* Altura da tela inteira */
+        margin: 0; /* Remove margens padrão */
+        padding-bottom: 200px; /* Espaço EXTRA abaixo da box */
+        overflow-y: auto; /* Permite rolar verticalmente */
+    }
+
+    .background-logo-container {
+      position: absolute;
+      top: 20px;
+      left: 20px;
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      z-index: 0;
+    }
+
+    .background-logo-container img {
+      width: 100px;
+      height: auto;
+    }
+
+    .background-logo-container span {
+      color: white;
+      font-size: 48px;
+      font-weight: bold;
+      font-family: 'Inter', sans-serif;
+    }
+
+    .container {
+      background-color: #fff;
+      border-radius: 12px;
+      box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+      top: 120px;
+      width: 400px;
+      height: 600px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between; /* garante que o conteúdo seja distribuído */
+      overflow: hidden;
+      position: relative;
+      transition: height 0.5s ease;
+    }
+
+     .header-container {
+            display: flex;
+            align-items: center;
+            background: linear-gradient(to bottom, #000000 0%, #3A024E 80%);
+            padding: 15px 20px;
+            border-radius: 12px 12px 0 0;
+            color: white;
+            width: 100%;
+        }
+
+        .header-container img {
+            width: 65px;
+            margin-right: 10px;
+        }
+
+        .header-container h3 {
+            margin: 0;
+            font-size: 20px;
+        }
+
+        .header-container h3 a {
+            text-decoration: none;
+            color: white;
+        }
+
+    .content {
+      padding: 15px 10px;
+      text-align: center;
+      flex: 1;
+    }
+
+    .question-box {
+  height: 100px;
+  border: 3px solid #19178A;
+  box-shadow: 0 3px 7px rgba(15, 8, 134, 0.4);
+  border-radius: 10px;
+  padding: 15px;
+  margin-top: 15px;
+  margin-bottom: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+.final-message {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 20px;
+  height: 100%;
+}
+
+.final-message h2 {
+  color: #5E097E;
+  margin-bottom: 15px;
+}
+
+.final-message p {
+  font-size: 16px;
+  color: #333;
+  margin-bottom: 40px;
+}
+
+.final-message a {
+  display: inline-block;
+  text-decoration: none;
+  background-color: #5E097E;
+  color: white;
+  padding: 12px 25px;
+  border-radius: 8px;
+  font-weight: bold;
+  transition: background-color 0.3s;
+  margin-top: 20px;
+}
+
+            .resolva-label {
+        position: absolute;
+        font-size: 18px;
+        font-weight: bold;
+        color: #19178A;
+        top: 102px; /* ajustado para alinhar com o topo da box */
+        left: 35px; /* ajustado para alinhar com o canto da box */
+        background-color: #fff;
+        padding: 0 5px;
+        z-index: 1;
+        }
+
+
+    .content h2 {
+      color: #5E097E;
+      margin-bottom: 15px;
+      font-size: 20px;
+    }
+
+    .option-button {
+      background-color: #F2F3FD;
+      color: #5E097E;
+      border: 2px solid #300A3E;
+      box-shadow: 0 2px 5px rgba(48, 10, 62, 0.4);
+      border-radius: 12px;
+      padding: 16px;
+      font-size: 14px;
+      cursor: pointer;
+      width: 100%;
+      margin: 10px auto;
+      text-align: left;
+      transition: all 0.3s ease;
+      display: block;
+    }
+
+    .option-button:hover {
+      background-color: #c9d9fc;
+    }
+
+    .option-button.selected {
+      border: 2px solid #9036e4;
+      background-color: #e4d2f5;
+    }
+
+    .correct-answer,
+    .incorrect-answer {
+      outline: none;
+    }
+
+    .correct-answer {
+      border-color: green !important;
+      background-color: #e6ffe6;
+    }
+
+    .incorrect-answer {
+      border-color: red !important;
+      background-color: #ffe6e6;
+    }
+
+    #feedback {
+      margin-top: 15px;
+      font-weight: bold;
+    }
+
+    .correct {
+      color: green;
+    }
+
+    .incorrect {
+      color: red;
+    }
+
+    #next-btn {
+      margin-top: 20px;
+      padding: 10px 20px;
+      font-size: 16px;
+      background-color: #5E097E;
+      color: white;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      display: none;
+    }
+    #next-btn:hover {
+        background-color: #9036e4; 
+    }
+
+    .disabled-option {
+    pointer-events: none;
+    cursor: default !important;
+    opacity: 0.7;
+  }
+
+  .option-button.disabled-option:hover {
+    background-color: inherit !important;
+  }
+
+  .return-button {
+  display: flex; /* Permite centralização com align-items e justify-content */
+  align-items: center; /* Centraliza verticalmente */
+  justify-content: center; /* Centraliza horizontalmente */
+  margin-bottom: 30px; /* Aumenta a distância do rodapé */
+  font-size: 16px;
+  height: 60px;
+  width: 230px;
+  background-color: #5E097E;
+  color: white;
+  text-decoration: none;
+  border-radius: 8px;
+  font-weight: bold;
+  transition: background-color 0.3s ease;
+}
+
+
+.return-button:hover {
+    background-color: #9036e4; 
+ 
+}
+
+ @media (max-width: 480px) {
+        body {
+          margin: 0;
+          bottom: 0;
+          padding-bottom: 0;
+          flex-direction: column;
+        }
+
+        .background-logo-container {
+          display: none; /* Remove logo do fundo */
+        }
+
+        .container {
+        top: -1px;
+        position: relative;
+        margin: 0 auto;
+        width: 95%;
+        min-height: 98vh; /* altura total visível */
+        height: auto;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between; /* empurra o rodapé para o fim */
+        box-sizing: border-box;
+        scrollbar-width: none;        /* Firefox */
+      -ms-overflow-style: none;     /* IE/Edge */
+      overflow-y: auto;  /* ADICIONADO: ativa rolagem interna */
+      }
+
+          .questionario-header {
+            margin-top: -640px; /* reduz distância entre o cabeçalho e o h2+img */
+            gap: 8px; /* ajusta espaçamento entre h2 e imagem */
+            margin-bottom: 20px;
+        }
+
+        
+      
+
+    }
+
+
+/* Responsivo para telas grandes */
+    @media (min-width: 1440px) {
+        .background-logo-container img {
+        width: 150px;
+        height: auto;
+        }
+
+        .background-logo-container span {
+        font-size: 58px;
+
+        }
+
+      .container {
+        top: 5px;
+        width: 500px;
+        height: 700px;
+        display: flex;
+        flex-direction: column;
+        padding-bottom: 0;
+        position: relative;
+        transform: translateX(-1px); /*GARANTE CENTRALIZAÇÃO IGUAL LOGIN*/
+      }
+
+      .boas-vindas {
+        font-size: 56px;
+      }
+
+            /* Estilo da imagem do logo no cabeçalho */
+        .header-container img {
+            width: 75px; /* Largura da imagem */
+            margin-right: 15px; /* Espaço à direita da imagem */
+        }
+
+        /* Estilo do título dentro do cabeçalho */
+        .header-container h3 {
+            font-size: 24px; /* Tamanho da fonte menor */
+        }
+
+           .resolva-label {
+        font-size: 20px;
+        top: 110px; /* ajustado para alinhar com o topo da box */
+        left: 35px; /* ajustado para alinhar com o canto da box */
+        }
+
+
+         .content button { 
+            margin-bottom: -3px;
+            font-size: 20px; /* Tamanho da fonte */
+            max-width: 95%; /* Máximo 300px para limitar tamanho */
+            height: 60px;
+          
+        }
+
+        .footer img {
+        width: 70px; /* Largura aumentada */
+        height: 65px; /* Altura aumentada */
+        padding: 45px; /* Remove padding para não cortar imagens */
+    }
+
+       
+
+      
+    }
+
+
+  </style>
+  
+</head>
+<body>
+
+<div class="background-logo-container">
+  <img src="Imagens/Logo sem Fundo.png" alt="Logo BrainForms Fundo">
+  <span>BrainForms</span>
+</div>
+
+<div class="container">
+  <div class="header-container">
+    <img src="Imagens/Logo sem Fundo.png" alt="Logo BrainForms">
+    <h3><a href="questoes-matematica.html">BrainForms</a></h3>
+  </div>
+  <div class="content">
+    <div class="question-box" id="question-box">
+     <span class="resolva-label">Resolva</span> 
+      <h2 id="question-text">Carregando...</h2>
+    </div>
+    <div id="options"></div>
+    <p id="feedback"></p>
+    <button id="next-btn" onclick="nextQuestion()">Próxima Questão</button>
+  </div>
+</div>
+
+<script>
+  const questions = [
+  {
+    text: 'Qual é a área de um quadrado com lado de 4 cm?',
+    options: ['8 cm²', '12 cm²', '16 cm²', '20 cm²'],
+    answer: '16 cm²',
+    explanation: 'A área do quadrado é dada por lado × lado = 4 × 4 = 16 cm².'
+  },
+  {
+    text: 'Um triângulo tem base 6 cm e altura 5 cm. Qual é sua área?',
+    options: ['15 cm²', '30 cm²', '11 cm²', '25 cm²'],
+    answer: '15 cm²',
+    explanation: 'Área do triângulo = (base × altura) ÷ 2 = (6 × 5) ÷ 2 = 15 cm².'
+  },
+  {
+    text: 'Qual é o perímetro de um retângulo com 3 cm de largura e 7 cm de comprimento?',
+    options: ['20 cm', '18 cm', '14 cm', '24 cm'],
+    answer: '20 cm',
+    explanation: 'Perímetro = 2 × (largura + comprimento) = 2 × (3 + 7) = 20 cm.'
+  },
+  {
+    text: 'Um círculo tem raio de 3 cm. Qual é aproximadamente sua área? (Use π ≈ 3,14)',
+    options: ['18,84 cm²', '28,26 cm²', '21,20 cm²', '25,12 cm²'],
+    answer: '28,26 cm²',
+    explanation: 'Área do círculo = π × raio² = 3,14 × 3² = 3,14 × 9 ≈ 28,26 cm².'
+  }
+];
+
+
+ let current = 0;
+let score = 0; // ✅ contador de acertos
+
+function ajustarAltura(heightPequena, heightGrande) {
+  const container = document.querySelector('.container');
+  const isLargeScreen = window.matchMedia("(min-width: 1440px)").matches;
+  container.style.height = isLargeScreen ? heightGrande : heightPequena;
+}
+
+function renderQuestion() {
+  document.getElementById('feedback').innerHTML = '';
+  const nextBtn = document.getElementById('next-btn');
+  nextBtn.style.display = 'none';
+  nextBtn.innerText = 'Próxima Questão';
+
+  ajustarAltura("600px", "700px");
+
+  const q = questions[current];
+  document.getElementById('question-text').innerText = q.text;
+  const optionsDiv = document.getElementById('options');
+  optionsDiv.innerHTML = '';
+
+  q.options.forEach((opt, idx) => {
+    const btn = document.createElement('button');
+    btn.className = 'option-button';
+    btn.innerText = `${String.fromCharCode(65 + idx)}) ${opt}`;
+    btn.dataset.clicked = 0;
+
+    btn.onclick = () => {
+      if (btn.disabled) return;
+
+      const alreadySelected = document.querySelector('.option-button.selected');
+      if (alreadySelected && alreadySelected !== btn) {
+        alreadySelected.classList.remove('selected');
+        alreadySelected.dataset.clicked = 0;
+      }
+
+      btn.dataset.clicked = parseInt(btn.dataset.clicked) + 1;
+      btn.classList.add('selected');
+
+      if (parseInt(btn.dataset.clicked) === 2) {
+        verify(opt, btn);
+      }
+    };
+
+    optionsDiv.appendChild(btn);
+  });
+
+  // Se for a última questão, trocar texto do botão
+  if (current === questions.length - 1) {
+    nextBtn.innerText = 'Finalizar';
+  }
+}
+
+function verify(resposta, btn) {
+  const correta = questions[current].answer;
+  const feedback = document.getElementById('feedback');
+  const buttons = document.querySelectorAll('.option-button');
+
+  buttons.forEach(b => {
+    b.disabled = true;
+    b.classList.remove('selected');
+    b.classList.add('disabled-option');
+  });
+
+  if (resposta === correta) {
+    btn.classList.add('correct-answer');
+    feedback.innerHTML = "✅ <span class='correct'>Resposta correta! Parabéns 🎉</span>";
+    score++;
+    ajustarAltura("680px", "780px"); // expande levemente
+  } else {
+    btn.classList.add('incorrect-answer');
+    buttons.forEach(b => {
+      if (b.innerText.includes(correta)) {
+        b.classList.add('correct-answer');
+      }
+    });
+    feedback.innerHTML = `❌ <span class='incorrect'>Resposta incorreta.</span><br><br>
+      📘 <strong>Explicação:</strong><br>
+      ${questions[current].explanation}<br><br>
+      ✅ A alternativa correta é <strong>${correta}</strong>.`;
+    ajustarAltura("780px", "900px"); // expande mais para a explicação
+  }
+
+  document.getElementById('next-btn').style.display = 'inline-block';
+}
+
+function nextQuestion() {
+  if (current < questions.length - 1) {
+    current++;
+    renderQuestion();
+  } else {
+    const box = document.getElementById('question-box');
+    const feedback = document.getElementById('feedback');
+    document.getElementById('options').innerHTML = '';
+    document.getElementById('next-btn').style.display = 'none';
+
+    let mensagem;
+    if (score === 4) {
+      mensagem = "<h2>✅ Questionário Finalizado!</h2>\n🎯 Excelente! Você acertou todas as questões!";
+    } else if (score === 3) {
+      mensagem = "<h2>✅ Questionário Finalizado!</h2>\n👏 Muito bem! Você acertou 3 de 4 questões.";
+    } else if (score === 2) {
+      mensagem = "<h2>✅ Questionário Finalizado!</h2>\n✨ Bom esforço! Você acertou 2 de 4.";
+    } else {
+      mensagem = `<h2>✅ Questionário Finalizado!</h2>\n📘 Continue praticando! Você acertou ${score} de 4.`;
+    }
+
+    ajustarAltura("600px", "700px");
+
+    box.innerHTML = `
+      <div class="final-message">
+          <p>${mensagem}</p>
+      </div>
+    `;
+
+    // Cria o botão separadamente
+    const botaoVoltar = document.createElement("a");
+    botaoVoltar.href = "questoes-matematica.html";
+    botaoVoltar.textContent = "Voltar para Matemática";
+    botaoVoltar.className = "return-button";
+
+    const container = document.querySelector('.container');
+
+    const botaoWrapper = document.createElement("div");
+    botaoWrapper.style.display = "flex";
+    botaoWrapper.style.justifyContent = "center";
+    botaoWrapper.style.marginTop = "auto";
+    botaoWrapper.style.paddingBottom = "20px"; // espaço do fundo
+    botaoWrapper.appendChild(botaoVoltar);
+
+    container.appendChild(botaoWrapper);
+
+    feedback.innerHTML = '';
+  }
+}
+
+renderQuestion(); // inicializa a primeira questão
+
+
+</script>
+</body>
+</html>

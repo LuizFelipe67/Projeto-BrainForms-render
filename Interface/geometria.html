@@ -1,0 +1,724 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Geometria - BrainForms</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet" />
+<style>
+body {
+  font-family: 'Inter', sans-serif;
+  background-color: #775085;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  margin: 0;
+  padding-bottom: 200px;
+  overflow-y: auto;
+}
+
+.background-logo-container {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  z-index: 0;
+}
+
+.background-logo-container img {
+  width: 100px;
+  height: auto;
+}
+
+.background-logo-container span {
+  color: white;
+  font-size: 48px;
+  font-weight: bold;
+}
+
+.container {
+      background-color: #fff;
+      border-radius: 12px;
+      box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+      width: 400px;
+      height: 600px;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      position: relative;
+      top: 120px;
+      scrollbar-width: none;        /* Firefox */
+      -ms-overflow-style: none;     /* IE/Edge */
+      overflow-y: auto;  /* ADICIONADO: ativa rolagem interna */
+     
+    }
+
+.header-container {
+            display: flex; /* Alinha logo e texto horizontalmente */
+            align-items: center; /* Alinha verticalmente */
+            background: linear-gradient(to bottom, #000000 0%, #3A024E 80%);
+            padding: 15px 20px;
+            border-radius: 12px 12px 0 0;
+            color: white;
+            width: 100%;
+        }
+
+        /* Estilo da imagem do logo */
+        .header-container img {
+            width: 65px;
+            margin-right: 10px;
+        }
+
+        /* Estilo do texto no cabeçalho */
+        .header-container h3 {
+            margin: 0;
+            font-size: 20px;
+        }
+
+        /* Link no h3 do cabeçalho */
+        .header-container h3 a {
+            text-decoration: none;
+            color: white;
+        }
+
+.content {
+  padding: 20px;
+  text-align: center;
+  flex: 1;
+}
+
+.content h1 {
+  font-size: 20px;
+  color: #5E097E;
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: start;
+}
+
+.content h1 button {
+  background: none;
+  border: none;
+  font-size: 22px;
+  color: #5E097E;
+  margin-right: 10px;
+  cursor: pointer;
+}
+
+h2 {
+  font-size: 18px;
+  color: #5E097E;
+  text-align: center;
+  margin-bottom: 10px;
+}
+
+/* Container para a explicação/definição */
+         .def-container {
+          width: 100%;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          position: relative;
+          margin-bottom: 20px;
+        }
+
+        /* Rótulo "Definição" sobre a caixa */
+        #def {
+            position: absolute;
+            top: -25px;
+            left: 20px;
+            background-color: #ffffff;
+            padding: 0 5px;
+        }
+
+        /* Estilo da caixa com a explicação do conceito */
+        .explicacao {
+            width: 100%;
+            border: 3px solid #302E96;
+            border-radius: 10px;
+            padding: 20px 10px;
+            text-align: center;
+             box-shadow: 0 3px 7px rgba(15, 8, 134, 0.4);
+        }
+
+#resultado {
+  margin-top: 20px;
+  border: 3px solid #19178A;
+  box-shadow: 0 3px 7px rgba(15, 8, 134, 0.4);
+  border-radius: 10px;
+  padding: 15px;
+  margin-bottom: 25px;
+  text-align: center;
+  background-color: #f9f9f9;
+}
+
+
+
+.calculo input[type="number"] {
+  width: 100%;
+  padding: 12px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  margin-bottom: 12px;
+  box-sizing: border-box;
+  transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+.calculo input[type="number"]:focus {
+  border-color: #5E097E;
+  box-shadow: 0 0 5px #5E097E;
+  outline: none;
+}
+
+h2 {
+  font-size: 18px;
+  color: #5E097E;
+  text-align: center;
+  margin-bottom: 10px;
+}
+
+button.calc-btn {
+  width: 100%;
+  padding: 12px;
+  font-size: 16px;
+  font-weight: 700;
+  background-color: #5E097E;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+button.calc-btn:hover {
+  background-color: #9036e4;
+}
+
+#resultado {
+  display: none;
+}
+
+#resultado h3 {
+  color: #5E097E;
+  margin-top: 0;
+  font-weight: 700;
+  font-size: 18px;
+}
+
+#saidaResultado {
+  margin-top: 10px;
+  line-height: 1.4;
+  color: #333;
+}
+
+/* Dropdown */
+.topo {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  margin-bottom: 20px;
+  justify-content: space-between;
+}
+
+.topo button.voltar-btn {
+  background: none;
+  border: none;
+  font-size: 22px;
+  color: #5E097E;
+  cursor: pointer;
+  padding: 0;
+  font-weight: 700;
+}
+
+.topo h1 {
+  font-size: 20px;
+  color: #5E097E;
+  margin: 0;
+  font-weight: 700;
+  flex-grow: 1;
+  text-align: left;
+}
+
+.dropdown {
+  position: relative;
+  user-select: none;
+}
+
+.dropdown-button {
+  background: #f9f9f9;
+  border: 3px solid #19178A;
+  border-radius: 10px;
+  padding: 8px 15px;
+  font-weight: 700;
+  color: #5E097E;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 15px;
+  white-space: nowrap;
+}
+
+.dropdown-button:hover {
+  background: #e0d8f0;
+}
+
+.arrow {
+  border: solid #5E097E;
+  border-width: 0 3px 3px 0;
+  display: inline-block;
+  padding: 4px;
+  transform: rotate(45deg);
+  transition: transform 0.3s ease;
+}
+
+.arrow.open {
+  transform: rotate(-135deg);
+}
+
+.dropdown-content {
+  position: absolute;
+  top: 40px;
+  right: 0;
+  background-color: #f9f9f9;
+  border: 3px solid #19178A;
+  border-radius: 10px;
+  min-width: 220px;
+  box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+  z-index: 10;
+  display: none;
+  flex-direction: column;
+}
+
+.dropdown-content.show {
+  display: flex;
+}
+
+.dropdown-content button {
+  background: none;
+  border: none;
+  padding: 12px 15px;
+  text-align: left;
+  font-weight: 700;
+  color: #5E097E;
+  cursor: pointer;
+  border-bottom: 1px solid #ddd;
+  font-size: 15px;
+  transition: background-color 0.2s ease;
+}
+
+.dropdown-content button:last-child {
+  border-bottom: none;
+}
+
+.dropdown-content button:hover {
+  background-color: #5E097E;
+  color: white;
+}
+
+/* Esconder todos os forms menos o ativo */
+.calculo-form {
+  display: none;
+}
+
+.calculo-form.active {
+  display: block;
+}
+
+  .calculo h2 {
+  position: relative;
+  text-align: center;
+  color: #5E097E;
+  margin-top: -10px;
+  font-size: 18px;
+}
+
+.calculo h2::before,
+.calculo h2::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  width: 30%;
+  height: 1px;
+  background-color: #000000;
+}
+
+.calculo h2::before {
+  left: 0;
+  margin-left: -3%;
+}
+
+.calculo h2::after {
+  right: 0;
+  margin-right: -3%;
+}
+
+
+.dropdown-container {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 20px;
+}
+
+ .footer {
+            background-color: #300A3E; /* Cor do rodapé */
+            display: flex; /* Flexbox */
+            align-items: center; /* Centraliza verticalmente */
+            bottom: 0; /* Fixa na parte inferior */
+            width: 100%; /* Ocupa toda a largura */
+            height: 80px; /* Altura aumentada do rodapé */
+            gap: 30px; /* Espaço entre os ícones */
+        }
+
+        /* Estilo das imagens do rodapé */
+        .footer img {
+            width: 65px; /* Largura aumentada */
+            height: 60px; /* Altura aumentada */
+            padding: 25PX; /* Remove padding para não cortar imagens */
+        }
+
+
+/* Responsivo para telas pequenas */
+@media (max-width: 440px) {
+  .container {
+    width: 95vw;
+  }
+
+  .header-container h3 {
+    font-size: 18px;
+  }
+
+  .topo h1 {
+    font-size: 18px;
+  }
+
+  .topo button.voltar-btn {
+    font-size: 20px;
+  }
+
+  .dropdown-button {
+    font-size: 14px;
+    padding: 6px 12px;
+  }
+
+  .dropdown-content {
+    min-width: 180px;
+    top: 35px;
+  }
+}
+
+   @media (max-width: 480px) {
+        body {
+          margin: 0;
+          bottom: 0;
+          padding-bottom: 0;
+          flex-direction: column;
+        }
+
+        .background-logo-container {
+          display: none; /* Remove logo do fundo */
+        }
+
+        .container {
+        top: -1px;
+        position: relative;
+        margin: 0 auto;
+        width: 95%;
+        min-height: 98vh; /* altura total visível */
+        height: auto;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between; /* empurra o rodapé para o fim */
+        box-sizing: border-box;
+        scrollbar-width: none;        /* Firefox */
+      -ms-overflow-style: none;     /* IE/Edge */
+      overflow-y: auto;  /* ADICIONADO: ativa rolagem interna */
+      }
+
+     
+
+    }
+
+/* Responsivo para telas grandes */
+@media (min-width: 1440px) {
+  .background-logo-container img {
+    width: 150px;
+    height: auto;
+  }
+
+  .background-logo-container span {
+    font-size: 58px;
+  }
+
+  .container {
+    top: 5px;
+    width: 500px;             /* Padronizado */
+    min-height: 700px;        /* Padronizado */
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding-bottom: 0;
+    position: relative;
+    transform: translateX(-1px);
+  }
+
+       /* Estilo da imagem do logo no cabeçalho */
+        .header-container img {
+            width: 75px; /* Largura da imagem */
+            margin-right: 15px; /* Espaço à direita da imagem */
+        }
+
+        /* Estilo do título dentro do cabeçalho */
+        .header-container h3 {
+            font-size: 24px; /* Tamanho da fonte menor */
+        }
+
+  .topo h1 {
+    font-size: 22px;
+  }
+
+  .dropdown-button {
+    font-size: 16px;
+    padding: 10px 18px;
+  }
+
+  .dropdown-content {
+    min-width: 250px;
+  }
+
+  .calculo input[type="number"] {
+    font-size: 18px;
+  }
+
+  button.calc-btn {
+    font-size: 18px;
+  }
+
+  #resultado h3 {
+    font-size: 20px;
+  }
+
+  .footer img {
+    margin-left: -25px;
+        width: 70px;
+        height: 65px;
+        padding: 55px;
+      }
+}
+
+</style>
+</head>
+<body>
+  <div class="background-logo-container">
+    <img src="Imagens/Logo sem Fundo.png" alt="Logo BrainForms Fundo" />
+    <span>BrainForms</span>
+  </div>
+
+  <div class="container" role="main" aria-label="Calculadora de Geometria BrainForms">
+    <div class="header-container">
+      <img src="Imagens/Logo sem Fundo.png" alt="Logo BrainForms" />
+      <h3><a href="calcular-matematica.html">BrainForms</a></h3>
+    </div>
+
+    <div class="content">
+      <div class="topo">
+        <button class="voltar-btn" aria-label="Voltar" onclick="window.location.href='calcular-matematica.html'">&lt;</button>
+        <h1>Cálculo de Geometria</h1>
+      </div>
+
+      <!-- Definição -->
+    <div class="def-container">
+      <h2 id="def">Definição</h2>
+      <div class="explicacao" id="explicacaoTexto" aria-live="polite" aria-atomic="true">
+        <!-- Definição será carregada aqui -->
+      </div>
+    </div>
+
+      <!-- Dropdown agora abaixo da definição -->
+      <div class="dropdown-container">
+        <div class="dropdown" style="margin-left:auto;">
+          <div class="dropdown-button" id="dropdownButton" tabindex="0" aria-haspopup="true" aria-expanded="false">
+            Selecione cálculo
+            <i class="arrow" id="arrowIcon"></i>
+          </div>
+          <div class="dropdown-content" id="dropdownContent" role="menu" aria-label="Lista de cálculos">
+            <button role="menuitem" data-form="areaCirculoForm">Área do Círculo</button>
+            <button role="menuitem" data-form="volumeEsferaForm">Volume da Esfera</button>
+            <button role="menuitem" data-form="areaTrianguloForm">Área do Triângulo</button>
+            <button role="menuitem" data-form="volumeCilindroForm">Volume do Cilindro</button>
+          </div>
+        </div>
+      </div>
+
+
+      <!-- Formulários -->
+      <form id="areaCirculoForm" class="calculo-form active calculo" aria-label="Formulário para calcular área do círculo" onsubmit="event.preventDefault(); calcularCirculo();">
+        <h2>Área do Círculo</h2>
+        <input type="number" id="raioCirculo" placeholder="Digite o raio" min="0" step="any" aria-required="true" />
+        <button type="submit" class="calc-btn">Calcular</button>
+      </form>
+
+      <form id="volumeEsferaForm" class="calculo-form calculo" aria-label="Formulário para calcular volume da esfera" onsubmit="event.preventDefault(); calcularEsfera();">
+        <h2>Volume da Esfera</h2>
+        <input type="number" id="raioEsfera" placeholder="Digite o raio" min="0" step="any" aria-required="true" />
+        <button type="submit" class="calc-btn">Calcular</button>
+      </form>
+
+      <form id="areaTrianguloForm" class="calculo-form calculo" aria-label="Formulário para calcular área do triângulo" onsubmit="event.preventDefault(); calcularTriangulo();">
+        <h2>Área do Triângulo</h2>
+        <input type="number" id="baseTriangulo" placeholder="Digite a base" min="0" step="any" aria-required="true" />
+        <input type="number" id="alturaTriangulo" placeholder="Digite a altura" min="0" step="any" aria-required="true" />
+        <button type="submit" class="calc-btn">Calcular</button>
+      </form>
+
+      <form id="volumeCilindroForm" class="calculo-form calculo" aria-label="Formulário para calcular volume do cilindro" onsubmit="event.preventDefault(); calcularCilindro();">
+        <h2>Volume do Cilindro</h2>
+        <input type="number" id="raioCilindro" placeholder="Digite o raio" min="0" step="any" aria-required="true" />
+        <input type="number" id="alturaCilindro" placeholder="Digite a altura" min="0" step="any" aria-required="true" />
+        <button type="submit" class="calc-btn">Calcular</button>
+      </form>
+
+      <!-- Resultado -->
+      <section id="resultado" role="region" aria-live="polite" aria-atomic="true">
+        <h3>Resultado</h3>
+        <div id="saidaResultado"></div>
+      </section>
+    </div>
+    <!-- Footer (fora da content, mas dentro da container) -->
+    <div class="footer">
+      <a href="menu.html">
+        <img src="Imagens/inicio.png" alt="Início" />
+      </a>
+      <img src="Imagens/conquistas.png" alt="Conquistas" />
+      <img src="Imagens/menu.png" alt="Menu" />
+    </div>
+    </div>
+  </div>
+
+<script>
+  // Dropdown controle
+  const dropdownButton = document.getElementById('dropdownButton');
+  const dropdownContent = document.getElementById('dropdownContent');
+  const arrowIcon = document.getElementById('arrowIcon');
+  const forms = document.querySelectorAll('.calculo-form');
+  const resultadoDiv = document.getElementById('resultado');
+  const saidaResultado = document.getElementById('saidaResultado');
+  const explicacaoDiv = document.getElementById('explicacaoTexto');
+
+  const definicoes = {
+    areaCirculoForm: `A área do círculo é a medida da superfície interna da circunferência. 
+                     É calculada multiplicando-se π pelo quadrado do raio (Área = π × raio²).`,
+
+    volumeEsferaForm: `O volume da esfera representa o espaço tridimensional ocupado pela esfera. 
+                      É calculado usando a fórmula Volume = (4/3) × π × raio³.`,
+
+    areaTrianguloForm: `A área do triângulo é a medida da superfície dentro de seus três lados. 
+                       Calcula-se multiplicando a base pela altura e dividindo por 2 (Área = (base × altura) / 2).`,
+
+    volumeCilindroForm: `O volume do cilindro é o espaço que ele ocupa, calculado pela área da base vezes a altura. 
+                        A fórmula é Volume = π × raio² × altura.`
+  };
+
+  function atualizarDefinicao(formId) {
+    explicacaoDiv.textContent = definicoes[formId] || '';
+  }
+
+  // Alternar dropdown e formulário
+  dropdownButton.addEventListener('click', () => {
+    const expanded = dropdownButton.getAttribute('aria-expanded') === 'true';
+    if (expanded) {
+      dropdownContent.classList.remove('show');
+      dropdownButton.setAttribute('aria-expanded', false);
+      arrowIcon.classList.remove('open');
+    } else {
+      dropdownContent.classList.add('show');
+      dropdownButton.setAttribute('aria-expanded', true);
+      arrowIcon.classList.add('open');
+    }
+  });
+
+  // Seleção do cálculo
+  dropdownContent.querySelectorAll('button').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const formId = btn.getAttribute('data-form');
+
+      // Mostrar o formulário selecionado
+      forms.forEach(f => f.classList.remove('active'));
+      document.getElementById(formId).classList.add('active');
+
+      // Resetar resultado
+      resultadoDiv.style.display = 'none';
+      saidaResultado.textContent = '';
+
+      // Fechar dropdown
+      dropdownContent.classList.remove('show');
+      dropdownButton.setAttribute('aria-expanded', false);
+      arrowIcon.classList.remove('open');
+
+      // Atualizar botão dropdown texto
+      dropdownButton.textContent = btn.textContent;
+      dropdownButton.appendChild(arrowIcon);
+
+      // Atualizar definição
+      atualizarDefinicao(formId);
+    });
+  });
+
+  // Mostrar definição inicial na carga da página
+  window.addEventListener('load', () => {
+    atualizarDefinicao('areaCirculoForm');
+  });
+
+  // Funções dos cálculos
+  function calcularCirculo() {
+    const raio = parseFloat(document.getElementById('raioCirculo').value);
+    if (isNaN(raio) || raio < 0) {
+      alert('Por favor, insira um valor válido para o raio.');
+      return;
+    }
+    const area = Math.PI * raio * raio;
+    resultadoDiv.style.display = 'block';
+    saidaResultado.textContent = `Área do círculo com raio ${raio.toFixed(2)} é ${area.toFixed(2)} unidades quadradas.`;
+  }
+
+  function calcularEsfera() {
+    const raio = parseFloat(document.getElementById('raioEsfera').value);
+    if (isNaN(raio) || raio < 0) {
+      alert('Por favor, insira um valor válido para o raio.');
+      return;
+    }
+    const volume = (4 / 3) * Math.PI * Math.pow(raio, 3);
+    resultadoDiv.style.display = 'block';
+    saidaResultado.textContent = `Volume da esfera com raio ${raio.toFixed(2)} é ${volume.toFixed(2)} unidades cúbicas.`;
+  }
+
+  function calcularTriangulo() {
+    const base = parseFloat(document.getElementById('baseTriangulo').value);
+    const altura = parseFloat(document.getElementById('alturaTriangulo').value);
+    if (isNaN(base) || base < 0 || isNaN(altura) || altura < 0) {
+      alert('Por favor, insira valores válidos para base e altura.');
+      return;
+    }
+    const area = (base * altura) / 2;
+    resultadoDiv.style.display = 'block';
+    saidaResultado.textContent = `Área do triângulo com base ${base.toFixed(2)} e altura ${altura.toFixed(2)} é ${area.toFixed(2)} unidades quadradas.`;
+  }
+
+  function calcularCilindro() {
+    const raio = parseFloat(document.getElementById('raioCilindro').value);
+    const altura = parseFloat(document.getElementById('alturaCilindro').value);
+    if (isNaN(raio) || raio < 0 || isNaN(altura) || altura < 0) {
+      alert('Por favor, insira valores válidos para raio e altura.');
+      return;
+    }
+    const volume = Math.PI * raio * raio * altura;
+    resultadoDiv.style.display = 'block';
+    saidaResultado.textContent = `Volume do cilindro com raio ${raio.toFixed(2)} e altura ${altura.toFixed(2)} é ${volume.toFixed(2)} unidades cúbicas.`;
+  }
+</script>
+</body>
+</html>

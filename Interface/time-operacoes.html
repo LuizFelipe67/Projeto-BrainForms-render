@@ -1,0 +1,815 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Time Quizz - BrainForms</title>
+  <style>
+    
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: #775085;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh; /* Altura da tela inteira */
+        margin: 0; /* Remove margens padrão */
+        padding-bottom: 200px; /* Espaço EXTRA abaixo da box */
+        overflow-y: auto; /* Permite rolar verticalmente */
+    }
+
+    .background-logo-container {
+      position: absolute;
+      top: 20px;
+      left: 20px;
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      z-index: 0;
+    }
+
+    .background-logo-container img {
+      width: 100px;
+      height: auto;
+    }
+
+    .background-logo-container span {
+      color: white;
+      font-size: 48px;
+      font-weight: bold;
+      font-family: 'Inter', sans-serif;
+    }
+
+    .container {
+      background-color: #fff;
+      border-radius: 12px;
+      box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+      top: 120px;
+      width: 400px;
+      height: 600px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between; /* garante que o conteúdo seja distribuído */
+      overflow: hidden;
+      position: relative;
+      transition: height 0.5s ease;
+    }
+
+     .header-container {
+            display: flex;
+            align-items: center;
+            background: linear-gradient(to bottom, #000000 0%, #3A024E 80%);
+            padding: 15px 20px;
+            border-radius: 12px 12px 0 0;
+            color: white;
+            width: 100%;
+        }
+
+        .header-container img {
+            width: 65px;
+            margin-right: 10px;
+        }
+
+        .header-container h3 {
+            margin: 0;
+            font-size: 20px;
+        }
+
+        .header-container h3 a {
+            text-decoration: none;
+            color: white;
+        }
+
+    .content {
+      padding: 15px 10px;
+      text-align: center;
+      flex: 1;
+    }
+
+    .question-box {
+  height: 100px;
+  border: 3px solid #19178A;
+  box-shadow: 0 3px 7px rgba(15, 8, 134, 0.4);
+  border-radius: 10px;
+  padding: 15px;
+  margin-top: 15px;
+  margin-bottom: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+.final-message {
+  margin-top: -30px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 40px;
+  height: 100%;
+  gap: 120px;
+}
+
+.final-message h2 {
+  color: #5E097E;
+  font-size: 50px;
+  font-weight: bold;
+}
+
+.final-message p {
+  text-align: center;
+  font-size: 20px;
+  font-weight: bold;
+  color: #000000;
+}
+
+.final-message a {
+  /* Remova ou comente as propriedades que conflitam */
+  /* text-align e display */
+  text-decoration: none;
+  background-color: #5E097E;
+  color: white;
+  width: 70%;
+  height: 60px;
+  border-radius: 8px;
+  font-weight: bold;
+  transition: background-color 0.3s;
+}
+
+.return-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 30px;
+  font-size: 16px;
+  height: 60px;
+  width: 70%;  /* mantendo largura igual */
+  background-color: #5E097E;
+  color: white;
+  text-decoration: none;
+  border-radius: 8px;
+  font-weight: bold;
+  transition: background-color 0.3s ease;
+}
+
+            .resolva-label {
+        position: absolute;
+        font-size: 18px;
+        font-weight: bold;
+        color: #19178A;
+        top: 100px; /* ajustado para alinhar com o topo da box */
+        left: 35px; /* ajustado para alinhar com o canto da box */
+        background-color: #fff;
+        padding: 0 5px;
+        z-index: 1;
+        }
+
+
+    .content h2 {
+      color: #5E097E;
+      margin-bottom: 15px;
+      font-size: 20px;
+    }
+
+    .option-button {
+      background-color: #F2F3FD;
+      color: #5E097E;
+      border: 2px solid #300A3E;
+      box-shadow: 0 2px 5px rgba(48, 10, 62, 0.4);
+      border-radius: 12px;
+      padding: 16px;
+      font-size: 14px;
+      cursor: pointer;
+      width: 100%;
+      margin: 10px auto;
+      text-align: left;
+      transition: all 0.3s ease;
+      display: block;
+    }
+
+    .option-button:hover {
+      background-color: #c9d9fc;
+    }
+
+    .option-button.selected {
+      border: 2px solid #9036e4;
+      background-color: #e4d2f5;
+    }
+
+    .correct-answer,
+    .incorrect-answer {
+      outline: none;
+    }
+
+    .correct-answer {
+      border-color: green !important;
+      background-color: #e6ffe6;
+    }
+
+    .incorrect-answer {
+      border-color: red !important;
+      background-color: #ffe6e6;
+    }
+
+    #feedback {
+      margin-top: 15px;
+      font-weight: bold;
+    }
+
+    .correct {
+      color: green;
+    }
+
+    .incorrect {
+      color: red;
+    }
+
+   
+  
+
+    .disabled-option {
+    pointer-events: none;
+    cursor: default !important;
+    opacity: 0.7;
+  }
+
+  .option-button.disabled-option:hover {
+    background-color: inherit !important;
+  }
+
+  .return-button {
+  display: flex; /* Permite centralização com align-items e justify-content */
+  align-items: center; /* Centraliza verticalmente */
+  justify-content: center; /* Centraliza horizontalmente */
+  margin-bottom: 30px; /* Aumenta a distância do rodapé */
+  font-size: 16px;
+  height: 60px;
+  width: 230px;
+  background-color: #5E097E;
+  color: white;
+  text-decoration: none;
+  border-radius: 8px;
+  font-weight: bold;
+  transition: background-color 0.3s ease;
+}
+
+
+.return-button:hover {
+    background-color: #9036e4; 
+ 
+}
+
+.blurred {
+      filter: blur(5px);
+    }
+
+    .start-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background-color: rgba(0, 0, 0, 0.5);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 1000;
+    }
+
+    .start-box {
+      margin-top: 200px;
+      background-color: white;
+      width: 300px;
+      height: 400px;
+      padding: 20px;
+      border-radius: 16px;
+      box-shadow: 0 0 20px rgba(0, 0, 0, 0.4);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;  /* centraliza verticalmente */
+      align-items: center;      /* centraliza horizontalmente */
+      text-align: center;
+      gap: 60px;
+      margin-right: 19px;
+    }
+
+    .start-box h1 {
+      font-size: 28px;
+      color: #5E097E;
+      margin-bottom: 20px;
+    }
+
+    .start-box button {
+      padding: 12px 30px;
+      font-size: 18px;
+      background-color: #5E097E;
+      color: white;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      font-weight: bold;
+    }
+
+    .start-box button:hover {
+      background-color: #9036e4;
+    }
+
+    .clock-wrapper {
+    position: absolute;
+    top: 85px;
+    right: 30px;
+    width: 80px;
+    height: 80px;
+    background-color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .clock-ring {
+    position: absolute;
+    top: 0;
+    left: 0;
+    transform: rotate(-90deg);
+  }
+
+  .clock-bg,
+  .clock-progress {
+    fill: none;
+    stroke-width: 6;
+    r: 35;
+    cx: 40;
+    cy: 40;
+  }
+
+  .clock-bg {
+    stroke: #e0e0e0;
+  }
+
+  .clock-progress {
+    stroke: #5E097E;
+    stroke-dasharray: 219.911;
+    stroke-dashoffset: 0;
+    transition: stroke-dashoffset 1s linear, stroke 1s linear;
+  }
+
+  .clock-text {
+    font-family: 'Courier New', monospace;
+    font-weight: bold;
+    font-size: 22px;
+    color: #19178A;
+    z-index: 1;
+  }
+
+
+
+  #question-text {
+    animation: fadeIn 0.5s ease;
+  }
+
+  .option-button {
+    animation: pulse 1.5s infinite ease-in-out;
+  }
+
+  #progress {
+    font-weight: bold;
+    color: #19178A;
+    font-size: 16px;
+    margin-bottom: 5px;
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-10px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  @keyframes pulse {
+    0% { box-shadow: 0 0 0 0 rgba(144, 54, 228, 0.5); }
+    90% { box-shadow: 0 0 0 5px rgba(144, 54, 228, 0); }
+    100% { box-shadow: 0 0 0 0 rgba(144, 54, 228, 0); }
+  }
+
+    @media (max-width: 480px) {
+        body {
+          margin: 0;
+          bottom: 0;
+          padding-bottom: 0;
+          flex-direction: column;
+        }
+
+        .background-logo-container {
+          display: none; /* Remove logo do fundo */
+        }
+
+        .container {
+        top: -1px;
+        position: relative;
+        margin: 0 auto;
+        width: 95%;
+        height: 98vh; /* altura total visível */
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between; /* empurra o rodapé para o fim */
+        box-sizing: border-box;
+      }
+
+       .start-box{
+        margin-top: -20px;
+        margin-left: 20px;
+       }
+    
+      
+
+    }
+
+
+
+
+/* Responsivo para telas grandes */
+    @media (min-width: 1440px) {
+        .background-logo-container img {
+        width: 150px;
+        height: auto;
+        }
+
+        .background-logo-container span {
+        font-size: 58px;
+
+        }
+
+      .container {
+        top: 5px;
+        width: 500px;
+        height: 700px;
+        display: flex;
+        flex-direction: column;
+        padding-bottom: 0;
+        position: relative;
+        transform: translateX(-1px); /*GARANTE CENTRALIZAÇÃO IGUAL LOGIN*/
+      }
+
+      .boas-vindas {
+        font-size: 56px;
+      }
+
+            /* Estilo da imagem do logo no cabeçalho */
+        .header-container img {
+            width: 75px; /* Largura da imagem */
+            margin-right: 15px; /* Espaço à direita da imagem */
+        }
+
+        /* Estilo do título dentro do cabeçalho */
+        .header-container h3 {
+            font-size: 24px; /* Tamanho da fonte menor */
+        }
+
+           .resolva-label {
+        font-size: 20px;
+        top: 110px; /* ajustado para alinhar com o topo da box */
+        left: 35px; /* ajustado para alinhar com o canto da box */
+        }
+
+
+         .content button { 
+            margin-bottom: -3px;
+            font-size: 20px; /* Tamanho da fonte */
+            max-width: 95%; /* Máximo 300px para limitar tamanho */
+            height: 60px;
+          
+        }
+
+        .clock-wrapper {
+    position: absolute;
+    top: 85px;
+    right: 30px;
+    width: 80px;
+    height: 80px;
+    background-color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .clock-ring {
+    position: absolute;
+    top: 0;
+    left: 0;
+    transform: rotate(-90deg);
+  }
+
+  .clock-bg,
+  .clock-progress {
+    fill: none;
+    stroke-width: 6;
+    r: 35;
+    cx: 40;
+    cy: 40;
+  }
+
+  .clock-bg {
+    stroke: #e0e0e0;
+  }
+
+  .clock-progress {
+    stroke: #5E097E;
+    stroke-dasharray: 219.911;
+    stroke-dashoffset: 0;
+    transition: stroke-dashoffset 1s linear, stroke 1s linear;
+  }
+
+  .clock-text {
+    font-family: 'Courier New', monospace;
+    font-weight: bold;
+    font-size: 22px;
+    color: #19178A;
+    z-index: 1;
+  }
+
+
+
+       
+
+      
+    }
+
+
+  </style>
+
+  
+</head>
+<body>
+
+  <!-- Música de fundo -->
+<audio id="background-music" src="audio/game-music.mp3" loop></audio>
+
+<!-- Som ao clicar em 'Começar' -->
+<audio id="start-sound" src="audio/start-sound.mp3"></audio>
+
+<!-- Som de encerramento -->
+<audio id="end-sound" src="audio/end-sound.mp3"></audio>
+
+
+<div class="start-overlay" id="start-overlay">
+    <div class="start-box">
+      <h1>Bem-vindo ao Time de Matemática!</h1>
+      <h3>Você terá tempo limitado para responder cada questão.<h3>
+      <button onclick="startGame()">Começar</button>
+    </div>
+  </div>
+
+  <div class="background-logo-container">
+    <img src="Imagens/Logo sem Fundo.png" alt="Logo BrainForms Fundo">
+    <span>BrainForms</span>
+  </div>
+
+  <div class="container" id="main-container">
+    <div class="header-container">
+      <img src="Imagens/Logo sem Fundo.png" alt="Logo BrainForms">
+      <h3><a href="time-quizz.html">BrainForms</a></h3>
+
+    </div>
+    <div class="content">
+
+      <div class="clock-wrapper">
+      <svg class="clock-ring" width="80" height="80">
+        <circle class="clock-bg" cx="40" cy="40" r="35" />
+        <circle class="clock-progress" cx="40" cy="40" r="35" />
+      </svg>
+      <div class="clock-text" id="time-left">--</div>
+    </div>
+
+
+      <div class="question-box" id="question-box">
+        <span class="resolva-label">Resolva</span>
+        <h2 id="question-text">Carregando...</h2>
+      </div>
+      <div id="progress">Questão 1 de 8</div>
+
+
+      <div id="options"></div>
+      <p id="feedback"></p>
+      <button id="next-btn" onclick="nextQuestion()">Próxima Questão</button>
+    </div>
+  </div>
+
+  
+
+ <script>
+  const questions = [
+      { text: "2 + 2", options: ["3", "4", "5", "6"], answer: "4" },
+      { text: "3 x 3", options: ["6", "9", "12", "15"], answer: "9" },
+      { text: "12 / 4", options: ["2", "3", "4", "6"], answer: "3" },
+      { text: "5 + 7", options: ["11", "12", "13", "14"], answer: "12" },
+      { text: "6 x 4", options: ["24", "20", "18", "16"], answer: "24" },
+      { text: "30 / 5", options: ["5", "6", "7", "8"], answer: "6" },
+      { text: "10 + 15", options: ["20", "25", "30", "35"], answer: "25" },
+      { text: "8 x 3", options: ["21", "24", "27", "30"], answer: "24" },
+  
+  ];
+
+  let current = 0;
+  let score = 0;
+  let timerInterval;
+  let timePerQuestion = [10, 9, 8, 7, 6, 5, 4, 3];
+  let gameStarted = false;
+
+  function startGame() {
+    gameStarted = true;
+    document.getElementById('start-overlay').style.display = 'none';
+
+    const startSound = document.getElementById('start-sound');
+    startSound.currentTime = 0.55; // Reinicia o som se já tiver tocado antes
+    startSound.play().catch((e) => {
+      console.error('Erro ao reproduzir o som:', e);
+    });
+
+    setTimeout(() => {
+      startSound.pause();      // Pausa o áudio
+    }, 600);
+
+
+    // Iniciar música de fundo
+    const bgMusic = document.getElementById('background-music');
+    bgMusic.volume = 0.3; // Volume moderado
+    
+    setTimeout(() => {
+    bgMusic.play();
+  }, 600); // Espera 1 segundo antes de tocar
+
+    renderQuestion();
+  }
+
+  const FULL_DASH_ARRAY = 219.911;
+
+  function interpolateColor(startColor, endColor, factor) {
+    const result = startColor.slice();
+    for (let i = 0; i < 3; i++) {
+      result[i] = Math.round(result[i] + factor * (endColor[i] - startColor[i]));
+    }
+    return `rgb(${result[0]}, ${result[1]}, ${result[2]})`;
+  }
+
+  function hexToRgb(hex) {
+    const bigint = parseInt(hex.slice(1), 16);
+    return [bigint >> 16 & 255, bigint >> 8 & 255, bigint & 255];
+  }
+
+  function updateTimerVisual(timeLeft, totalTime) {
+    const offset = FULL_DASH_ARRAY * (1 - timeLeft / totalTime);
+    document.querySelector('.clock-progress').style.strokeDashoffset = offset;
+    document.getElementById('time-left').textContent = timeLeft + 's';
+
+    const progress = 1 - (timeLeft / totalTime);
+    const green = hexToRgb("#00C853");
+    const yellow = hexToRgb("#FFD600");
+    const red = hexToRgb("#D50000");
+
+    let newColor;
+    if (progress < 0.5) {
+      const factor = progress / 0.5;
+      newColor = interpolateColor(green, yellow, factor);
+    } else {
+      const factor = (progress - 0.5) / 0.5;
+      newColor = interpolateColor(yellow, red, factor);
+    }
+
+    document.querySelector('.clock-progress').style.stroke = newColor;
+  }
+
+  function startTimer(duration) {
+    clearInterval(timerInterval); // <<< IMPORTANTE
+    let timeLeft = duration;
+    updateTimerVisual(timeLeft, duration);
+
+    timerInterval = setInterval(() => {
+      timeLeft--;
+      updateTimerVisual(timeLeft, duration);
+
+      if (timeLeft === 0) {
+        clearInterval(timerInterval);
+        setTimeout(() => {
+          handleTimeout();
+        }, 800);
+      }
+    }, 1000);
+  }
+
+  function handleTimeout() {
+    document.getElementById("feedback").innerHTML = "<span class='incorrect'>⏱ Tempo esgotado! Questão pulada.</span>";
+    const correctBtn = document.querySelector("button[data-correct='true']");
+    correctBtn.classList.add("correct-answer");
+    disableOptions();
+    setTimeout(() => {
+      if (gameStarted) nextQuestion();
+    }, 1500);
+  }
+
+  function renderQuestion() {
+    if (!gameStarted) return;
+
+    clearInterval(timerInterval); // <<< LIMPA QUALQUER TIMER ATUAL
+    document.getElementById("feedback").innerHTML = "";
+    document.getElementById("next-btn").style.display = "none";
+
+    if (current >= questions.length) {
+      showFinalMessage();
+      return;
+    }
+
+    const question = questions[current];
+    document.getElementById("question-text").textContent = question.text;
+    document.getElementById("progress").innerText = `Questão ${current + 1} de ${questions.length}`;
+
+    const optionsContainer = document.getElementById("options");
+    optionsContainer.innerHTML = "";
+
+    question.options.forEach(option => {
+      const btn = document.createElement("button");
+      btn.textContent = option;
+      btn.className = "option-button";
+
+      if (option === question.answer) {
+        btn.setAttribute("data-correct", "true");
+      }
+
+      btn.onclick = () => handleAnswer(btn, question.answer);
+      optionsContainer.appendChild(btn);
+    });
+
+    startTimer(timePerQuestion[current] || 3);
+  }
+
+  function handleAnswer(button, correctAnswer) {
+    clearInterval(timerInterval); // <<< PARA O TIMER
+    const allButtons = document.querySelectorAll(".option-button");
+
+    allButtons.forEach(btn => btn.classList.add("disabled-option"));
+
+    if (button.textContent === correctAnswer) {
+      button.classList.add("correct-answer");
+      document.getElementById("feedback").innerHTML = "<span class='correct'>✔️ Resposta correta!</span>";
+      score++;
+    } else {
+      button.classList.add("incorrect-answer");
+      allButtons.forEach(btn => {
+        if (btn.textContent === correctAnswer) btn.classList.add("correct-answer");
+      });
+      document.getElementById("feedback").innerHTML = "<span class='incorrect'>❌ Resposta incorreta.</span>";
+    }
+
+    setTimeout(() => {
+      nextQuestion();
+    }, 1000);
+  }
+
+  function nextQuestion() {
+    if (!gameStarted) return;
+    current++;
+    renderQuestion();
+  }
+
+  function disableOptions() {
+    document.querySelectorAll(".option-button").forEach(btn => {
+      btn.classList.add("disabled-option");
+    });
+  }
+
+ function showFinalMessage() {
+  gameStarted = false; 
+  clearInterval(timerInterval); 
+
+  const bgMusic = document.getElementById('background-music');
+  if (bgMusic) {
+    bgMusic.pause();
+    bgMusic.currentTime = 0;
+  }
+
+  const content = document.querySelector(".content");
+  if (content) {
+    content.innerHTML = `
+      <div class="final-message">
+        <h2>Quiz Finalizado!</h2>
+        <p>Você acertou ${score} de ${questions.length} questões.</p>
+        <a href="mini-games.html" class="return-button">Voltar para Games</a>
+      </div>
+    `;
+  } else {
+    console.error("Elemento .content não encontrado para exibir mensagem final.");
+  }
+
+  const endSound = document.getElementById('end-sound');
+  endSound.currentTime = 0;
+  endSound.play().catch(e => console.error('Erro ao tocar som final:', e));
+
+}
+
+
+
+</script>
+
+</body>
+</html>

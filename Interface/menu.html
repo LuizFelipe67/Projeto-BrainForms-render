@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Menu - BrainForms</title>
+    
+    <style>
+        
+        /* Estiliza o corpo da página */
+body {
+    font-family: 'Roboto', sans-serif; /* Fonte da página */
+    background-color: #775085; /* Cor de fundo roxa */
+    display: flex; /* Usando flexbox para centralizar conteúdo */
+    justify-content: center; /* Centraliza horizontalmente */
+    align-items: center; /* Centraliza verticalmente */
+    min-height: 100vh; /* Altura da tela inteira */
+    margin: 0; /* Remove margens padrão */
+    padding-bottom: 200px; /* Espaço EXTRA abaixo da box */
+    overflow-y: auto; /* Permite rolar verticalmente */
+}
+
+ /* LOGO E TEXTO NO CANTO SUPERIOR ESQUERDO DO FUNDO */
+    .background-logo-container {
+      position: absolute;
+      top: 20px;
+      left: 20px;
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      z-index: 0;
+    }
+
+    .background-logo-container img {
+      width: 100px;
+      height: auto;
+    }
+
+    .background-logo-container span {
+      color: white;
+      font-size: 48px;
+      font-weight: bold;
+      font-family: 'Inter', sans-serif;
+    }
+
+/* Container principal do menu */
+.menu-container {
+    background-color: #fff; /* Fundo branco */
+    border-radius: 12px; /* Cantos arredondados */
+    box-shadow: 0 0 20px rgba(34, 2, 45, 0.6); /* Sombra mais visível */
+    text-align: center; /* Centraliza texto */
+    top: 120px;
+    width: 400px;
+    height: 600px;
+    display: flex; /* Flexbox para organização */
+    flex-direction: column; /* Itens em coluna */
+    overflow: hidden; /* Esconde overflow */
+    position: relative; /* Necessário para posicionar o rodapé */
+}
+
+/* Cabeçalho dentro do container do menu */
+.header-container {
+    display: flex; /* Flexbox para alinhar texto e imagem na horizontal */
+    align-items: center; /* Alinha verticalmente ao centro */
+    background: linear-gradient(to bottom, #000000 0%, #3A024E 80%); /* Gradiente invertido */
+    padding: 15px 20px; /* Espaçamento interno */
+    border-radius: 12px 12px 0 0; /* Cantos arredondados só no topo */
+    color: white; /* Cor do texto */
+    width: 100%; /* Largura total do container */
+    margin-bottom: 30px; /* Espaço abaixo do cabeçalho */
+}
+
+/* Estilo da imagem do logo no cabeçalho */
+.header-container img {
+    width: 65px; /* Largura da imagem */
+    margin-right: 10px; /* Espaço à direita da imagem */
+}
+
+/* Estilo do título dentro do cabeçalho */
+.header-container h3 {
+    margin: 0; /* Remove margem padrão */
+    font-size: 20px; /* Tamanho da fonte menor */
+}
+
+/* Estilo do título da seção principal */
+.menu-container h2 {
+    text-align: left; /* Alinha o texto à esquerda */
+    padding-left: 20px; /* Espaço à esquerda */
+    margin-top: 2px; /* Pequena margem superior */
+    color: #5E097E; /* Cor roxa */
+    margin-bottom: -30px;
+}
+
+/* Container que agrupa os botões */
+.button-container {
+    flex-grow: 1;       /* ocupa todo espaço restante */
+    overflow-y: auto;   /* rolagem vertical se necessário */
+    display: flex; /* Flexbox */
+    flex-direction: column; /* Itens em coluna */
+    gap: 10px; /* Espaço entre os botões */
+    align-items: center; /* Centraliza horizontalmente */
+    margin-top: 60px; /* Espaço acima */
+    padding: 0 20px; /* Espaçamento lateral */
+}
+
+/* Linha que contém dois botões lado a lado */
+.button-container .row {
+    display: flex; /* Flexbox */
+    gap: 20px; /* Espaço entre os botões */
+    justify-content: center; /* Centraliza os botões */
+    width: 100%; /* Ocupa toda largura */
+}
+
+/* Estilo dos botões dentro do container do menu */
+.menu-container button {
+    background-color: #F2F3FD; /* Fundo claro */
+    color: #5E097E; /* Texto roxo */
+    border: 2px solid #440459; /* Borda mais grossa */
+    border-radius: 16px; /* Cantos mais arredondados */
+    padding: 10px; /* Espaçamento interno reduzido */
+    font-size: 16px; /* Tamanho da fonte menor */
+    font-weight: bold; /* Negrito */
+    cursor: pointer; /* Cursor tipo mãozinha */
+    width: 100%; /* Largura total do botão */
+    height: auto;
+    max-height: 160px;
+    min-height: 80px;        /* altura mínima */
+    display: flex; /* Flexbox para alinhar imagem e texto */
+    flex-direction: column; /* Organiza itens em coluna */
+    align-items: center; /* Centraliza horizontalmente */
+    justify-content: center; /* Centraliza verticalmente */
+    box-shadow: 10px 0 14px rgba(34, 2, 45, 0.5); /* Sombra para a direita */
+    flex-shrink: 1;          /* permite encolher */
+    overflow: hidden;
+    white-space: normal;     /* permite quebra de linha */
+    text-overflow: ellipsis;
+}
+
+/* Efeito visual ao passar o mouse sobre os botões */
+.menu-container button:hover {
+    background-color: #9036e4; /* Fundo roxo vibrante */
+    color: #99e9f7; /* Texto branco */
+    box-shadow: 12px 0 18px rgba(48, 10, 62, 0.7); /* Sombra mais intensa à direita */
+    transform: scale(1.02);
+}
+
+/* Estilo para a imagem dentro dos botões */
+.menu-container button img {
+    width: 50px; /* Largura da imagem menor */
+    height: 50px; /* Altura da imagem menor */
+    margin-bottom: 15px; /* Espaço abaixo da imagem */
+    flex-shrink: 0;      /* imagem não encolhe */
+}
+
+/* Estilo do texto dentro dos botões (span) */
+.button-container span {
+    font-size: 16px; /* Fonte menor para melhor adaptação */
+    word-break: break-word; /* Quebra o texto grande */
+}
+
+/* Botões com imagem e texto lado a lado */
+.menu-container .questionarios-button,
+.menu-container .minigames-button {
+    flex-direction: row;
+    align-items: center;
+    height: auto;
+    max-height: 160px;
+}
+
+/* Ajuste da imagem no botão "Questionários" */
+.menu-container .questionarios-button img {
+    margin-right: 15px;
+    margin-bottom: 0;
+    width: 50px;
+    height: 50px;
+}
+
+/* Ajuste da imagem no botão "Mini Games" */
+.menu-container .minigames-button img {
+    margin-bottom: -5px;
+    margin-left: 15px;
+    width: 50px;
+    height: 50px;
+}
+
+/* Rodapé fixo na parte inferior do container */
+.footer {
+    background-color: #300A3E; /* Cor do rodapé */
+    display: flex; /* Flexbox */
+    justify-content: center; /* Centraliza os ícones */
+    align-items: center; /* Centraliza verticalmente */
+    position: absolute; /* Posicionamento absoluto dentro do container */
+    bottom: 0; /* Fixa na parte inferior */
+    width: 100%; /* Ocupa toda a largura */
+    height: 80px; /* Altura aumentada do rodapé */
+    gap: 30px; /* Espaço entre os ícones */
+}
+
+/* Estilo das imagens do rodapé */
+.footer img {
+    width: 65px; /* Largura aumentada */
+    height: 60px; /* Altura aumentada */
+    padding: 25PX; /* Remove padding para não cortar imagens */
+}
+
+ /* Responsivo para telas pequenas */
+     @media (max-width: 480px) {
+        body {
+          margin: 0;
+          bottom: 0;
+          padding-bottom: 0;
+          flex-direction: column;
+        }
+
+        .background-logo-container {
+          display: none; /* Remove logo do fundo */
+        }
+
+        .menu-container {
+        top: -1px;
+        position: relative;
+        margin: 0 auto;
+        width: 95%;
+        height: 98vh; /* altura total visível */
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between; /* empurra o rodapé para o fim */
+        box-sizing: border-box;
+      }
+
+      .menu-container button{
+        margin-top: 50px;
+      
+      }
+
+      .menu-container h2{
+        margin-top: 20px;
+      }
+
+       .menu-container button img {
+            width: 65px; /* Largura da imagem menor */
+            height: 65px; /* Altura da imagem menor */
+        }
+
+        /* Estilo do texto dentro dos botões (span) */
+        .button-container span {
+            font-size: 18px; /* Fonte menor para melhor adaptação */
+        }
+
+        /* Botões com imagem e texto lado a lado */
+        .menu-container .questionarios-button,
+        .menu-container .minigames-button {
+            margin-top: 15px;
+            flex-direction: row;
+            align-items: center;
+            height: 100px;
+        }
+
+        /* Ajuste da imagem no botão "Questionários" */
+        .menu-container .questionarios-button img {
+            margin-right: 15px;
+            margin-bottom: 0;
+            width: 65px;
+            height: 65px;
+        }
+
+        /* Ajuste da imagem no botão "Mini Games" */
+        .menu-container .minigames-button img {
+            margin-bottom: -5px;
+            margin-left: 15px;
+            width: 65px;
+            height: 65px;
+        }
+        
+    }
+
+    /* Responsivo para telas grandes */
+    @media (min-width: 1440px) {
+        .background-logo-container img {
+        width: 150px;
+        height: auto;
+        }
+
+        .background-logo-container span {
+        font-size: 58px;
+
+        }
+
+      .menu-container {
+        top: 5px;
+        width: 500px;
+        height: 700px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        padding-bottom: 0;
+        position: relative;
+        transform: translateX(-1px); /*GARANTE CENTRALIZAÇÃO IGUAL LOGIN*/
+      }
+
+      .boas-vindas {
+        font-size: 56px;
+      }
+
+            /* Estilo da imagem do logo no cabeçalho */
+        .header-container img {
+            width: 75px; /* Largura da imagem */
+            margin-right: 15px; /* Espaço à direita da imagem */
+        }
+
+        /* Estilo do título dentro do cabeçalho */
+        .header-container h3 {
+            font-size: 24px; /* Tamanho da fonte menor */
+        }
+
+      /* Estilo do título da seção principal */
+        .menu-container h2 {
+            padding-left: 25px; /* Espaço à esquerda */
+            margin-top: 3px; /* Pequena margem superior */
+            margin-bottom: -10px;
+            font-size: 28px;
+        }
+
+      .menu-container button img {
+            width: 65px; /* Largura da imagem menor */
+            height: 65px; /* Altura da imagem menor */
+        }
+
+        /* Estilo do texto dentro dos botões (span) */
+        .button-container span {
+            font-size: 18px; /* Fonte menor para melhor adaptação */
+        }
+
+        /* Botões com imagem e texto lado a lado */
+        .menu-container .questionarios-button,
+        .menu-container .minigames-button {
+            margin-top: 10px;
+            flex-direction: row;
+            align-items: center;
+            height: 100px;
+        }
+
+        /* Ajuste da imagem no botão "Questionários" */
+        .menu-container .questionarios-button img {
+            margin-right: 15px;
+            margin-bottom: 0;
+            width: 65px;
+            height: 65px;
+        }
+
+        /* Ajuste da imagem no botão "Mini Games" */
+        .menu-container .minigames-button img {
+            margin-bottom: -5px;
+            margin-left: 15px;
+            width: 65px;
+            height: 65px;
+        }
+
+      .footer img {
+        width: 70px; /* Largura aumentada */
+        height: 65px; /* Altura aumentada */
+        padding: 45px; /* Remove padding para não cortar imagens */
+    }
+
+
+
+    }
+
+
+    </style>
+</head>
+<body>
+
+      <!-- LOGO E TEXTO NO BACKGROUND -->
+  <div class="background-logo-container">
+    <img src="Imagens/Logo sem Fundo.png" alt="Logo BrainForms Fundo">
+    <span>BrainForms</span>
+  </div>
+
+    <!-- Container principal do menu -->
+    <div class="menu-container">
+        <!-- Cabeçalho com logo e título -->
+        <div class="header-container">
+            <img src="Imagens/Logo sem Fundo.png" alt="Logo BrainForms"> <!-- Logo -->
+            <h3>BrainForms</h3> <!-- Nome do sistema -->
+        </div>
+
+        <!-- Título da seção abaixo do cabeçalho -->
+        <h2>Navegue pelo sistema</h2>
+
+        <!-- Container que agrupa os botões -->
+        <div class="button-container">
+            <!-- Linha com dois botões lado a lado -->
+            <div class="row">
+                <!-- Botão para fórmulas matemáticas -->
+                <button onclick="location.href='calcular-matematica.html'">
+                    <img src="Imagens/mat.png" alt="Matemática"> <!-- Ícone da matemática -->
+                    <span>Fórmulas Matemáticas</span> <!-- Texto do botão -->
+                </button>
+
+                <!-- Botão para fórmulas físicas -->
+                <button onclick="location.href='calcular-fisica.html'">
+                    <img src="Imagens/fisic.png" alt="Física"> <!-- Ícone da física -->
+                    <span>Fórmulas Físicas</span> <!-- Texto do botão -->
+                </button>
+            </div>
+
+            <!-- Botão para questionários, ocupa linha completa -->
+            <button onclick="location.href='menu-questoes.html'" class="questionarios-button">
+                <img src="Imagens/quest.png" alt="Questionário"> <!-- Ícone do questionário -->
+                <span>Questionários</span> <!-- Texto do botão -->
+            </button>
+
+            <!-- Botão para mini games -->
+            <button onclick="location.href='mini-games.html'" class="minigames-button">
+                <span>Mini Games</span> <!-- Texto do botão -->
+                <img src="Imagens/game.png" alt="Mini Games"> <!-- Ícone dos mini games -->
+            </button>
+        </div>
+
+        <!-- Rodapé com três ícones (aumentados e centralizados corretamente) -->
+        <div class="footer">
+            <img src="Imagens/perfil.png" alt="Perfil"> <!-- Ícone do perfil -->
+            <img src="Imagens/conquistas.png" alt="Conquistas"> <!-- Ícone das conquistas -->
+            <img src="Imagens/menu.png" alt="Menu"> <!-- Ícone do menu -->
+        </div>
+    </div>
+</body>
+</html>
