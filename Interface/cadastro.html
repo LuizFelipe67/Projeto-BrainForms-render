@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Cadastro - BrainForms</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&family=Roboto&display=swap" rel="stylesheet">
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Roboto', sans-serif;
+      background-color: #775085;
+      margin: 20px;
+      padding: 0;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      overflow-y: auto;
+    }
+
+    .background-logo-container {
+      position: absolute;
+      top: 20px;
+      left: 20px;
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      z-index: 10;
+    }
+
+    .background-logo-container img {
+      width: 100px;
+      height: auto;
+    }
+
+    .background-logo-container span {
+      color: white;
+      font-size: 48px;
+      font-weight: bold;
+      font-family: 'Inter', sans-serif;
+    }
+
+    .login-box {
+      background-color: white;
+      border-radius: 10px;
+      box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+      width: 400px;
+      min-width: 400px;
+      max-width: unset;
+      margin: 100px auto;
+      text-align: center;
+      overflow: hidden;
+    }
+
+    .top-image-container {
+      position: relative;
+      width: 100%;
+      height: 140px;
+      overflow: hidden;
+    }
+
+    .top-image-bg {
+      position: absolute;
+      top: 20px;
+      left: 80px;
+      width: 80%;
+      height: 80%;
+      z-index: 0;
+      object-fit: cover;
+      pointer-events: none;
+    }
+
+    .top-image {
+      position: relative;
+      width: 100%;
+      height: 80px;
+      z-index: 1;
+      display: block;
+    }
+
+    .content {
+      padding: 24px 32px;
+      text-align: left;
+    }
+
+    h2 {
+      margin-top: -50px;
+      color: #01174F;
+      font-size: 20px;
+      margin-bottom: 20px;
+    }
+
+    label {
+      display: block;
+      font-size: 14px;
+      font-weight: bold;
+      margin-bottom: 6px;
+    }
+
+    input {
+      width: 100%;
+      padding: 12px;
+      margin-bottom: 18px;
+      font-size: 16px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+
+    input:focus {
+      border-color: #0004ff;
+      outline: none;
+      box-shadow: 0 0 5px #210041;
+    }
+
+    .botao {
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+      margin-bottom: 20px;
+    }
+
+    button {
+      flex: 1;
+      height: 45px;
+      font-size: 15px;
+      border-radius: 4px;
+      cursor: pointer;
+      border: 1px solid #1d265e;
+      transition: 0.3s;
+    }
+
+
+    #cancelar {
+      background-color: white;
+      color: #1d265e;
+      border: 1px solid #1d265e;
+    }
+
+    #cadastrar {
+      background-color: #1d265e;
+      color: white;
+      border: 1px solid #1d265e;
+    }
+
+    #cancelar:hover {
+      background-color: #1d265e;
+      color: white;
+      box-shadow: 0 0 5px #210041;
+    }
+
+    #cadastrar:hover {
+      background-color: #151344;
+      color: white;
+      box-shadow: 0 0 5px #210041;
+    }
+
+    .logo-centralizada {
+      text-align: center;
+      margin-top: -70px;
+      margin-bottom: -10px;
+    }
+
+    .logo-centralizada img {
+      width: 120px;
+      height: auto;
+    }
+
+    .rodape-image {
+  height: 110px;
+  width: 110%;
+  display: block;
+  margin-top: -10px;
+  margin-left: -5%;
+  border-radius: 0 0 10px 10px;
+}
+
+    @media (max-width: 480px) {
+
+   
+        body {
+          margin: 0;
+          bottom: 0;
+          padding-bottom: 0;
+        }
+
+        .background-logo-container {
+          display: none; /* Remove logo do fundo */
+        }
+
+        .login-box {
+        position: relative;
+        margin: 0 auto;
+        width: 95%;
+        height: 98vh; /* altura total visível */
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between; /* empurra o rodapé para o fim */
+        box-sizing: border-box;
+      }
+
+      h2{
+        margin-top: -50px;
+        margin-bottom: 40px;
+        font-size: 20px;
+      }
+
+
+   
+
+  label {
+    font-size: 14px;
+  }
+
+  input {
+    font-size: 16px;
+    padding: 14px 20px; /* padding horizontal aumentado */
+    width: 100%;
+    box-sizing: border-box;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+    margin-bottom: 25px;
+    
+  }
+
+  .botao{
+    margin-top: 20px;
+  }
+
+  
+      
+    }
+
+
+    @media (min-width: 1440px) {
+        .login-box {
+    width: 500px;
+    height: 700px;
+    padding-bottom: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+
+  .background-logo-container img {
+    width: 150px;
+  }
+
+  .background-logo-container span {
+    font-size: 58px;
+  }
+
+  .top-image-container {
+    height: 180px;
+  }
+
+  .top-image-bg {
+    left: 100px;
+    width: 90%;
+    height: 90%;
+  }
+
+  .top-image {
+    height: 110px;
+  }
+
+  .content {
+    padding: 20px 48px 0; /* aumenta o espaçamento lateral */
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+
+
+  form {
+    display: grid;
+    grid-template-columns: 1fr;
+  }
+
+  label {
+  font-size: 15px;
+  margin-bottom: 2px; /* Reduzido */
+  margin-top: 4px;
+}
+
+input {
+  font-size: 16px;
+  padding: 14px;
+  margin-bottom: 15px; /* Espaço entre esse input e a próxima label */
+}
+
+  button {
+    height: 46px;
+    font-size: 16px;
+  }
+
+  .botao {
+    margin-top: 24px;
+    gap: 16px;
+  }
+    }
+  </style>
+</head>
+<body>
+  <!-- LOGO -->
+  <div class="background-logo-container">
+    <img src="Imagens/Logo sem Fundo.png" alt="Logo BrainForms">
+    <span>BrainForms</span>
+  </div>
+
+  <!-- FORMULÁRIO -->
+  <div class="login-box">
+    <div class="top-image-container">
+      <img class="top-image-bg" src="Imagens/up-login2.png" alt="Fundo Curvo" />
+      <img class="top-image" src="Imagens/up-login1.png" alt="Topo" />
+    </div>
+
+    <div class="content">
+      <h2>Insira seus dados abaixo:</h2>
+      <form action="menu.html">
+        <label for="usuario">Digite o nome de usuário</label>
+        <input type="text" id="usuario" placeholder="Usuário" required>
+
+        <label for="email">Digite seu e-mail</label>
+        <input type="email" id="email" placeholder="E-mail" required>
+
+        <label for="senha">Digite sua senha</label>
+        <input type="password" id="senha" placeholder="Senha" required>
+
+        <label for="confirmar">Confirme sua senha</label>
+        <input type="password" id="confirmar" placeholder="Senha" required>
+
+        <div class="botao">
+          <button type="button" id="cancelar">Cancelar</button>
+          <button type="submit" id="cadastrar">Cadastrar</button>
+        </div>
+      </form>
+    </div>
+    <img class="rodape-image" src="Imagens/rodape-login.png" alt="Rodapé Login" />
+  </div>
+
+  <script>
+    // Redireciona ao clicar em "Cancelar"
+    document.getElementById("cancelar").onclick = function () {
+      window.location.href = "index.html";
+    };
+
+    // Validação ao enviar o formulário
+    const form = document.querySelector("form");
+    form.addEventListener("submit", function (event) {
+      const usuario = document.getElementById("usuario").value.trim();
+      const email = document.getElementById("email").value.trim();
+      const senha = document.getElementById("senha").value;
+      const confirmar = document.getElementById("confirmar").value;
+
+      if (!usuario || !email || !senha || !confirmar) {
+        event.preventDefault(); // Impede o envio
+        alert("Por favor, preencha todos os campos.");
+      } else if (senha !== confirmar) {
+        event.preventDefault(); // Impede o envio
+        alert("As senhas não coincidem.");
+      }
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Boas-Vindas - BrainForms</title>
+
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      background-color: #775085;
+      font-family: Arial, sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      padding-bottom: 200px; /* Espaço EXTRA abaixo da box */
+      overflow-y: auto; /* Permite rolar verticalmente */
+    }
+
+    /* LOGO E TEXTO NO CANTO SUPERIOR ESQUERDO DO FUNDO */
+    .background-logo-container {
+      position: absolute;
+      top: 20px;
+      left: 20px;
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      z-index: 0;
+    }
+
+    .background-logo-container img {
+      width: 100px;
+      height: auto;
+    }
+
+    .background-logo-container span {
+      color: white;
+      font-size: 48px;
+      font-weight: bold;
+      font-family: 'Roboto', sans-serif;
+    }
+
+    .gif-box {
+      top: 120px;
+      width: 400px;
+      height: 600px; /* Aumentado para comportar o rodapé */
+      margin: 100px auto;       /* centraliza horizontalmente e espaço vertical */
+      background-color: #775085;
+      border-radius: 12px;
+      background-image: url('Imagens/carregar1.gif');
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+      align-items: center;
+      box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .top-image-container {
+      position: relative;
+      width: 100%;
+      height: 160px;
+      overflow: hidden;
+    }
+
+    .top-image-bg {
+      position: absolute;
+      top: 10px;
+      left: 20px;
+      width: 100%;
+      height: 100%;
+      z-index: 0;
+      object-fit: cover;
+      pointer-events: none;
+    }
+
+    .top-image {
+      position: relative;
+      width: 100%;
+      height: 80px;
+      z-index: 1;
+      display: block;
+    }
+
+    .logo-central {
+      width: 280px;
+      max-width: 90%;
+      z-index: 2;
+      cursor: pointer;
+      margin-top: 30px;
+      transform: translateX(10px);
+    }
+
+    .logo-central:hover{
+      margin-left: 15px;
+      transform: scale(1.04);
+    }
+
+    .boas-vindas {
+      margin-top: -10px;
+      font-size: 48px;
+      color: #00FFFF;
+      font-weight: bold;
+      text-shadow: 5px 5px 6px #0481d480;
+      text-align: center;
+    }
+
+    .rodape-image {
+      height: 120px;
+      width: 110%;
+      display: block;
+      margin-top: auto;
+      margin-left: -5%;
+      border-radius: 0 0 10px 10px;
+    }
+
+    /* Responsivo para telas pequenas */
+    @media (max-width: 480px) {
+       body {
+    padding: 0;
+    margin: 0;
+    padding-bottom: 0;
+   
+   
+  }
+
+  .background-logo-container {
+    display: none;
+  }
+
+  .gif-box {
+    top: 5px;
+    bottom: 0;
+    margin: 0;
+    position: fixed;
+    height: 99%;
+    width: 95%;
+  }
+
+  .logo-central{
+    margin-top: 110px;
+  }
+
+
+
+      .boas-vindas {
+        font-size: 40px;
+      }
+
+      .rodape-image {
+        height: 90px;
+      }
+    }
+
+    /* Responsivo para telas grandes */
+    @media (min-width: 1440px) {
+        .background-logo-container img {
+        width: 150px;
+        height: auto;
+        }
+
+        .background-logo-container span {
+        font-size: 58px;
+
+        }
+
+      .gif-box {
+        top: 6px;
+        width: 500px;
+        height: 700px;
+        display: flex;
+        flex-direction: column;
+        padding-bottom: 0;
+        position: relative;
+        transform: translateX(-6px); /*GARANTE CENTRALIZAÇÃO IGUAL LOGIN*/
+      }
+
+      .logo-central {
+        margin-top: 80px;
+        width: 330px;
+        transform: translateX(15px);
+      }
+
+      .boas-vindas {
+        font-size: 56px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+     <!-- LOGO E TEXTO NO BACKGROUND -->
+  <div class="background-logo-container">
+    <img src="Imagens/Logo sem Fundo.png" alt="Logo BrainForms Fundo">
+    <span>BrainForms</span>
+  </div>
+
+  <div class="gif-box">
+    <div class="top-image-container">
+      <img class="top-image-bg" src="Imagens/up-login2.png" alt="Imagem de fundo" />
+      <img class="top-image" src="Imagens/up-login1.png" alt="Imagem topo login" />
+    </div>
+
+    <a href="index.html">
+      <img src="Imagens/Logo sem Fundo.png" alt="Logo BrainForms Central" class="logo-central" />
+    </a>
+
+    <div class="boas-vindas">Boas-Vindas</div>
+
+    <img class="rodape-image" src="Imagens/rodape-login.png" alt="Rodapé Login" />
+  </div>
+</body>
+</html>
