@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 name: Deploy BrainForms FrontEnd
 
 on:
@@ -20,4 +21,4 @@ jobs:
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./  # Pasta raiz do seu projeto
+          publish_dir: ./C:\Users\Luiz Felipe\Desktop\Interface-BrainForms # Pasta raiz do seu projeto
