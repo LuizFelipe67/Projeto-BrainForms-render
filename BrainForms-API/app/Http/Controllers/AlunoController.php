@@ -24,13 +24,13 @@ class AlunoController extends Controller
         $request->validate([
             'nome' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:alunos',
-            'senha' => 'required|string|min:6|confirmed',
+            'password' => 'required|string|min:6|confirmed',
         ]);
 
         $aluno = Aluno::create([
             'nome' => $request->nome,
             'email' => $request->email,
-            'senha' => bcrypt($request->senha),
+            'password' => bcrypt($request->senha),
         ]);
 
         return [
