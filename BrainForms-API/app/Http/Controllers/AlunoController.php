@@ -22,15 +22,15 @@ class AlunoController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'nome' => 'required|string|max:255',
+            'name' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:alunos',
             'password' => 'required|string|min:6|confirmed',
         ]);
 
         $aluno = Aluno::create([
-            'nome' => $request->nome,
+            'name' => $request->name,
             'email' => $request->email,
-            'password' => bcrypt($request->senha),
+            'password' => bcrypt($request->password),
         ]);
 
         return [
