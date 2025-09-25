@@ -24,7 +24,7 @@ class AlunoController extends Controller
         $request->validate([
             'name' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:alunos',
-            'password' => 'required|string|min:6',
+            'password' => 'required|string|min:6|confirmed',
         ]);
 
         $aluno = Aluno::create([
@@ -33,13 +33,13 @@ class AlunoController extends Controller
             'password' => bcrypt($request->password),
         ]);
 
-        return [
+        return response()->json([
             'status' => 200,
             'message' => 'Aluno cadastrado com sucesso',
             'aluno' => $aluno
-        ];
+        ]);
+
     }
-    
 
     /**
      * Display the specified resource.
