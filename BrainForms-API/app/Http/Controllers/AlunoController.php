@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\AlunoRequest;
 use Illuminate\Http\Request;
 use App\Models\Aluno;
 use Illuminate\Support\Facades\Hash;
@@ -19,14 +20,9 @@ class AlunoController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(AlunoRequest $request)
     {
-        $request->validate([
-            'name' => 'required|string|max:255',
-            'email' => 'required|string|email|max:255|unique:alunos',
-            'password' => 'required|string|min:6|confirmed',
-        ]);
-
+       
         $aluno = Aluno::create([
             'name' => $request->name,
             'email' => $request->email,

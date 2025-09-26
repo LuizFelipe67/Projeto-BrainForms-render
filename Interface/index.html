@@ -432,7 +432,7 @@ button#cadastrar:hover {
 
     }
   .login-box {
-    top: 15px;
+    top: 35px;
     width: 500px;               /* Aumentada de 640px para 740px */
     min-height: 700px;
     display: flex;
@@ -603,21 +603,76 @@ button#cadastrar:hover {
     <img class="rodape-image" src="Imagens/rodape-login.png" alt="Rodapé Login" />
   </div>
 
-  <script>
-    document.getElementById("acessar").onclick = function (event) {
-      event.preventDefault();
-      var email = document.getElementById("email").value;
-      var senha = document.getElementById("password").value;
-      if (email && senha) {
-        window.location.href = "menu.html";
-      } else {
-        alert("Por favor, preencha todos os campos.");
-      }
-    };
+ <script>
+  // Função auxiliar para exibir erro em um input
+  function mostrarErro(divId, inputId, mensagem) {
+    const divErro = document.getElementById(divId);
+    const input = document.getElementById(inputId);
+    if (divErro && input) {
+      divErro.innerText = mensagem;
+      divErro.style.display = "block";
+      input.classList.add("error");
+    }
+  }
 
-    document.getElementById("cadastrar").onclick = function () {
-      window.location.href = "cadastro.html";
-    };
-  </script>
+  // Botão Acessar (login)
+  document.getElementById("acessar").onclick = function (event) {
+    event.preventDefault();
+
+    // Limpa os erros antes de validar novamente
+    document.querySelectorAll(".error-msg").forEach(div => {
+      div.style.display = "none";
+      div.innerText = "";
+    });
+    document.querySelectorAll("input").forEach(input => input.classList.remove("error"));
+
+    const email = document.getElementById("email").value.trim();
+    const senha = document.getElementById("password").value;
+
+
+    fetch("http://localhost:8000/api/alunos/login", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "Accept": "application/json",
+      },
+      body: JSON.stringify({
+        email: email,
+        password: senha
+      }),
+    })
+    .then(response => response.json())
+    .then(data => {
+      if (data.status === 200) {
+        // Salva token no localStorage
+        localStorage.setItem("token", data.token);
+
+        alert("✅ Login realizado com sucesso!\n\nBem-vindo, " + data.user.name + "!");
+        window.location.href = "menu.html";
+      } 
+      else if (data.errors) {
+        // Erros específicos vindos do backend
+        for (const campo in data.errors) {
+          const inputId = campo === "password" ? "password" : campo;
+          mostrarErro(campo, inputId, data.errors[campo].join("\n"));
+        }
+      } 
+      else {
+        // Mensagem genérica (ex.: credenciais inválidas)
+        alert("❌ Erro ao efetuar login: " + (data.message || "Verifique suas credenciais e tente novamente."));
+      }
+    })
+    .catch(error => {
+      console.error("Erro:", error);
+      alert("❌ Erro de conexão com o servidor. Tente novamente mais tarde.");
+    });
+  };
+
+  // Botão Cadastrar
+  document.getElementById("cadastrar").onclick = function () {
+    window.location.href = "cadastro.html";
+  };
+</script>
+
 </body>
 </html>
