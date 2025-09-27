@@ -40,7 +40,7 @@ body {
       color: white;
       font-size: 48px;
       font-weight: bold;
-      font-family: 'Inter', sans-serif;
+      font-family: 'Roboto', sans-serif;
     }
 
 /* Container principal do menu */
@@ -202,6 +202,63 @@ body {
     height: 60px; /* Altura aumentada */
     padding: 25PX; /* Remove padding para não cortar imagens */
 }
+
+
+.blurred {
+  filter: blur(5px);
+}
+
+.start-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.start-box {
+  margin-top: 200px;
+  background-color: white;
+  width: 300px;
+  height: 400px;
+  padding: 20px;
+  border-radius: 16px;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.4);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  gap: 60px;
+  margin-right: 19px;
+}
+
+.start-box h1 {
+  font-size: 28px;
+  color: #5E097E;
+  margin-bottom: 20px;
+}
+
+.start-box button {
+  padding: 12px 30px;
+  font-size: 18px;
+  background-color: #5E097E;
+  color: white;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.start-box button:hover {
+  background-color: #9036e4;
+}
+
 
  /* Responsivo para telas pequenas */
      @media (max-width: 480px) {
@@ -425,5 +482,33 @@ body {
             <img src="Imagens/menu.png" alt="Menu"> <!-- Ícone do menu -->
         </div>
     </div>
+
+
+    <div class="start-overlay" id="start-overlay" style="display: none;">
+        <div class="start-box">
+            <h1 id="titulo-boas-vindas">Bem-vindo(a) ao BrainForms!</h1>
+            <h3 id="texto-boas-vindas">Estamos felizes em ter você aqui, <span id="nome-usuario"></span>! Prepare-se para explorar o mundo da Matemática e Física de forma divertida.</h3>
+            <button onclick="startGame()">Começar</button>
+        </div>
+    </div>
+
+
+    <script>
+    document.addEventListener("DOMContentLoaded", () => {
+        const nome = localStorage.getItem("usuario_nome");
+        const jaMostrou = localStorage.getItem("boas_vindas_mostrada");
+
+        if (jaMostrou === "false" && nome) {
+        document.getElementById("nome-usuario").textContent = nome;
+        document.getElementById("start-overlay").style.display = "flex";
+        }
+
+        window.startGame = () => {
+        document.getElementById("start-overlay").style.display = "none";
+        localStorage.setItem("boas_vindas_mostrada", "true");
+        };
+    });
+</script>
+
 </body>
 </html>

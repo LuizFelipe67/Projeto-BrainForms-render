@@ -43,7 +43,7 @@ body {
       color: white;
       font-size: 48px;
       font-weight: bold;
-      font-family: 'Inter', sans-serif;
+      font-family: 'Roboto', sans-serif;
     }
 
 .login-box {
@@ -127,20 +127,6 @@ label {
   margin-bottom: 8px;
   font-weight: bold;
 }
-
- .error-msg {
-      color: #b00020;
-      font-size: 13px;
-      margin-top: -12px;
-      margin-bottom: 12px;
-      display: none; /* Escondido por padrão */
-      background: #ffdede;
-      padding: 5px 10px;
-      border-radius: 4px;
-    }
-    input.error {
-      border-color: #b00020;
-    }
 
 input[type="email"],
 input[type="password"] {
@@ -446,7 +432,7 @@ button#cadastrar:hover {
 
     }
   .login-box {
-    top: 35px;
+    top: 15px;
     width: 500px;               /* Aumentada de 640px para 740px */
     min-height: 700px;
     display: flex;
@@ -587,7 +573,7 @@ button#cadastrar:hover {
 
         <div class="botao">
           <button type="button" id="cadastrar">Cadastrar</button>
-          <button type="button" id="acessar">Acessar</button>
+          <button type="submit" id="acessar">Acessar</button>
         </div>
       </form>
 
@@ -617,76 +603,31 @@ button#cadastrar:hover {
     <img class="rodape-image" src="Imagens/rodape-login.png" alt="Rodapé Login" />
   </div>
 
- <script>
-  // Função auxiliar para exibir erro em um input
-  function mostrarErro(divId, inputId, mensagem) {
-    const divErro = document.getElementById(divId);
-    const input = document.getElementById(inputId);
-    if (divErro && input) {
-      divErro.innerText = mensagem;
-      divErro.style.display = "block";
-      input.classList.add("error");
-    }
-  }
+  <script>
+    document.getElementById("acessar").onclick = function (event) {
+      event.preventDefault();
+      
+      const emailDigitado = document.getElementById("email").value.trim();
+      const senhaDigitada = document.getElementById("password").value;
 
-  // Botão Acessar (login)
-  document.getElementById("acessar").onclick = function (event) {
-    event.preventDefault();
+      const emailSalvo = localStorage.getItem("usuario_email");
+      const senhaSalva = localStorage.getItem("usuario_senha");
 
-    // Limpa erros antes de validar novamente
-    document.querySelectorAll(".error-msg").forEach(div => {
-      div.style.display = "none";
-      div.innerText = "";
-    });
-    document.querySelectorAll("input").forEach(input => input.classList.remove("error"));
+      if (!emailDigitado || !senhaDigitada) {
+        alert("Por favor, preencha todos os campos.");
+        return;
+      }
 
-    const email = document.getElementById("email").value.trim();
-    const senha = document.getElementById("password").value;
-
-    // Validação simples antes do fetch
-    if (!email) {
-      mostrarErro("email", "email", "Por favor, informe seu e-mail.");
-      return;
-    }
-    if (!senha) {
-      mostrarErro("password", "password", "Por favor, informe sua senha.");
-      return;
-    }
-
-    fetch("http://localhost:8000/api/alunos/login", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        "Accept": "application/json",
-      },
-      body: JSON.stringify({
-        email: email,
-        password: senha
-      }),
-    })
-    .then(response => response.json())
-    .then(data => {
-    console.log("Resposta da API:", data);
-    if (data.status === 200) {
-        localStorage.setItem("token", data.token);
-        alert("✅ Login realizado com sucesso!");
+      if (emailDigitado === emailSalvo && senhaDigitada === senhaSalva) {
         window.location.href = "menu.html";
-    } else {
-        alert("❌ " + (data.message || "Credenciais inválidas."));
-    }
-  })
+      } else {
+        alert("E-mail ou senha incorretos.");
+      }
+    };
 
-    .catch(error => {
-      console.error("Erro:", error);
-      alert("❌ Erro de conexão com o servidor.");
-    });
-  };
-
-  // Botão Cadastrar
-  document.getElementById("cadastrar").onclick = function () {
-    window.location.href = "cadastro.html";
-  };
+    document.getElementById("cadastrar").onclick = function () {
+      window.location.href = "cadastro.html";
+    };
 </script>
-
 </body>
 </html>
