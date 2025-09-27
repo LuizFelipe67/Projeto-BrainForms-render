@@ -26,7 +26,7 @@ class AlunoController extends Controller
         $aluno = Aluno::create([
             'name' => $request->name,
             'email' => $request->email,
-            'password' => bcrypt($request->password),
+            'password' => Hash::make($request->password),
         ]);
 
         return response()->json([

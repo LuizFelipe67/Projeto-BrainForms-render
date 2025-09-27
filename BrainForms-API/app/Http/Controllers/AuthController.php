@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Aluno;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
-use App\Models\User; // ou Aluno, se for o seu model
+use Illuminate\Support\Facades\Auth;
+
 
 class AuthController extends Controller
 {
@@ -17,27 +18,28 @@ class AuthController extends Controller
             'password' => 'required'
         ]);
 
-        // 2. Buscar usuário
-        $user = User::where('email', $request->email)->first();
+        // 2. Buscar usuário na tabela 'alunos'
+        $aluno = Aluno::where('email', $request->email)->first();
 
-        if (!$user || !Hash::check($request->password, $user->password)) {
+        if (!$aluno || !Hash::check($request->password, $aluno->password)) {
             return response()->json([
                 'status' => 401,
                 'message' => 'Credenciais inválidas'
             ], 401);
         }
 
-        // 3. Se quiser usar token simples
-        $token = $user->createToken('api-token')->plainTextToken;
+        // 3. Criar token com expiração de 15 minutos
+        $token = $aluno->createToken('api-token', [], now()->addMinutes(15))->plainTextToken;
 
+        // 4. Retornar JSON com token e dados do aluno
         return response()->json([
             'status' => 200,
             'message' => 'Login realizado com sucesso',
             'token' => $token,
             'user' => [
-                'id' => $user->id,
-                'name' => $user->name,
-                'email' => $user->email
+                'id' => $aluno->id,
+                'name' => $aluno->name,
+                'email' => $aluno->email
             ]
         ]);
     }

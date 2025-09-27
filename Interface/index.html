@@ -128,6 +128,20 @@ label {
   font-weight: bold;
 }
 
+ .error-msg {
+      color: #b00020;
+      font-size: 13px;
+      margin-top: -12px;
+      margin-bottom: 12px;
+      display: none; /* Escondido por padrão */
+      background: #ffdede;
+      padding: 5px 10px;
+      border-radius: 4px;
+    }
+    input.error {
+      border-color: #b00020;
+    }
+
 input[type="email"],
 input[type="password"] {
   width: 100%;
@@ -573,7 +587,7 @@ button#cadastrar:hover {
 
         <div class="botao">
           <button type="button" id="cadastrar">Cadastrar</button>
-          <button type="submit" id="acessar">Acessar</button>
+          <button type="button" id="acessar">Acessar</button>
         </div>
       </form>
 
@@ -619,7 +633,7 @@ button#cadastrar:hover {
   document.getElementById("acessar").onclick = function (event) {
     event.preventDefault();
 
-    // Limpa os erros antes de validar novamente
+    // Limpa erros antes de validar novamente
     document.querySelectorAll(".error-msg").forEach(div => {
       div.style.display = "none";
       div.innerText = "";
@@ -629,6 +643,15 @@ button#cadastrar:hover {
     const email = document.getElementById("email").value.trim();
     const senha = document.getElementById("password").value;
 
+    // Validação simples antes do fetch
+    if (!email) {
+      mostrarErro("email", "email", "Por favor, informe seu e-mail.");
+      return;
+    }
+    if (!senha) {
+      mostrarErro("password", "password", "Por favor, informe sua senha.");
+      return;
+    }
 
     fetch("http://localhost:8000/api/alunos/login", {
       method: "POST",
@@ -643,28 +666,19 @@ button#cadastrar:hover {
     })
     .then(response => response.json())
     .then(data => {
-      if (data.status === 200) {
-        // Salva token no localStorage
+    console.log("Resposta da API:", data);
+    if (data.status === 200) {
         localStorage.setItem("token", data.token);
-
-        alert("✅ Login realizado com sucesso!\n\nBem-vindo, " + data.user.name + "!");
+        alert("✅ Login realizado com sucesso!");
         window.location.href = "menu.html";
-      } 
-      else if (data.errors) {
-        // Erros específicos vindos do backend
-        for (const campo in data.errors) {
-          const inputId = campo === "password" ? "password" : campo;
-          mostrarErro(campo, inputId, data.errors[campo].join("\n"));
-        }
-      } 
-      else {
-        // Mensagem genérica (ex.: credenciais inválidas)
-        alert("❌ Erro ao efetuar login: " + (data.message || "Verifique suas credenciais e tente novamente."));
-      }
-    })
+    } else {
+        alert("❌ " + (data.message || "Credenciais inválidas."));
+    }
+  })
+
     .catch(error => {
       console.error("Erro:", error);
-      alert("❌ Erro de conexão com o servidor. Tente novamente mais tarde.");
+      alert("❌ Erro de conexão com o servidor.");
     });
   };
 
