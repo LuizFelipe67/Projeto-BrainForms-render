@@ -105,15 +105,22 @@
     .error-msg {
       color: #b00020;
       font-size: 13px;
-      margin-top: -12px;
+      margin-top: -6px; /* trocar de -12px para 4px */
       margin-bottom: 12px;
       display: none; /* Escondido por padrão */
       background: #ffdede;
       padding: 5px 10px;
       border-radius: 4px;
     }
+
     input.error {
       border-color: #b00020;
+      transition: border 0.3s;
+    }
+
+    .error-msg {
+      transition: opacity 0.3s;
+      opacity: 1;
     }
 
 
@@ -193,6 +200,8 @@
   margin-left: -5%;
   border-radius: 0 0 10px 10px;
 }
+
+
 
     @media (max-width: 480px) {
 
@@ -363,7 +372,7 @@
 
       <label for="email">Digite seu e-mail</label>
       <input type="email" id="email" placeholder="E-mail" name="email" required>
-      <div class="error-msg" id="email"></div>
+      <div class="error-msg" id="email-error"></div>
 
       <label for="senha">Digite sua senha</label>
       <input type="password" id="senha" placeholder="Senha" name="password" required>
@@ -392,15 +401,16 @@
   const form = document.getElementById("cadastro-form");
 
   // Função auxiliar para exibir erro em um input
-  function mostrarErro(divId, inputId, mensagem) {
-    const divErro = document.getElementById(divId);
-    const input = document.getElementById(inputId);
-    if (divErro && input) {
-      divErro.innerText = mensagem;
-      divErro.style.display = "block";
-      input.classList.add("error");
-    }
+  function mostrarErro(campo, inputId, mensagem) {
+  const divErro = document.getElementById(campo + "-error"); // agora sempre encontra a div
+  const input = document.getElementById(inputId);
+  if (divErro && input) {
+    divErro.innerText = mensagem;
+    divErro.style.display = "block";
+    input.classList.add("error");
   }
+}
+
 
   form.addEventListener("submit", function (event) {
     event.preventDefault(); // impede envio padrão do form

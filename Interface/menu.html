@@ -484,31 +484,37 @@ body {
     </div>
 
 
+    <!-- Overlay de boas-vindas -->
     <div class="start-overlay" id="start-overlay" style="display: none;">
         <div class="start-box">
             <h1 id="titulo-boas-vindas">Bem-vindo(a) ao BrainForms!</h1>
-            <h3 id="texto-boas-vindas">Estamos felizes em ter você aqui, <span id="nome-usuario"></span>! Prepare-se para explorar o mundo da Matemática e Física de forma divertida.</h3>
+            <h3 id="texto-boas-vindas">Estamos felizes em ter você aqui, <span id="nome-usuario" style="font-weight:bold; color: #650591;"></span>! Prepare-se para explorar o mundo da Matemática e Física de forma divertida.</h3>
             <button onclick="startGame()">Começar</button>
         </div>
     </div>
 
 
-    <script>
+<script>
     document.addEventListener("DOMContentLoaded", () => {
-        const nome = localStorage.getItem("usuario_nome");
-        const jaMostrou = localStorage.getItem("boas_vindas_mostrada");
-
-        if (jaMostrou === "false" && nome) {
-        document.getElementById("nome-usuario").textContent = nome;
-        document.getElementById("start-overlay").style.display = "flex";
+        const nome = localStorage.getItem("alunoNome");
+        let mostrados = {};
+        try {
+            mostrados = JSON.parse(localStorage.getItem("boas_vindas_mostrada")) || {};
+        } catch(e) {
+            mostrados = {};
         }
-
+        if (nome && !mostrados[nome]) {
+            document.getElementById("nome-usuario").textContent = nome;
+            document.getElementById("start-overlay").style.display = "flex";
+        }
         window.startGame = () => {
-        document.getElementById("start-overlay").style.display = "none";
-        localStorage.setItem("boas_vindas_mostrada", "true");
+            document.getElementById("start-overlay").style.display = "none";
+            mostrados[nome] = true;
+            localStorage.setItem("boas_vindas_mostrada", JSON.stringify(mostrados));
         };
     });
 </script>
+
 
 </body>
 </html>
