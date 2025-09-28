@@ -14,7 +14,7 @@ jobs:
       - name: Checkout do código
         uses: actions/checkout@v3
 
-      # 2. Rodar teste simples (quando houver testes)
+      # 2. Rodar teste simples (quando houver testes!!)
       - name: Rodar teste simples
         run: echo "Nenhum teste configurado"
 
