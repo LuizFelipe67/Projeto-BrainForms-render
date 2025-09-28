@@ -23,4 +23,4 @@ jobs:
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./   # Como é HTML/CSS/JS puro, publica a raiz do projeto
+          publish_dir: ./Interface   # pasta onde está o build do front-end

@@ -1,29 +1,25 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="pt-br">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Acesso - BrainForms</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Boas-Vindas - BrainForms</title>
+
   <style>
-   * {
-  box-sizing: border-box;
-}
+    body {
+      margin: 0;
+      padding: 0;
+      background-color: #775085;
+      font-family: Arial, sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      padding-bottom: 200px; /* Espaço EXTRA abaixo da box */
+      overflow-y: auto; /* Permite rolar verticalmente */
+    }
 
-body {
-  font-family: 'Roboto', sans-serif;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  min-height: 100vh;
-  margin: 20px;            /* margem para evitar que a box encoste nas bordas */
-  background-color: #775085;
-  padding: 0;
-  padding-bottom: 200px; /* Espaço EXTRA abaixo da box */
-  overflow-y: auto; /* Permite rolar verticalmente */
-}
-
-/* LOGO E TEXTO NO CANTO SUPERIOR ESQUERDO DO FUNDO */
+    /* LOGO E TEXTO NO CANTO SUPERIOR ESQUERDO DO FUNDO */
     .background-logo-container {
       position: absolute;
       top: 20px;
@@ -46,657 +42,180 @@ body {
       font-family: 'Roboto', sans-serif;
     }
 
-.login-box {
-  
-  background-color: #ffffff;
-  padding: 0;
-  border-radius: 10px;
-  box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
-  width: 400px;            /* largura fixa */
-  max-width: unset;
-  min-width: 400px;
-  margin: 100px auto;       /* centraliza horizontalmente e espaço vertical */
-  text-align: center;
-  overflow: hidden;
-  
-}
-
-.top-image-container {
-  position: relative;
-  width: 100%;
-  height: 160px;
-  overflow: hidden;
-}
-
-.top-image-bg {
-  position: absolute;
-  top: 20px;
-  left: 80px;
-  width: 80%;
-  height: 80%;
-  z-index: 0;
-  object-fit: cover;
-  pointer-events: none;
-}
-
-.top-image {
-  position: relative;
-  width: 100%;
-  height: 80px;
-  z-index: 1;
-  display: block;
-}
-
-.content {
-  padding: 16px;
-  
-}
-
-.logo-box {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  margin-top: -160px;
-  z-index: 2;
-  position: relative;
-}
-
-.logo-frente {
-  width: 140px;
-  max-width: 90%;
-}
-
-.logo-box h1 {
-  margin-top: -10px;
-  font-size: 38px;
-  color: #5E097E;
-}
-
-h2 {
-  color: #01174F;
-  font-size: 18px;
-  margin-top: -10px;
-  text-align: left;
-}
-
-label {
-  display: block;
-  text-align: left;
-  font-size: 13px;
-  margin-bottom: 8px;
-  font-weight: bold;
-}
-
- .error-msg {
-      color: #b00020;
-      font-size: 13px;
-      margin-top: -12px;
-      margin-bottom: 12px;
-      display: none; /* Escondido por padrão */
-      background: #ffdede;
-      padding: 5px 10px;
-      border-radius: 4px;
-    }
-    input.error {
-      border-color: #b00020;
+    .gif-box {
+      top: 120px;
+      width: 400px;
+      height: 600px; /* Aumentado para comportar o rodapé */
+      margin: 100px auto;       /* centraliza horizontalmente e espaço vertical */
+      background-color: #775085;
+      border-radius: 12px;
+      background-image: url('Imagens/carregar1.gif');
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+      align-items: center;
+      box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+      position: relative;
+      overflow: hidden;
     }
 
-input[type="email"],
-input[type="password"] {
-  width: 100%;
-  padding: 12px;
-  font-size: 16px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  margin-bottom: 16px;
-}
+    .top-image-container {
+      position: relative;
+      width: 100%;
+      height: 160px;
+      overflow: hidden;
+    }
 
-input:focus {
-  border-color: #0004ff;
-  outline: none;
-  box-shadow: 0 0 5px #210041;
-}
+    .top-image-bg {
+      position: absolute;
+      top: 10px;
+      left: 20px;
+      width: 100%;
+      height: 100%;
+      z-index: 0;
+      object-fit: cover;
+      pointer-events: none;
+    }
 
-.checkbox {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  margin-bottom: 16px;
-  font-size: 14px;
-}
+    .top-image {
+      position: relative;
+      width: 100%;
+      height: 80px;
+      z-index: 1;
+      display: block;
+    }
 
-.checkbox-label {
-  margin-bottom: 0;
-}
+    .logo-central {
+      width: 280px;
+      max-width: 90%;
+      z-index: 2;
+      cursor: pointer;
+      margin-top: 30px;
+      transform: translateX(10px);
+    }
 
-[type="checkbox"] {
-  cursor: pointer;
-  width: 16px;
-  height: 16px;
-}
+    .logo-central:hover{
+      margin-left: 15px;
+      transform: scale(1.04);
+    }
 
-.botao {
-  display: flex;
-  justify-content: center;
-  flex-wrap: wrap;
-  gap: 10px;
-  margin-bottom: 30px;
-}
+    .boas-vindas {
+      margin-top: -10px;
+      font-size: 48px;
+      color: #00FFFF;
+      font-weight: bold;
+      text-shadow: 5px 5px 6px #0481d480;
+      text-align: center;
+    }
 
-button#cadastrar,
-button#acessar {
-  width: 110px;
-  height: 45px;
-  font-size: 15px;
-  background-color: white;
-  border: 1px solid #1d265e;
-  border-radius: 4px;
-  cursor: pointer;
-  transition: all 0.3s ease;
-}
+    .rodape-image {
+      height: 120px;
+      width: 110%;
+      display: block;
+      margin-top: auto;
+      margin-left: -5%;
+      border-radius: 0 0 10px 10px;
+    }
 
-button#acessar {
-  background-color: #1d265e;
-  color: white;
-  border: 1px solid #1d265e;
-}
-
-button#acessar:hover {
-  background-color: #151344;
-  color: white;
-  box-shadow: 0 0 5px #210041;
-}
-
-button#cadastrar:hover {
-  background-color: #1d265e;
-  color: white;
-  box-shadow: 0 0 5px #210041;
-}
-
-.divider {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin: 10px 0 10px;
-}
-
-.line {
-  flex: 1;
-  height: 1px;
-  background-color: #aaa;
-  margin: 0 10px;
-}
-
-.divider-text {
-  font-size: 13px;
-  white-space: nowrap;
-  font-weight: 500;
-}
-
-.social {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 20px;
-  margin-top: 10px;
-  margin-bottom: 30px;
-  position: relative;
-  z-index: 10;
-}
-
-.social img.google {
-  width: 45px;
-  height: 45px;
-  object-fit: contain;
-  cursor: pointer;
-  border-radius: 50%;
-  border: 1px solid #535353;
-  padding: 6px;
-}
-
-.img-wrapper.facebook img {
-  width: 47px;
-  height: 47px;
-  object-fit: contain;
-  cursor: pointer;
-  border-radius: 50%;
-  border: 1px solid #535353;
-  padding: 6px;
-}
-
-.facebook-link {
-  cursor: pointer;
-  display: inline-block;
-}
-
-.rodape-image {
-  height: 120px;
-  width: 110%;
-  display: block;
-  margin-top: -80px;
-  margin-left: -5%;
-  border-radius: 0 0 10px 10px;
-}
-
-.footer-text {
-  font-size: 10px;
-  color: white;
-  text-align: center;
-  margin-bottom: -50px;
-  z-index: 3;
-  position: relative;
-}
-
-.footer-text a {
-  color: white;
-  text-decoration: underline;
-}
-
-@media (max-width: 480px) {
-   body {
+    /* Responsivo para telas pequenas */
+    @media (max-width: 480px) {
+       body {
+    padding: 0;
     margin: 0;
-    bottom: 0;
     padding-bottom: 0;
+   
+   
   }
 
   .background-logo-container {
-    display: none; /* Remove logo do fundo */
+    display: none;
   }
 
-  .login-box {
-  position: relative;
-  margin: 0 auto;
-  width: 95%;
-  height: 98vh; /* altura total visível */
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between; /* empurra o rodapé para o fim */
-  box-sizing: border-box;
-}
-
-  .top-image-container {
-    padding: 0 0 0 0;
-    margin-left: 0;
-    height: 140px;
+  .gif-box {
+    top: 5px;
+    bottom: 0;
+    margin: 0;
+    position: fixed;
+    height: 99%;
+    width: 95%;
   }
 
-  .top-image-bg {
-    padding: 0;
-    top: 10px;
-    left: 50px;
-    width: 100%;
-    height: 100%;
+  .logo-central{
+    margin-top: 110px;
   }
 
- 
-
-  .logo-box {
-    margin-top: -120px;
-    display: flex;
-    justify-content: center;
-  }
-
-  .logo-frente {
-    width: 130px;
-    max-width: 100%;
-  }
-
-  .logo-box h1 {
-    font-size: 30px;
-    text-align: center;
-    margin: 2px 0 0 0;
-  }
-
-  .content {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-  }
-
-  h2 {
-    font-size: 20px;
-  }
-
-  label {
-    font-size: 14px;
-  }
-
-  input[type="email"],
-  input[type="password"] {
-    font-size: 16px;
-    padding: 14px 20px; /* padding horizontal aumentado */
-    width: 100%;
-    box-sizing: border-box;
-    border-radius: 6px;
-    border: 1px solid #ccc;
-  }
-
-  .checkbox {
-    font-size: 14px;
-    gap: 8px;
-  }
-
-  .botao {
-    padding: 10px;
-    flex-direction: column;
-    gap: 12px;
-  }
-
-  button#cadastrar,
-  button#acessar {
-    width: 100%;
-    height: 48px;
-    font-size: 16px;
-    border-radius: 6px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-  }
-
-  .divider {
-  margin: -30px;
-  margin-bottom: 10px;
-}
-
-  
-
-  .social {
-    gap: 34px;
-    justify-content: center;
-  }
-
-  .social img.google,
-  .img-wrapper.facebook img {
-    width: 54px;
-    height: 54px;
-  }
-
-  .footer-text {
-    top: 53px;
-    font-size: 10px;
-    z-index: 2;
-    position: relative;
-    text-align: center;
-  }
-
-  .rodape-image {
-    height: 175px;
-    margin-left: 0;
-    width: 100%; 
-    position: relative;
-    z-index: 1;
-    object-fit: cover;
-    justify-content: flex-end;
-  }
-
-}
- 
-   
 
 
+      .boas-vindas {
+        font-size: 40px;
+      }
 
-@media (min-width: 1440px) {
-   .background-logo-container img {
-      width: 150px;
-      height: auto;
+      .rodape-image {
+        height: 90px;
+      }
     }
 
-    .background-logo-container span {
-      font-size: 58px;
+    /* Responsivo para telas grandes */
+    @media (min-width: 1440px) {
+        .background-logo-container img {
+        width: 150px;
+        height: auto;
+        }
 
+        .background-logo-container span {
+        font-size: 58px;
+
+        }
+
+      .gif-box {
+        top: 6px;
+        left: 5px;
+        width: 500px;
+        height: 700px;
+        display: flex;
+        flex-direction: column;
+        padding-bottom: 0;
+        position: relative;
+        transform: translateX(-6px); /*GARANTE CENTRALIZAÇÃO IGUAL LOGIN*/
+      }
+
+      .logo-central {
+        margin-top: 80px;
+        width: 330px;
+        transform: translateX(15px);
+      }
+
+      .boas-vindas {
+        font-size: 56px;
+      }
     }
-  .login-box {
-    top: 35px;
-    width: 500px;               /* Aumentada de 640px para 740px */
-    min-height: 700px;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    padding-bottom: 0;
-    position: relative;
-  }
-
-  .top-image-container {
-    height: 180px;
-  }
-
-  .top-image-bg {
-    left: 100px;
-    width: 90%;
-    height: 90%;
-  }
-
-  .top-image {
-    height: 110px;
-  }
-
-  .logo-box {
-    margin-top: -190px;
-  }
-
-  .logo-frente {
-    width: 150px;
-  }
-
-  .logo-box h1 {
-    font-size: 44px;
-  }
-
-  .content {
-    flex-grow: 1;
-    padding: 24px 32px 0;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-  }
-
-  h2 {
-    font-size: 20px;
-  }
-
-  label {
-    font-size: 15px;
-  }
-
-  input[type="email"],
-  input[type="password"] {
-    padding: 14px;
-    font-size: 16px;
-  }
-
-  .checkbox {
-    font-size: 15px;
-  }
-
-  .botao {
-    gap: 16px;
-  }
-
-  button#cadastrar,
-  button#acessar {
-    width: 135px;
-    height: 46px;
-    font-size: 16px;
-  }
-
-  .social img.google,
-  .img-wrapper.facebook img {
-    width: 48px;
-    height: 48px;
-  }
-
-  .footer-text {
-    font-size: 11px;
-    color: white;
-    text-align: center;
-    position: absolute;
-    bottom: 55px;
-    left: 0;
-    width: 100%;
-    z-index: 10;
-  }
-
-  .rodape-image {
-    height: 150px;
-    width: 110%;
-    display: block;
-    margin-top: -100px;
-    margin-left: -5%;
-    border-radius: 0 0 10px 10px;
-    position: relative;
-    z-index: 1;
-  }
-}
-
-
-
   </style>
 </head>
+
 <body>
-   <!-- LOGO E TEXTO NO BACKGROUND -->
+
+     <!-- LOGO E TEXTO NO BACKGROUND -->
   <div class="background-logo-container">
     <img src="Imagens/Logo sem Fundo.png" alt="Logo BrainForms Fundo">
     <span>BrainForms</span>
   </div>
 
-  <div class="login-box">
+  <div class="gif-box">
     <div class="top-image-container">
       <img class="top-image-bg" src="Imagens/up-login2.png" alt="Imagem de fundo" />
       <img class="top-image" src="Imagens/up-login1.png" alt="Imagem topo login" />
     </div>
 
-    <div class="content">
-      <div class="logo-box">
-        <img class="logo-frente" src="Imagens/Logo sem Fundo.png" alt="Logo BrainForms" />
-        <h1>BrainForms</h1>
-      </div>
+    <a href="login.html">
+      <img src="Imagens/Logo sem Fundo.png" alt="Logo BrainForms Central" class="logo-central" />
+    </a>
 
-      <h2>Acesse</h2>
-
-      <form action="menu.html">
-        <label for="email">Digite seu e-mail</label>
-        <input type="email" id="email" placeholder="E-mail" required />
-
-        <label for="password">Digite sua senha</label>
-        <input type="password" id="password" placeholder="Senha" required />
-
-        <div class="checkbox">
-          <input type="checkbox" id="lembrar" />
-          <label for="lembrar" class="checkbox-label">Lembrar minha senha</label>
-        </div>
-
-        <div class="botao">
-          <button type="button" id="cadastrar">Cadastrar</button>
-          <button type="button" id="acessar">Acessar</button>
-        </div>
-      </form>
-
-      <div class="divider">
-        <div class="line"></div>
-        <span class="divider-text">ou acesse</span>
-        <div class="line"></div>
-      </div>
-
-      <div class="social">
-        <a href="https://accounts.google.com/signin" target="_blank" rel="noopener noreferrer" title="Entrar com Google">
-          <img class="google" src="Imagens/Google.png" alt="Login Google" />
-        </a>
-        <a href="https://www.facebook.com/login" target="_blank" rel="noopener noreferrer" title="Entrar com Facebook" class="facebook-link">
-          <div class="img-wrapper facebook">
-            <img src="Imagens/Facebook.png" alt="Login Facebook" />
-          </div>
-        </a>
-      </div>
-
-
-      <div class="footer-text">
-        By continuing, you agree to our <a href="#">Terms and Conditions</a> and <a href="#">Privacy Policy</a>.
-      </div>
-    </div>
+    <div class="boas-vindas">Boas-Vindas</div>
 
     <img class="rodape-image" src="Imagens/rodape-login.png" alt="Rodapé Login" />
   </div>
-
-  <div id="custom-alert" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background: rgba(0,0,0,0.5); justify-content:center; align-items:center;">
-  <div style="background:white; padding:20px; border-radius:10px; text-align:center;">
-    <p>✅ Login realizado com sucesso!</p>
-    <p>Seja muito bem-vindo(a) <b id="alert-nome"></b> ao BrainForms!</p>
-    <button onclick="document.getElementById('custom-alert').style.display='none'">Fechar</button>
-  </div>
-</div>
-
- <script>
-  // Função auxiliar para exibir erro em um input
-  function mostrarErro(divId, inputId, mensagem) {
-    const divErro = document.getElementById(divId);
-    const input = document.getElementById(inputId);
-    if (divErro && input) {
-      divErro.innerText = mensagem;
-      divErro.style.display = "block";
-      input.classList.add("error");
-    }
-  }
-
-  // Botão Acessar (login)
-  document.getElementById("acessar").onclick = function (event) {
-    event.preventDefault();
-
-    // Limpa erros antes de validar novamente
-    document.querySelectorAll(".error-msg").forEach(div => {
-      div.style.display = "none";
-      div.innerText = "";
-    });
-    document.querySelectorAll("input").forEach(input => input.classList.remove("error"));
-
-    const email = document.getElementById("email").value.trim();
-    const senha = document.getElementById("password").value;
-
-    // Validação simples antes do fetch
-    if (!email) {
-      mostrarErro("email", "email", "Por favor, informe seu e-mail.");
-      return;
-    }
-    if (!senha) {
-      mostrarErro("password", "password", "Por favor, informe sua senha.");
-      return;
-    }
-
-    fetch("http://localhost:8000/api/alunos/login", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        "Accept": "application/json",
-      },
-      body: JSON.stringify({
-        email: email,
-        password: senha
-      }),
-    })
-    .then(response => response.json())
-    .then(data => {
-    console.log("Resposta da API:", data);
-    if (data.status === 200) {
-    localStorage.setItem("token", data.token);
-    localStorage.setItem("alunoNome", data.user.name);
-    
-    alert(`✅ Login realizado com sucesso!\n\nSeja muito bem-vindo(a) ${data.user.name} ao BrainForms!`);
-    window.location.href = "menu.html";
-      } else {
-        alert("❌ " + (data.message || "Credenciais inválidas."));
-    }
-  })
-
-    .catch(error => {
-      console.error("Erro:", error);
-      alert("❌ Erro de conexão com o servidor.");
-    });
-  };
-
-  // Botão Cadastrar
-  document.getElementById("cadastrar").onclick = function () {
-    window.location.href = "cadastro.html";
-  };
-</script>
-
 </body>
 </html>
