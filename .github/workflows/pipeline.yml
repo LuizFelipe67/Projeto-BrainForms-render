@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 name: Deploy BrainForms FrontEnd
 
 on:
@@ -11,14 +10,17 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      # 1. Baixar o código
       - name: Checkout do código
         uses: actions/checkout@v3
 
+      # 2. Rodar teste simples (quando houver testes)
       - name: Rodar teste simples
         run: echo "Nenhum teste configurado"
 
+      # 3. Deploy para o GitHub Pages
       - name: Publicar no GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./C:\Users\Luiz Felipe\Desktop\Interface-BrainForms # Pasta raiz do seu projeto
+          publish_dir: ./   # Como é HTML/CSS/JS puro, publica a raiz do projeto
