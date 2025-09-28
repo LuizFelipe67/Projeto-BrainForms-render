@@ -368,7 +368,7 @@
     <form id="cadastro-form">
       <label for="usuario">Digite o nome de usuário</label>
       <input type="text" id="usuario" placeholder="Usuário" name="name" required>
-      <div class="error-msg" id="name"></div>
+      <div class="error-msg" id="name-error"></div>
 
       <label for="email">Digite seu e-mail</label>
       <input type="email" id="email" placeholder="E-mail" name="email" required>
@@ -376,11 +376,11 @@
 
       <label for="senha">Digite sua senha</label>
       <input type="password" id="senha" placeholder="Senha" name="password" required>
-      <div class="error-msg" id="password"></div>
+      <div class="error-msg" id="password-error"></div>
 
       <label for="confirmar">Confirme sua senha</label>
       <input type="password" id="confirmar" placeholder="Senha" name="password_confirmation" required>
-      <div class="error-msg" id="password_confirmation"></div>
+      <div class="error-msg" id="password_confirmation-error"></div>
 
       <div class="botao">
         <button type="button" id="cancelar">Cancelar</button>
@@ -395,7 +395,7 @@
  <script>
   // Botão Cancelar
   document.getElementById("cancelar").onclick = function () {
-    window.location.href = "index.html";
+    window.location.href = "login.html";
   };
 
   const form = document.getElementById("cadastro-form");
@@ -450,7 +450,7 @@
     .then(data => {
       if (data.status === 200) {
         alert("✅ Cadastro realizado com sucesso!\n\nVocê já pode efetuar o login.");
-        window.location.href = "index.html";
+        window.location.href = "login.html";
       } else if (data.errors) {
         for (const campo in data.errors) {
           const inputId = campo === "password_confirmation" ? "confirmar" :
