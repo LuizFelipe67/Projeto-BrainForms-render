@@ -7,7 +7,7 @@
   <style>
     
     body {
-      font-family: 'Inter', sans-serif;
+      font-family: 'Roboto', sans-serif;
       background-color: #775085;
       display: flex;
       justify-content: center;
@@ -37,7 +37,7 @@
       color: white;
       font-size: 48px;
       font-weight: bold;
-      font-family: 'Inter', sans-serif;
+      font-family: 'Roboto', sans-serif;
     }
 
     .container {
@@ -555,54 +555,74 @@
  <script>
   const questions = [
   {
-    text: "Qual a unidade de medida da força no Sistema Internacional?",
-    options: ["Newton", "Watt", "Joule", "Pascal"],
-    answer: "Newton"
-  },
-  {
-    text: "O que é a velocidade da luz no vácuo?",
-    options: ["300.000 km/s", "150.000 km/s", "30.000 km/s", "3.000 km/s"],
-    answer: "300.000 km/s"
-  },
-  {
-    text: "Qual é a fórmula da segunda lei de Newton?",
-    options: ["F = m x a", "E = m x c²", "p = m x v", "v = d/t"],
-    answer: "F = m x a"
-  },
-  {
-    text: "Qual fenômeno explica a refração da luz?",
-    options: [
-      "Mudança de velocidade da luz ao passar de um meio para outro",
-      "Reflexão da luz",
-      "Absorção da luz",
-      "Difração da luz"
+    "text": "Por que o Newton é considerado a unidade de força no Sistema Internacional?",
+    "options": [
+      "Porque representa a força que dá a uma massa de 1 kg uma aceleração de 1 m/s²",
+      "Porque mede a energia de um corpo em movimento",
+      "Porque foi definido como a unidade da gravidade terrestre",
+      "Porque mede a massa de um objeto"
     ],
-    answer: "Mudança de velocidade da luz ao passar de um meio para outro"
+    "answer": "Porque representa a força que dá a uma massa de 1 kg uma aceleração de 1 m/s²"
   },
   {
-    text: "Qual é a unidade da energia no SI?",
-    options: ["Joule", "Watt", "Newton", "Volt"],
-    answer: "Joule"
-  },
-  {
-    text: "O que acontece com a pressão em um fluido quando a profundidade aumenta?",
-    options: [
-      "Aumenta",
-      "Diminui",
-      "Permanece constante",
-      "Varia aleatoriamente"
+    "text": "A velocidade da luz no vácuo é constante. O que isso implica em relação à Teoria da Relatividade?",
+    "options": [
+      "O tempo e o espaço são relativos ao observador",
+      "A massa de um objeto nunca muda",
+      "A gravidade não influencia a luz",
+      "A luz pode acelerar indefinidamente"
     ],
-    answer: "Aumenta"
+    "answer": "O tempo e o espaço são relativos ao observador"
   },
   {
-    text: "Qual o nome da força que mantém os planetas em órbita ao redor do Sol?",
-    options: ["Gravidade", "Eletromagnetismo", "Força nuclear forte", "Força centrípeta"],
-    answer: "Gravidade"
+    "text": "A segunda lei de Newton pode ser usada para prever o movimento de um corpo. Qual situação a seguir é um exemplo correto disso?",
+    "options": [
+      "Uma bola parada continua parada",
+      "Uma força maior aplicada a um objeto leve produz maior aceleração",
+      "Dois corpos colidem e conservam a energia",
+      "A luz muda de direção ao passar pela água"
+    ],
+    "answer": "Uma força maior aplicada a um objeto leve produz maior aceleração"
   },
   {
-    text: "Qual é a fórmula da velocidade média?",
-    options: ["v = d/t", "v = m x a", "v = F/m", "v = E/t"],
-    answer: "v = d/t"
+    "text": "Quando a luz passa do ar para a água, ela muda de direção. Qual fator físico é responsável por essa mudança?",
+    "options": [
+      "Diferença na velocidade da luz entre os meios",
+      "Diferença de temperatura",
+      "Interferência eletromagnética",
+      "Gravidade do meio"
+    ],
+    "answer": "Diferença na velocidade da luz entre os meios"
+  },
+  {
+    "text": "Um corpo de massa 2 kg é elevado a 5 metros de altura. Qual a energia potencial gravitacional adquirida? (Considere g = 10 m/s²)",
+    "options": ["100 J", "10 J", "2 J", "50 J"],
+    "answer": "100 J"
+  },
+  {
+    "text": "Por que a pressão aumenta com a profundidade em um líquido?",
+    "options": [
+      "Devido ao peso da coluna de líquido acima do ponto considerado",
+      "Porque o líquido esfria com a profundidade",
+      "Devido à diminuição do volume do líquido",
+      "Por causa da evaporação"
+    ],
+    "answer": "Devido ao peso da coluna de líquido acima do ponto considerado"
+  },
+  {
+    "text": "A força gravitacional entre dois corpos depende de quais fatores?",
+    "options": [
+      "Massas dos corpos e distância entre eles",
+      "Volume dos corpos e velocidade",
+      "Área de contato e densidade",
+      "Carga elétrica e massa"
+    ],
+    "answer": "Massas dos corpos e distância entre eles"
+  },
+  {
+    "text": "Um carro percorre 150 km em 3 horas. Qual é sua velocidade média?",
+    "options": ["50 km/h", "100 km/h", "45 km/h", "60 km/h"],
+    "answer": "50 km/h"
   }
 ];
 

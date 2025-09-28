@@ -84,7 +84,7 @@
     }
 
     .content {
-      padding: 24px 32px;
+      padding: 34px 32px;
       text-align: left;
     }
 
@@ -101,6 +101,28 @@
       font-weight: bold;
       margin-bottom: 6px;
     }
+
+    .error-msg {
+      color: #b00020;
+      font-size: 13px;
+      margin-top: -6px; /* trocar de -12px para 4px */
+      margin-bottom: 12px;
+      display: none; /* Escondido por padrão */
+      background: #ffdede;
+      padding: 5px 10px;
+      border-radius: 4px;
+    }
+
+    input.error {
+      border-color: #b00020;
+      transition: border 0.3s;
+    }
+
+    .error-msg {
+      transition: opacity 0.3s;
+      opacity: 1;
+    }
+
 
     input {
       width: 100%;
@@ -179,6 +201,8 @@
   border-radius: 0 0 10px 10px;
 }
 
+
+
     @media (max-width: 480px) {
 
    
@@ -237,10 +261,15 @@
 
 
     @media (min-width: 1440px) {
-        .login-box {
+
+  .rodape-image {
+    height: 95px;
+  }
+
+  .login-box {
     width: 500px;
     height: 700px;
-    padding-bottom: 0;
+    margin-bottom: 130px;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -261,40 +290,52 @@
   .top-image-bg {
     left: 100px;
     width: 90%;
-    height: 90%;
+    height: 75%; /* altura intermediária */
   }
 
   .top-image {
-    height: 110px;
+    height: 90px; /* altura intermediária */
+    position: absolute;
+  }
+
+  .top-image-container {
+    position: relative;
+    height: 120px; /* altura fixa */
+    flex-shrink: 0; /* impede que encolha */
   }
 
   .content {
-    padding: 20px 48px 0; /* aumenta o espaçamento lateral */
+    padding: 35px 48px 0;
     flex-grow: 1;
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
+    /* Remove justify-content: space-between para não empurrar o form para baixo */
   }
 
+  h2 {
+    margin-bottom: 25px; /* Reduzido para aproximar do form */
+  }
 
   form {
     display: grid;
     grid-template-columns: 1fr;
+    margin-top: 0; /* Garante que não há espaço extra acima do form */
   }
 
   label {
-  font-size: 15px;
-  margin-bottom: 2px; /* Reduzido */
-  margin-top: 4px;
-}
+    font-size: 15px;
+    margin-bottom: 2px; /* Reduzido */
+    margin-top: 4px;
+  }
 
-input {
-  font-size: 16px;
-  padding: 14px;
-  margin-bottom: 15px; /* Espaço entre esse input e a próxima label */
-}
+  input {
+    font-size: 16px;
+    padding: 14px;
+    margin-bottom: 15px; /* Espaço entre esse input e a próxima label */
+  }
 
   button {
+    margin-top: -10px;
     height: 46px;
     font-size: 16px;
   }
@@ -313,7 +354,7 @@ input {
     <span>BrainForms</span>
   </div>
 
-  <!-- FORMULÁRIO -->
+
   <div class="login-box">
     <div class="top-image-container">
       <img class="top-image-bg" src="Imagens/up-login2.png" alt="Fundo Curvo" />
@@ -322,50 +363,106 @@ input {
 
     <div class="content">
       <h2>Insira seus dados abaixo:</h2>
-      <form action="menu.html">
-        <label for="usuario">Digite o nome de usuário</label>
-        <input type="text" id="usuario" placeholder="Usuário" required>
+  
+      <!-- FORMULÁRIO -->
+    <form id="cadastro-form">
+      <label for="usuario">Digite o nome de usuário</label>
+      <input type="text" id="usuario" placeholder="Usuário" name="name" required>
+      <div class="error-msg" id="name"></div>
 
-        <label for="email">Digite seu e-mail</label>
-        <input type="email" id="email" placeholder="E-mail" required>
+      <label for="email">Digite seu e-mail</label>
+      <input type="email" id="email" placeholder="E-mail" name="email" required>
+      <div class="error-msg" id="email-error"></div>
 
-        <label for="senha">Digite sua senha</label>
-        <input type="password" id="senha" placeholder="Senha" required>
+      <label for="senha">Digite sua senha</label>
+      <input type="password" id="senha" placeholder="Senha" name="password" required>
+      <div class="error-msg" id="password"></div>
 
-        <label for="confirmar">Confirme sua senha</label>
-        <input type="password" id="confirmar" placeholder="Senha" required>
+      <label for="confirmar">Confirme sua senha</label>
+      <input type="password" id="confirmar" placeholder="Senha" name="password_confirmation" required>
+      <div class="error-msg" id="password_confirmation"></div>
 
-        <div class="botao">
-          <button type="button" id="cancelar">Cancelar</button>
-          <button type="submit" id="cadastrar">Cadastrar</button>
-        </div>
-      </form>
-    </div>
+      <div class="botao">
+        <button type="button" id="cancelar">Cancelar</button>
+        <button type="submit" id="cadastrar">Cadastrar</button>
+      </div>
+    </form>
+
+  </div>
     <img class="rodape-image" src="Imagens/rodape-login.png" alt="Rodapé Login" />
   </div>
 
-  <script>
-    // Redireciona ao clicar em "Cancelar"
-    document.getElementById("cancelar").onclick = function () {
-      window.location.href = "index.html";
-    };
+ <script>
+  // Botão Cancelar
+  document.getElementById("cancelar").onclick = function () {
+    window.location.href = "index.html";
+  };
 
-    // Validação ao enviar o formulário
-    const form = document.querySelector("form");
-    form.addEventListener("submit", function (event) {
-      const usuario = document.getElementById("usuario").value.trim();
-      const email = document.getElementById("email").value.trim();
-      const senha = document.getElementById("senha").value;
-      const confirmar = document.getElementById("confirmar").value;
+  const form = document.getElementById("cadastro-form");
 
-      if (!usuario || !email || !senha || !confirmar) {
-        event.preventDefault(); // Impede o envio
-        alert("Por favor, preencha todos os campos.");
-      } else if (senha !== confirmar) {
-        event.preventDefault(); // Impede o envio
-        alert("As senhas não coincidem.");
+  // Função auxiliar para exibir erro em um input
+  function mostrarErro(campo, inputId, mensagem) {
+  const divErro = document.getElementById(campo + "-error"); // agora sempre encontra a div
+  const input = document.getElementById(inputId);
+  if (divErro && input) {
+    divErro.innerText = mensagem;
+    divErro.style.display = "block";
+    input.classList.add("error");
+  }
+}
+
+
+  form.addEventListener("submit", function (event) {
+    event.preventDefault(); // impede envio padrão do form
+
+    // Limpa todos os erros antes
+    document.querySelectorAll(".error-msg").forEach(div => {
+      div.style.display = "none";
+      div.innerText = "";
+    });
+    document.querySelectorAll("input").forEach(input => input.classList.remove("error"));
+
+    const usuario = document.getElementById("usuario").value.trim();
+    const email = document.getElementById("email").value.trim();
+    const senha = document.getElementById("senha").value;
+    const confirmar = document.getElementById("confirmar").value;
+
+      if (senha !== confirmar) {
+      mostrarErro("password_confirmation", "confirmar", "As senhas não coincidem.");
+      return;
+    }
+
+
+    fetch("http://localhost:8000/api/alunos/cadastrar", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "Accept": "application/json"
+      },
+      body: JSON.stringify({
+        name: usuario,
+        email: email,
+        password: senha,
+        password_confirmation: confirmar
+      })
+    })
+    .then(response => response.json())
+    .then(data => {
+      if (data.status === 200) {
+        alert("✅ Cadastro realizado com sucesso!\n\nVocê já pode efetuar o login.");
+        window.location.href = "index.html";
+      } else if (data.errors) {
+        for (const campo in data.errors) {
+          const inputId = campo === "password_confirmation" ? "confirmar" :
+                          campo === "password" ? "senha" : campo;
+          mostrarErro(campo, inputId, data.errors[campo].join("\n"));
+        }
+      } else {
+        alert("❌ Erro ao cadastrar: " + (data.message || "Verifique os dados e tente novamente."));
       }
     });
-  </script>
+  });
+</script>
+
 </body>
 </html>
