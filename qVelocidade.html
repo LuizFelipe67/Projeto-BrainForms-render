@@ -383,175 +383,295 @@
 </div>
 
 <script>
- const questions = [
-  {
-    text: 'Um carro percorre 120 km em 2 horas. Qual é sua velocidade média?',
-    options: ['60 km/h', '80 km/h', '100 km/h', '120 km/h'],
-    answer: '60 km/h',
-    explanation: 'Velocidade média é dada por Vm = ΔS / ΔT. Logo, Vm = 120 km / 2 h = 60 km/h.'
-  },
-  {
-    text: 'Se um ciclista mantém uma velocidade média de 20 km/h, quanto tempo ele levará para percorrer 60 km?',
-    options: ['2 horas', '3 horas', '4 horas', '1 hora'],
-    answer: '3 horas',
-    explanation: 'Tempo = distância / velocidade. Assim, T = 60 km / 20 km/h = 3 horas.'
-  },
-  {
-    text: 'Um trem percorre 150 km em 3 horas. Depois, percorre mais 150 km em 2 horas. Qual foi a velocidade média total?',
-    options: ['50 km/h', '60 km/h', '75 km/h', '100 km/h'],
-    answer: '60 km/h',
-    explanation: 'Velocidade média total = distância total / tempo total. Vm = 300 km / 5 h = 60 km/h.'
-  },
-  {
-    text: 'Um corredor percorre 10 km em 40 minutos. Qual é a sua velocidade média em km/h?',
-    options: ['10 km/h', '12 km/h', '15 km/h', '25 km/h'],
-    answer: '15 km/h',
-    explanation: 'Converter 40 min para horas: 40/60 = 2/3 h. Vm = 10 / (2/3) = 10 × 3/2 = 15 km/h.'
+  const questions = [
+    {
+      text: 'Um carro percorre 120 km em 2 horas. Qual é sua velocidade média?',
+      options: ['60 km/h', '80 km/h', '100 km/h', '120 km/h'],
+      answer: '60 km/h',
+      explanation: 'Velocidade média é dada por Vm = ΔS / ΔT. Logo, Vm = 120 km / 2 h = 60 km/h.'
+    },
+    {
+      text: 'Se um ciclista mantém uma velocidade média de 20 km/h, quanto tempo ele levará para percorrer 60 km?',
+      options: ['2 horas', '3 horas', '4 horas', '1 hora'],
+      answer: '3 horas',
+      explanation: 'Tempo = distância / velocidade. Assim, T = 60 km / 20 km/h = 3 horas.'
+    },
+    {
+      text: 'Um trem percorre 150 km em 3 horas. Depois, percorre mais 150 km em 2 horas. Qual foi a velocidade média total?',
+      options: ['50 km/h', '60 km/h', '75 km/h', '100 km/h'],
+      answer: '60 km/h',
+      explanation: 'Velocidade média total = distância total / tempo total. Vm = 300 km / 5 h = 60 km/h.'
+    },
+    {
+      text: 'Um corredor percorre 10 km em 40 minutos. Qual é a sua velocidade média em km/h?',
+      options: ['10 km/h', '12 km/h', '15 km/h', '25 km/h'],
+      answer: '15 km/h',
+      explanation: 'Converter 40 min para horas: 40/60 = 2/3 h. Vm = 10 / (2/3) = 10 × 3/2 = 15 km/h.'
+    }
+  ];
+
+  let current = 0;
+  let score = 0; // ✅ contador de acertos
+
+
+//Adicionado
+
+  let selectedAnswers = []; // Array para armazenar respostas selecionadas por questão (índice = current)
+
+  // Função auxiliar para exibir erro (similar ao seu script de cadastro)
+  function mostrarErro(mensagem) {
+    alert('❌ ' + mensagem); // Pode expandir para divs de erro se preferir
   }
-];
+
+  // Verifica se o usuário está logado (token existe)
+  function verificarLogin() {
+    const token = localStorage.getItem('token');
+    if (!token) {
+      mostrarErro('Faça login primeiro para responder o questionário!');
+      window.location.href = 'index.html'; // Redireciona para login
+      return false;
+    }
+    return true;
+  }
+
+//Final da aplicacao!
 
 
-    let current = 0;
-    let score = 0; // ✅ contador de acertos
 
   function ajustarAltura(heightPequena, heightGrande) {
-  const container = document.querySelector('.container');
-  const isLargeScreen = window.matchMedia("(min-width: 1440px)").matches;
-  container.style.height = isLargeScreen ? heightGrande : heightPequena;
-}
-
-function renderQuestion() {
-  document.getElementById('feedback').innerHTML = '';
-  const nextBtn = document.getElementById('next-btn');
-  nextBtn.style.display = 'none';
-  nextBtn.innerText = 'Próxima Questão';
-
-  ajustarAltura("600px", "700px");
-
-  const q = questions[current];
-  document.getElementById('question-text').innerText = q.text;
-  const optionsDiv = document.getElementById('options');
-  optionsDiv.innerHTML = '';
-
-  q.options.forEach((opt, idx) => {
-    const btn = document.createElement('button');
-    btn.className = 'option-button';
-    btn.innerText = `${String.fromCharCode(65 + idx)}) ${opt}`;
-    btn.dataset.clicked = 0;
-
-    btn.onclick = () => {
-      if (btn.disabled) return;
-
-      const alreadySelected = document.querySelector('.option-button.selected');
-      if (alreadySelected && alreadySelected !== btn) {
-        alreadySelected.classList.remove('selected');
-        alreadySelected.dataset.clicked = 0;
-      }
-
-      btn.dataset.clicked = parseInt(btn.dataset.clicked) + 1;
-      btn.classList.add('selected');
-
-      if (parseInt(btn.dataset.clicked) === 2) {
-        verify(opt, btn);
-      }
-    };
-
-    optionsDiv.appendChild(btn);
-  });
-
-  // Se for a última questão, trocar texto do botão
-  if (current === questions.length - 1) {
-    nextBtn.innerText = 'Finalizar';
-  }
-}
-
-function verify(resposta, btn) {
-  const correta = questions[current].answer;
-  const feedback = document.getElementById('feedback');
-  const buttons = document.querySelectorAll('.option-button');
-
-  buttons.forEach(b => {
-    b.disabled = true;
-    b.classList.remove('selected');
-    b.classList.add('disabled-option');
-  });
-
-  if (resposta === correta) {
-    btn.classList.add('correct-answer');
-    feedback.innerHTML = "✅ <span class='correct'>Resposta correta! Parabéns 🎉</span>";
-    score++;
-    ajustarAltura("680px", "780px"); // expande levemente
-  } else {
-    btn.classList.add('incorrect-answer');
-    buttons.forEach(b => {
-      if (b.innerText.includes(correta)) {
-        b.classList.add('correct-answer');
-      }
-    });
-    feedback.innerHTML = `❌ <span class='incorrect'>Resposta incorreta.</span><br><br>
-      📘 <strong>Explicação:</strong><br>
-      ${questions[current].explanation}<br><br>
-      ✅ A alternativa correta é <strong>${correta}</strong>.`;
-    ajustarAltura("780px", "900px"); // expande mais para a explicação
+    const container = document.querySelector('.container');
+    const isLargeScreen = window.matchMedia("(min-width: 1440px)").matches;
+    container.style.height = isLargeScreen ? heightGrande : heightPequena;
   }
 
-  document.getElementById('next-btn').style.display = 'inline-block';
-}
-
-function nextQuestion() {
-  if (current < questions.length - 1) {
-    current++;
-    renderQuestion();
-  } else {
-    const box = document.getElementById('question-box');
-    const feedback = document.getElementById('feedback');
-    document.getElementById('options').innerHTML = '';
-    document.getElementById('next-btn').style.display = 'none';
-
-    let mensagem;
-    if (score === 4) {
-      mensagem = "<h2>✅ Questionário Finalizado!</h2>\n🎯 Excelente! Você acertou todas as questões!";
-    } else if (score === 3) {
-      mensagem = "<h2>✅ Questionário Finalizado!</h2>\n👏 Muito bem! Você acertou 3 de 4 questões.";
-    } else if (score === 2) {
-      mensagem = "<h2>✅ Questionário Finalizado!</h2>\n✨ Bom esforço! Você acertou 2 de 4.";
-    } else {
-      mensagem = `<h2>✅ Questionário Finalizado!</h2>\n📘 Continue praticando! Você acertou ${score} de 4.`;
-    }
+  function renderQuestion() {
+    document.getElementById('feedback').innerHTML = '';
+    const nextBtn = document.getElementById('next-btn');
+    nextBtn.style.display = 'none';
+    nextBtn.innerText = 'Próxima Questão';
 
     ajustarAltura("600px", "700px");
 
-    box.innerHTML = `
-      <div class="final-message">
-          <p>${mensagem}</p>
-      </div>
-    `;
+    const q = questions[current];
+    document.getElementById('question-text').innerText = q.text;
+    const optionsDiv = document.getElementById('options');
+    optionsDiv.innerHTML = '';
 
-    // Cria o botão separadamente
-    const botaoVoltar = document.createElement("a");
-    botaoVoltar.href = "questoes-fisica.html";
-    botaoVoltar.textContent = "Voltar para Física";
-    botaoVoltar.className = "return-button";
+    q.options.forEach((opt, idx) => {
+      const btn = document.createElement('button');
+      btn.className = 'option-button';
+      btn.innerText = `${String.fromCharCode(65 + idx)}) ${opt}`;
+      btn.dataset.clicked = 0;
 
-    const container = document.querySelector('.container');
+      btn.onclick = () => {
+        if (btn.disabled) return;
 
-    const botaoWrapper = document.createElement("div");
-    botaoWrapper.style.display = "flex";
-    botaoWrapper.style.justifyContent = "center";
-    botaoWrapper.style.marginTop = "auto";
-    botaoWrapper.style.paddingBottom = "20px"; // espaço do fundo
-    botaoWrapper.appendChild(botaoVoltar);
+        const alreadySelected = document.querySelector('.option-button.selected');
+        if (alreadySelected && alreadySelected !== btn) {
+          alreadySelected.classList.remove('selected');
+          alreadySelected.dataset.clicked = 0;
+        }
 
-    container.appendChild(botaoWrapper);
+        btn.dataset.clicked = parseInt(btn.dataset.clicked) + 1;
+        btn.classList.add('selected');
 
-    feedback.innerHTML = '';
+        if (parseInt(btn.dataset.clicked) === 2) {
+          verify(opt, btn);
+        }
+      };
+
+      optionsDiv.appendChild(btn);
+    });
+
+    // Se for a última questão, trocar texto do botão
+    if (current === questions.length - 1) {
+      nextBtn.innerText = 'Finalizar';
+    }
   }
-}
 
-renderQuestion(); // inicializa a primeira questão
+  function verify(resposta, btn) {
+    const correta = questions[current].answer;
+    const feedback = document.getElementById('feedback');
+    const buttons = document.querySelectorAll('.option-button');
 
 
 
+    // Armazena a resposta selecionada para esta questão
+    selectedAnswers[current] = resposta;
+
+
+
+    buttons.forEach(b => {
+      b.disabled = true;
+      b.classList.remove('selected');
+      b.classList.add('disabled-option');
+    });
+
+    if (resposta === correta) {
+      btn.classList.add('correct-answer');
+      feedback.innerHTML = "✅ <span class='correct'>Resposta correta! Parabéns 🎉</span>";
+      score++;
+      ajustarAltura("680px", "780px"); // expande levemente
+    } else {
+      btn.classList.add('incorrect-answer');
+      buttons.forEach(b => {
+        if (b.innerText.includes(correta)) {
+          b.classList.add('correct-answer');
+        }
+      });
+      feedback.innerHTML = `❌ <span class='incorrect'>Resposta incorreta.</span><br><br>
+        📘 <strong>Explicação:</strong><br>
+        ${questions[current].explanation}<br><br>
+        ✅ A alternativa correta é <strong>${correta}</strong>.`;
+      ajustarAltura("800px", "900px"); // expande mais para a explicação (consistência)
+    }
+
+    document.getElementById('next-btn').style.display = 'inline-block';
+  }
+
+
+
+//Adicionado
+
+
+  // Função para salvar resposta no backend
+  async function salvarResposta(secao, numQuestao, selectedAnswer, questionText) {
+    const token = localStorage.getItem('token');
+    if (!token) {
+      mostrarErro('Token de autenticação não encontrado. Faça login novamente.');
+      return false;
+    }
+
+    const dados = {
+      section: secao,
+      question_number: numQuestao,
+      selected_answer: selectedAnswer,
+      question_text: questionText
+    };
+
+    try {
+      const response = await fetch('http://localhost:8000/api/fis-responses', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json',
+          'Authorization': 'Bearer ' + token
+        },
+        body: JSON.stringify(dados)
+      });
+
+      const data = await response.json();
+      console.log('Resposta da API:', data);
+
+      if (data.status === 200) {
+        console.log('✅ Resposta salva no banco!');
+        return true;
+      } else if (data.errors) {
+        // Mostra erros como no seu cadastro
+        let erroMsg = 'Erros: ';
+        for (const campo in data.errors) {
+          erroMsg += data.errors[campo].join('\n') + ' ';
+        }
+        mostrarErro(erroMsg);
+        return false;
+      } else {
+        mostrarErro(data.message || 'Erro ao salvar resposta.');
+        return false;
+      }
+    } catch (error) {
+      console.error('Erro no fetch:', error);
+      mostrarErro('Erro de conexão com o servidor.');
+      return false;
+    }
+  }
+
+  async function nextQuestion() {
+    // Verifica se há resposta selecionada para a questão atual
+    if (typeof selectedAnswers[current] === 'undefined') {
+      mostrarErro('Selecione uma resposta antes de prosseguir!');
+      return;
+    }
+
+    // Sempre salva a resposta ATUAL antes de avançar ou finalizar
+    const sucesso = await salvarResposta(
+      'velocidade', // Seção fixa para Velocidade (subseção de Física)
+      current + 1, // Número da questão (1-based)
+      selectedAnswers[current],
+      questions[current].text
+    );
+
+    if (!sucesso) {
+      mostrarErro('Não foi possível salvar a resposta. Tente novamente.');
+      return; // Não avança se falhar
+    }
+
+    // Mensagem de sucesso personalizada
+    if (current < questions.length - 1) {
+      alert('✅ Resposta salva! Avançando para a próxima...');
+      current++;
+      renderQuestion();
+    } else {
+      // Para a última: salva e finaliza
+      alert('✅ Questionário salvo com sucesso! Finalizando...');
+      
+      const box = document.getElementById('question-box');
+      const feedback = document.getElementById('feedback');
+      document.getElementById('options').innerHTML = '';
+      document.getElementById('next-btn').style.display = 'none';
+
+
+//Final da aplicacao!
+
+
+
+
+      let mensagem;
+      if (score === 4) {
+        mensagem = "<h2>✅ Questionário Finalizado!</h2>\n🎯 Excelente! Você acertou todas as questões!";
+      } else if (score === 3) {
+        mensagem = "<h2>✅ Questionário Finalizado!</h2>\n👏 Muito bem! Você acertou 3 de 4 questões.";
+      } else if (score === 2) {
+        mensagem = "<h2>✅ Questionário Finalizado!</h2>\n✨ Bom esforço! Você acertou 2 de 4.";
+      } else {
+        mensagem = `<h2>✅ Questionário Finalizado!</h2>\n📘 Continue praticando! Você acertou ${score} de 4.`;
+      }
+
+      ajustarAltura("600px", "700px");
+
+      box.innerHTML = `
+        <div class="final-message">
+            <p>${mensagem}</p>
+        </div>
+      `;
+
+      // Cria o botão separadamente
+      const botaoVoltar = document.createElement("a");
+      botaoVoltar.href = "questoes-fisica.html";
+      botaoVoltar.textContent = "Voltar para Física";
+      botaoVoltar.className = "return-button";
+
+      const container = document.querySelector('.container');
+
+      const botaoWrapper = document.createElement("div");
+      botaoWrapper.style.display = "flex";
+      botaoWrapper.style.justifyContent = "center";
+      botaoWrapper.style.marginTop = "auto";
+      botaoWrapper.style.paddingBottom = "20px"; // espaço do fundo
+      botaoWrapper.appendChild(botaoVoltar);
+
+      container.appendChild(botaoWrapper);
+
+      feedback.innerHTML = '';
+    }
+  }
+
+
+
+
+  // Inicializa: Verifica login e renderiza primeira questão
+  if (verificarLogin()) {
+    renderQuestion(); // inicializa a primeira questão
+  }
 </script>
 </body>
 </html>
