@@ -1,0 +1,522 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Conquista - BrainForms</title>
+  <style>
+/* Corpo da página */
+body {
+    font-family: 'Roboto', sans-serif;
+    background-color: #775085;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    margin: 0;
+    padding-bottom: 200px;
+    overflow-y: auto;
+}
+
+/* LOGO E TEXTO NO FUNDO */
+.background-logo-container {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  z-index: 0;
+}
+.background-logo-container img {
+  width: 100px;
+  height: auto;
+}
+.background-logo-container span {
+  color: white;
+  font-size: 48px;
+  font-weight: bold;
+  font-family: 'Roboto', sans-serif;
+}
+
+/* Container principal */
+.menu-container {
+    background-color: #fff;
+    border-radius: 12px;
+    box-shadow: 0 0 20px rgba(34, 2, 45, 0.6);
+    text-align: center;
+    top: 120px;
+    width: 400px;
+    height: 600px;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    overflow-y: auto;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+}
+
+/* Cabeçalho */
+ .header-container {
+      display: flex; /* Alinha logo e texto horizontalmente */
+      align-items: center; /* Alinha verticalmente */
+      background: linear-gradient(to bottom, #000000 0%, #3A024E 80%);
+      padding: 15px 20px;
+      border-radius: 12px 12px 0 0;
+      color: white;
+      width: 100%;
+      margin-bottom: 10px;
+  }
+
+  /* Estilo da imagem do logo */
+  .header-container img {
+      width: 65px;
+      margin-right: 10px;
+  }
+
+  /* Estilo do texto no cabeçalho */
+  .header-container h3 {
+      margin: 0;
+      font-size: 20px;
+  }
+
+  /* Link no h3 do cabeçalho */
+  .header-container h3 a {
+      text-decoration: none;
+      color: white;
+  }
+
+/* Barra de progresso */
+.progress-section {
+    margin: 1px 20px;
+    margin-top: 1px;
+}
+.progress-section h4 {
+    color: #5E097E;
+    margin-bottom: 6px;
+    font-size: 14px;
+    text-align: left;
+}
+.progress-bar {
+    width: 100%;
+    height: 18px;
+    background: #ddd;
+    border-radius: 10px;
+    overflow: hidden;
+    position: relative;
+}
+.progress {
+    height: 100%;
+    width: 0%;
+    background: linear-gradient(90deg, #00f7ff, #6a00ff, #f82dff);
+    border-radius: 10px;
+    transition: width 0.5s ease;
+}
+.progress-text {
+    position: absolute;
+    width: 100%;
+    text-align: center;
+    font-size: 12px;
+    font-weight: bold;
+    color: #00028d;
+    font-family: 'Orbitron', sans-serif;
+    top: 50%;
+    transform: translateY(-50%);
+    pointer-events: none;
+    left: 0;
+}
+
+/* Avatar */
+.avatar-container {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+}
+.avatar-container img {
+    width: 110px;
+    height: 110px;
+    border-radius: 50%;
+    object-fit: cover;
+    box-sizing: border-box;
+    border: 3px solid transparent;
+    box-shadow: #615f5f 1px 5px 5px 1px;
+    background: linear-gradient(white, white) padding-box, 
+                linear-gradient(180deg, #00f7ff 0%, #6a00ff 35%, #f82dff 100%) border-box;
+    background-origin: border-box;
+}
+.avatar-container img:hover {
+    transform: scale(1.1);
+    transition: transform 0.3s ease;
+}
+.user-name {
+    margin-top: 5px;
+    font-size: 18px;
+    font-weight: bold;
+    color: #5E097E;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+/* Título do painel */
+.conquista-header {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 30px;
+    margin-bottom: -20px;
+    width: 100%;
+}
+.conquista-header h2 {
+    color: #5E097E;
+    margin: 0;
+    font-size: 18px;
+    margin-bottom: -20px;
+}
+.conquista-header img {
+    width: 100px;
+    height: auto;
+    margin-bottom: 15px;
+}
+
+/* Linha separadora */
+hr {
+  width: 95%;
+  border: none;
+  border-top: 1.5px solid #C2C2C2;
+  margin: 10px auto;
+}
+
+/* Painel de conquistas */
+.conquistas-panel {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 25px;
+    padding: 10px 20px;
+    justify-items: center;
+}
+.conquista {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    cursor: pointer;
+}
+.conquista img {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    object-fit: cover;
+    background-color: #D9D9D9;
+}
+.conquista img:hover {
+    transform: scale(1.1);
+    transition: transform 0.3s ease;
+}
+.conquista span {
+    margin-top: 8px;
+    font-size: 9px;
+    font-weight: bold;
+    color: black;
+}
+
+/* Texto de conquistas concluídas */
+#conquista-total {
+    font-size: 14px;
+    font-weight: bold;
+    color: #5E097E;
+    margin: 10px 0 20px 0;
+}
+
+/* Rodapé */
+.footer {
+    align-items: center;
+    justify-content: flex-start;
+    margin-top: auto;
+    display: flex;
+    height: 80px;
+}
+.footer img {
+    margin-top: 80px;
+    width: 65px;
+    height: 60px;
+    padding: 25px;
+}
+
+/* Modal */
+.modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.6);
+    display: none;
+    justify-content: center;
+    align-items: center;
+}
+.modal-content {
+    background: white;
+    padding: 20px;
+    border-radius: 12px;
+    width: 300px;
+    text-align: center;
+    box-shadow: 0 0 15px rgba(0,0,0,0.7);
+}
+.modal-content img {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+}
+.modal-content h3 {
+    color: #5E097E;
+    margin-top: 1px;
+}
+.modal-content p {
+    font-size: 14px;
+    color: #333;
+}
+.modal-content .status {
+    margin-top: 15px;
+    font-weight: bold;
+}
+.modal-close {
+    margin-top: 15px;
+    padding: 8px 15px;
+    background: #5E097E;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+}
+.modal-close:hover {
+    background: #9036e4;
+}
+  </style>
+</head>
+
+<body>
+<div class="background-logo-container">
+  <img src="Imagens/Logo sem Fundo.png" alt="Logo BrainForms Fundo">
+  <span>BrainForms</span>
+</div>
+
+<div class="menu-container">
+  <div class="header-container">
+    <img src="Imagens/Logo sem Fundo.png" alt="Logo BrainForms">
+    <h3><a href="menu.html">BrainForms</a></h3>
+  </div>
+
+  <div class="progress-section">
+    <h4>Progresso do Usuário</h4>
+    <div class="progress-bar">
+      <div class="progress" id="progress"></div>
+      <span class="progress-text" id="progress-text">0%</span>
+    </div>
+  </div>
+
+  <div class="avatar-container">
+    <a href="avatar.html">
+      <img id="conquistasAvatar" src="Imagens/perfilDefault.png" alt="Perfil do Usuário">
+    </a>
+  </div>
+
+  <p id="name-usuario-avatar" class="user-name"></p>
+
+  <div class="conquista-header">
+    <h2>Painel de Conquistas</h2>
+    <img src="Imagens/conquistasTitulo.png" alt="Ícone Conquistas">
+  </div>
+
+  <hr>
+
+  <div class="conquistas-panel" id="conquistas-panel"></div>
+
+  <hr>
+
+  <p id="conquista-total"></p>
+
+  <div class="footer">
+    <a href="menu.html">
+      <img src="Imagens/inicio.png" alt="Início">
+    </a>
+  </div>
+</div>
+
+<!-- Modal -->
+<div class="modal" id="modal">
+  <div class="modal-content">
+    <img id="modal-img" src="" alt="Ícone Conquista">
+    <h3 id="modal-name"></h3>
+    <p id="modal-descricao"></p>
+    <p class="status" id="modal-status"></p>
+    <button class="modal-close" id="modal-close">Fechar</button>
+  </div>
+</div>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  const name = localStorage.getItem("alunoname") || 'user';
+  document.getElementById("name-usuario-avatar").textContent = name;
+
+  const savedAvatar = localStorage.getItem('alunoAvatar');
+  if (savedAvatar) document.getElementById('conquistasAvatar').src = savedAvatar;
+
+  const conquistas = [
+    {
+      id: 1,
+      name: "A Jornada",
+      cor: "#EDBCFF",
+      descricao: `Seja muito bem-vindo ao BrainForms.<br> 
+      Sua jornada começa aqui!!<br>
+      (essa é sua 1° conquista por acessar o sistema)` ,
+      icone: "Imagens/conquista1.png"
+    },
+    {
+      id: 2,
+      name: "Matemática Forms",
+      cor: "#3C71ED",
+      descricao: `Vamos explorar o Universo da Matemática.
+      Efetue um Cálculo em Fórmulas Matemáticas!`,
+      icone: "Imagens/conquista2.png"
+    },
+    {
+      id: 3,
+      name: "Em Prática",
+      cor: "#e74c3c",
+      descricao: `Conclua exercícios práticos para reforçar seu aprendizado.<br>
+      Finalize algum questionário do BrainForms!!`,
+      icone: "Imagens/conquista3.png"
+    },
+    {
+      id: 4,
+      name: "Game Maker",
+      cor: "#8e44ad",
+      descricao: `Estudar nem sempre é chato, ainda mais com o BrainForms.<br>
+      Finalize o TimeQuizz na zona de minigames!`,
+      icone: "Imagens/conquista4.png"
+    },
+    {
+      id: 5,
+      name: "Físico Forms",
+      cor: "#3CED68",
+      descricao: `Vamos explorar o Universo da Física.<br>
+      Efetue um Cálculo em Fórmulas Físicas!`,
+      icone: "Imagens/conquista5.png"
+    },
+    {
+      id: 6,
+      name: "Disciplinado",
+      cor: "#FFEB3C",
+      descricao: `O Foco e Disciplina movem montanhas.<br> 
+      Mantenha-se firme em seus estudos por 3 dias seguidos!`,
+      icone: "Imagens/conquista6.png"
+    },
+    {
+      id: 7,
+      name: "De Cara Nova",
+      cor: "#9747FF",
+      descricao: "QUE CHARME!!<br>Altere sua foto de perfil.",
+      icone: "Imagens/conquista7.png"
+    },
+    {
+      id: 8,
+      name: "Genio do Questionário",
+      cor: "linear-gradient(180deg, #00f7ff 0%, #6a00ff 55%)",
+      descricao: `Uau! Você é um gênio dos questionários!<br>
+      Complete um questionário com 100% de acertos.`,
+      icone: "Imagens/conquista8.png"
+    },
+    {
+      id: 9,
+      name: "Mestre Geométrico",
+      cor: "#001CD3",
+      descricao: `Aprender Geometria é divertido!<br>
+      Efetue um cálculo de Fórmulas Geométricas.`,
+      icone: "Imagens/conquista9.png"
+    },
+    {
+      id: 10,
+      name: "Mestre da Conversão",
+      cor: "#d35400",
+      descricao: `Aprender sobre temperaturas é incrivél!<br>
+      Efetue um cálculo de Conversão de Temperaturas .`,
+      icone: "Imagens/conquista10.png"
+    },
+    {
+      id: 11,
+      name: "Gênio do TimeQuizz",
+      cor: "linear-gradient(180deg, #B400D3 0%, #6a00ff 55%)",
+      descricao: `Ágil e Certeiro!!<br>
+      Um verdadeiro Gênio do TimeQuizz.<br>
+      Acerte todas as questões em um TimeQuizz.`,
+      icone: "Imagens/conquista11.png"
+    },
+    {
+      id: 12,
+      name: "Boa Tentativa",
+      cor: "#2980b9",
+      descricao: `Essa foi Quase!!<br>
+      Erre apena uma questão no TimeQuizz.`,
+      icone: "Imagens/conquista12.png"
+    }
+  ];
+
+
+  const totalConquistas = conquistas.length;
+  let conquistasConcluidas = JSON.parse(localStorage.getItem('conquistasConcluidas')) || [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
+
+  // Progresso
+  let progressoPercent = (conquistasConcluidas.length / totalConquistas) * 100;
+  document.getElementById('progress').style.width = progressoPercent + '%';
+  document.getElementById('progress-text').textContent = Math.round(progressoPercent) + '%';
+
+  const panel = document.getElementById('conquistas-panel');
+
+  conquistas.forEach(c => {
+    const div = document.createElement('div');
+    div.className = 'conquista';
+
+    const img = document.createElement('img');
+    img.src = c.icone;
+    img.alt = c.name;
+
+    if (conquistasConcluidas.includes(c.id)) {
+      img.style.backgroundColor = c.cor;
+      img.style.background = c.cor;
+      img.style.filter = 'none';
+    } else {
+      img.style.backgroundColor = '#D9D9D9';
+      img.style.filter = 'grayscale(100%)';
+    }
+
+    const span = document.createElement('span');
+    span.textContent = c.name;
+
+    div.appendChild(img);
+    div.appendChild(span);
+    panel.appendChild(div);
+
+    div.addEventListener('click', () => {
+      const modalImg = document.getElementById('modal-img');
+      modalImg.src = c.icone;
+      modalImg.style.filter = conquistasConcluidas.includes(c.id) ? 'none' : 'grayscale(100%)';
+      modalImg.style.background = c.cor; 
+      modalImg.style.backgroundColor = conquistasConcluidas.includes(c.id) ? c.cor : '#D9D9D9';
+
+      document.getElementById('modal-name').textContent = c.name;
+      document.getElementById('modal-descricao').innerHTML = c.descricao;
+      document.getElementById('modal-status').textContent = conquistasConcluidas.includes(c.id) ? "✅ Concluída" : "🔒 Bloqueada";
+      document.getElementById('modal').style.display = 'flex';
+    });
+  });
+
+  document.getElementById("conquista-total").textContent = 
+    `${conquistasConcluidas.length} de ${totalConquistas} conquistas concluídas`;
+
+  document.getElementById('modal-close').addEventListener('click', () => {
+    document.getElementById('modal').style.display = 'none';
+  });
+});
+</script>
+</body>
+</html>

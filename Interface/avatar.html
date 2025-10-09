@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Avatar - BrainForms</title>
+
+<style>
+/* Estiliza o corpo da página */
+body {
+    font-family: 'Roboto', sans-serif;
+    background-color: #775085;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    margin: 0;
+    padding-bottom: 200px;
+    overflow-y: auto;
+}
+
+/* LOGO E TEXTO NO CANTO SUPERIOR ESQUERDO DO FUNDO */
+.background-logo-container {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  z-index: 0;
+}
+
+.background-logo-container img {
+  width: 100px;
+  height: auto;
+}
+
+.background-logo-container span {
+  color: white;
+  font-size: 48px;
+  font-weight: bold;
+  font-family: 'Roboto', sans-serif;
+}
+
+/* Container principal */
+.menu-container {
+ background-color: #fff;
+    border-radius: 12px;
+    box-shadow: 0 0 20px rgba(34, 2, 45, 0.6);
+    text-align: center;
+    top: 120px;
+    width: 400px;
+    height: 600px;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    overflow-y: auto;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+}
+
+/* Cabeçalho */
+ .header-container {
+      display: flex; /* Alinha logo e texto horizontalmente */
+      align-items: center; /* Alinha verticalmente */
+      background: linear-gradient(to bottom, #000000 0%, #3A024E 80%);
+      padding: 15px 20px;
+      border-radius: 12px 12px 0 0;
+      color: white;
+      width: 100%;
+      margin-bottom: 10px;
+  }
+
+  /* Estilo da imagem do logo */
+  .header-container img {
+      width: 65px;
+      margin-right: 10px;
+  }
+
+  /* Estilo do texto no cabeçalho */
+  .header-container h3 {
+      margin: 0;
+      font-size: 20px;
+  }
+
+  /* Link no h3 do cabeçalho */
+  .header-container h3 a {
+      text-decoration: none;
+      color: white;
+  }
+
+.header-left {
+    display: flex;
+    align-items: center;
+    
+}
+
+
+
+/* Seção abaixo do cabeçalho */
+.header-section {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 5px 15px;
+}
+
+/* Botões (upload e voltar)
+   Separo estilos comuns e específicos para permitir personalizar o botão "voltar"
+   sem afetar o botão de upload. */
+.icon-btn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  cursor: pointer;
+  text-decoration: none;
+  color: black;
+}
+
+/* upload mantém o tamanho original e fica em coluna (imagem acima do texto) */
+.upload-btn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  cursor: pointer;
+  text-decoration: none;
+  color: black;
+  font-size: 12px;
+}
+
+.upload-btn img{
+  width: 40px;
+  height: 40px;
+  margin-bottom: 6px; /* espaço claro entre imagem e label */
+}
+
+.upload-btn span {
+  font-size: 12px;
+  background-color: #e2e2e2;
+  padding: 3px 5px;
+  border-radius: 8px;
+  box-shadow: #615f5f 0px 4px 4px 0px;
+}
+
+/* botão de voltar: estilo único e um pouco maior */
+.back-btn {
+  display: flex; /* garante alinhamento vertical se quiser adicionar ícone depois */
+  flex-direction: column;
+  align-items: center;
+  font-size: 14px; /* controla texto/label */
+  padding: 4px 6px; /* aumenta a área clicável */
+  color: black; /* sobrescreve cor de link padrão (azul) */
+  text-decoration: none;
+}
+
+.back-btn span {
+  font-size: 14px;
+  background-color: #e2e2e2;
+  padding: 12px 10px; /* maior que o upload */
+  border-radius: 16px;
+  box-shadow: #615f5f 0px 4px 4px 0px;
+  display: inline-block;
+}
+
+/* Input escondido */
+#uploadInput {
+    display: none;
+}
+
+h2 {
+    text-align: left;
+    color: #5E097E;
+    font-size: 18px;
+    flex-grow: 1;
+    margin-left: 5px;
+}
+
+/* Rodapé */
+.footer {
+    align-items: center;
+    justify-content: flex-start;
+    margin-top: auto;
+    display: flex;
+    height: 80px;
+}
+
+.footer img {
+  margin-top: 80px;
+    width: 65px;
+    height: 60px;
+    padding: 25px;
+}
+
+/* Seção do avatar */
+.avatar-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 15px;
+}
+
+/* Avatar principal */
+.main-avatar {
+    margin-top: -20px;
+    width: 110px;
+    height: 110px;
+    border-radius: 50%;
+    object-fit: cover;
+    box-sizing: border-box;
+    border: 3px solid transparent;
+    box-shadow: #615f5f 1px 5px 5px 1px;
+ 
+
+    background: 
+      linear-gradient(white, white) padding-box, 
+      linear-gradient(180deg, #00f7ff 0%, #6a00ff 35%, #f82dff 100%) border-box;
+
+    background-origin: border-box;
+   
+}
+
+
+.user-name {
+    margin-top: 9px;
+    font-size: 18px;
+    font-weight: bold;
+    color: #5E097E;
+    text-align: center;
+    margin-bottom: 50px;
+}
+
+h4 {
+    align-self: flex-start;
+    margin-top: -25px;
+    color: black;
+    margin-bottom: 10px;
+    font-size: 14px;
+    
+}
+
+/* Painel de fundo */
+.avatar-panel {
+    background-color: #814597;
+    padding: 15px;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Avatares de escolha */
+.avatar-options {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 25px;
+    justify-items: center;
+}
+
+.avatar-options img {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background-color: #a476b4;
+    border: 2px solid #3b0250;
+    cursor: pointer;
+    object-fit: cover;
+    transition: transform 0.2s ease-in-out;
+    overflow: hidden; 
+    box-sizing: border-box;
+}
+
+.avatar-options img:hover {
+    transform: scale(1.1);
+}
+
+</style>
+</head>
+<body>
+
+  <!-- LOGO E TEXTO NO BACKGROUND -->
+  <div class="background-logo-container">
+    <img src="Imagens/Logo sem Fundo.png" alt="Logo BrainForms Fundo">
+    <span>BrainForms</span>
+  </div>
+
+  <!-- Container principal -->
+  <div class="menu-container">
+    
+    <!-- Cabeçalho -->
+    <div class="header-container">
+      <div class="header-left">
+        <img src="Imagens/Logo sem Fundo.png" alt="Logo BrainForms">
+       <h3><a href="menu.html">BrainForms</a></h3>
+      </div>
+    </div>
+
+    <!-- Linha com botão voltar, título e upload -->
+    <div class="header-section">
+      <a href="javascript:history.back()" class="back-btn">
+        <span>&lt; Voltar</span>
+      </a>
+
+      <h2>Alterar Foto do Perfil</h2>
+
+      <label class="upload-btn" for="uploadInput">
+        <img src="Imagens/foto.png" alt="Upload Foto">
+        <span>Insira sua foto</span>
+      </label>
+      <input type="file" id="uploadInput" accept="image/*">
+    </div>
+
+    <!-- Seção de avatares -->
+    <div class="avatar-section">
+      <!-- Avatar principal -->
+      <img id="mainAvatar" src="Imagens/perfilDefault.png" alt="Avatar Principal" class="main-avatar">
+      
+      <!-- Nome do usuário -->
+      <p id="nome-usuario-avatar" class="user-name"></p>
+
+      <h4>Escoha o avatar de sua preferência:</h4>
+      <!-- Painel com avatares -->
+      <div class="avatar-panel">
+        <div class="avatar-options">
+          <img src="Imagens/avatar1.png" alt="Avatar 1" onclick="trocarAvatar(this.src)">
+          <img src="Imagens/avatar2.png" alt="Avatar 2" onclick="trocarAvatar(this.src)">
+          <img src="Imagens/avatar3.png" alt="Avatar 3" onclick="trocarAvatar(this.src)">
+          <img src="Imagens/avatar4.png" alt="Avatar 4" onclick="trocarAvatar(this.src)">
+          <img src="Imagens/avatar5.png" alt="Avatar 5" onclick="trocarAvatar(this.src)">
+          <img src="Imagens/avatar6.png" alt="Avatar 6" onclick="trocarAvatar(this.src)">
+          <img src="Imagens/avatar7.png" alt="Avatar 7" onclick="trocarAvatar(this.src)">
+          <img src="Imagens/avatar8.png" alt="Avatar 8" onclick="trocarAvatar(this.src)">
+          <img src="Imagens/avatar9.png" alt="Avatar 9" onclick="trocarAvatar(this.src)">
+          <img src="Imagens/avatar10.png" alt="Avatar 10" onclick="trocarAvatar(this.src)">
+          <img src="Imagens/avatar11.png" alt="Avatar 11" onclick="trocarAvatar(this.src)">
+          <img src="Imagens/avatar12.png" alt="Avatar 12" onclick="trocarAvatar(this.src)">
+          <img src="Imagens/avatar13.png" alt="Avatar 13" onclick="trocarAvatar(this.src)">
+          <img src="Imagens/avatar14.png" alt="Avatar 14" onclick="trocarAvatar(this.src)">
+          <img src="Imagens/avatar15.png" alt="Avatar 15" onclick="trocarAvatar(this.src)">
+          <img src="Imagens/avatar16.png" alt="Avatar 16" onclick="trocarAvatar(this.src)">
+        </div>
+      </div>
+    </div>
+
+    <!-- Rodapé -->
+    <div class="footer">
+      <a href="menu.html">
+        <img src="Imagens/inicio.png" alt="Início">
+      </a>
+    </div>
+  </div>
+
+<script>
+  // Troca avatar principal
+  function trocarAvatar(src) {
+    document.getElementById('mainAvatar').src = src;
+    try {
+      localStorage.setItem('alunoAvatar', src);
+    } catch (e) {
+      console.warn('Não foi possível salvar o avatar no localStorage:', e);
+    }
+  }
+  
+  //Nome do usuário
+  document.addEventListener("DOMContentLoaded", () => {
+      const nome = localStorage.getItem("alunoNome");
+      if (nome) {
+          document.getElementById("nome-usuario-avatar").textContent = nome || 'user';
+      }
+      else {
+          document.getElementById("nome-usuario-avatar").textContent = 'user';
+      }
+    // Carrega avatar salvo (se houver)
+    const savedAvatar = localStorage.getItem('alunoAvatar');
+    if (savedAvatar) {
+    const main = document.getElementById('mainAvatar');
+    main.src = savedAvatar;
+    }
+  });
+
+  // Upload de imagem personalizada
+  document.getElementById("uploadInput").addEventListener("change", function(event) {
+      const file = event.target.files[0];
+      if (file) {
+          const reader = new FileReader();
+          reader.onload = function(e) {
+              const dataUrl = e.target.result;
+              document.getElementById("mainAvatar").src = dataUrl;
+              try {
+                localStorage.setItem('alunoAvatar', dataUrl);
+              } catch (err) {
+                console.warn('Não foi possível salvar avatar no localStorage:', err);
+              }
+          }
+          reader.readAsDataURL(file);
+      }
+  });
+</script>
+
+</body>
+</html>

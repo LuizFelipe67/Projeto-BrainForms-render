@@ -56,28 +56,29 @@
             position: relative; /* Necessário para posicionar o rodapé */
         }
 
-                /* Cabeçalho dentro do container */
+             
+        /* Cabeçalho dentro do container do menu */
         .header-container {
-            display: flex; /* Alinha logo e texto horizontalmente */
-            align-items: center; /* Alinha verticalmente */
-            background: linear-gradient(to bottom, #000000 0%, #3A024E 80%);
-            padding: 15px 20px;
-            border-radius: 12px 12px 0 0;
-            color: white;
-            width: 100%;
-            margin-bottom: 30px;
+            display: flex; /* Flexbox para alinhar texto e imagem na horizontal */
+            align-items: center; /* Alinha verticalmente ao centro */
+            background: linear-gradient(to bottom, #000000 0%, #3A024E 80%); /* Gradiente invertido */
+            padding: 15px 20px; /* Espaçamento interno */
+            border-radius: 12px 12px 0 0; /* Cantos arredondados só no topo */
+            color: white; /* Cor do texto */
+            width: 100%; /* Largura total do container */
+            margin-bottom: 30px; /* Espaço abaixo do cabeçalho */
         }
 
-        /* Estilo da imagem do logo */
+        /* Estilo da imagem do logo no cabeçalho */
         .header-container img {
-            width: 65px;
-            margin-right: 10px;
+            width: 65px; /* Largura da imagem */
+            margin-right: 10px; /* Espaço à direita da imagem */
         }
 
-        /* Estilo do texto no cabeçalho */
+        /* Estilo do título dentro do cabeçalho */
         .header-container h3 {
-            margin: 0;
-            font-size: 20px;
+            margin: 0; /* Remove margem padrão */
+            font-size: 20px; /* Tamanho da fonte menor */
         }
 
         /* Link no h3 do cabeçalho */
@@ -188,6 +189,7 @@
             width: 65px; /* Largura aumentada */
             height: 60px; /* Altura aumentada */
             padding: 25PX; /* Remove padding para não cortar imagens */
+            display: block;
         }
 
          @media (max-width: 480px) {
@@ -328,7 +330,9 @@
             <a href="menu.html">
             <img src="Imagens/inicio.png" alt="inicio">
             </a>
-            <img src="Imagens/conquistas.png" alt="conquista">
+            <a href="conquistas.html">
+                <img src="Imagens/conquistas.png" alt="Conquistas">
+            </a>
             <img src="Imagens/menu.png" alt="menu">
         </div>
 

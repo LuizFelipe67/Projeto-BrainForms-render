@@ -58,6 +58,7 @@ body {
     position: relative; /* Necessário para posicionar o rodapé */
 }
 
+
 /* Cabeçalho dentro do container do menu */
 .header-container {
     display: flex; /* Flexbox para alinhar texto e imagem na horizontal */
@@ -101,6 +102,8 @@ body {
     align-items: center; /* Centraliza horizontalmente */
     margin-top: 60px; /* Espaço acima */
     padding: 0 20px; /* Espaçamento lateral */
+    overflow: visible;
+
 }
 
 /* Linha que contém dois botões lado a lado */
@@ -138,9 +141,8 @@ body {
 
 /* Efeito visual ao passar o mouse sobre os botões */
 .menu-container button:hover {
-    background-color: #9036e4; /* Fundo roxo vibrante */
-    color: #99e9f7; /* Texto branco */
     box-shadow: 12px 0 18px rgba(48, 10, 62, 0.7); /* Sombra mais intensa à direita */
+    background-color: #D8D2F0;
     transform: scale(1.02);
 }
 
@@ -193,15 +195,49 @@ body {
     bottom: 0; /* Fixa na parte inferior */
     width: 100%; /* Ocupa toda a largura */
     height: 80px; /* Altura aumentada do rodapé */
-    gap: 30px; /* Espaço entre os ícones */
+    gap: 80px; /* Espaço entre os ícones */
+    padding: 0; /* remove padding que pode deslocar o conteúdo */
 }
 
 /* Estilo das imagens do rodapé */
 .footer img {
-    width: 65px; /* Largura aumentada */
-    height: 60px; /* Altura aumentada */
-    padding: 25PX; /* Remove padding para não cortar imagens */
+    width: 65px;
+    height: 60px;
+    padding: 0;
+    display: block;
+    margin: 0; 
+   
 }
+
+
+
+/* Avatar circular com anel gradiente uniforme */
+.footer a[href="avatar.html"] {
+   
+    --ring: 3px;
+
+    display: inline-grid;
+    place-items: center;
+    width: 58px;   /* tamanho total com anel */
+    height: 58px;
+    border-radius: 50%;
+    position: relative; /* needed for ::before ring */
+    background:  linear-gradient(180deg, #00f7ff 0%, #6a00ff 35%, #f82dff 100%); 
+    box-shadow: 0 0 8px rgba(106,0,255,0.10);
+}
+
+
+/* Garante que a imagem do avatar fique certinha dentro do anel */
+#menuAvatar {
+    /* size avatar to fit inside the punched ring */
+    width: calc(100% - (var(--ring) * 2));
+    height: calc(100% - (var(--ring) * 2));
+    border-radius: 50%;
+    object-fit: cover;
+    z-index: 1; /* sit above the ::before ring */
+}
+
+
 
 
 .blurred {
@@ -413,15 +449,27 @@ body {
             height: 65px;
         }
 
-      .footer img {
-        width: 70px; /* Largura aumentada */
-        height: 65px; /* Altura aumentada */
-        padding: 45px; /* Remove padding para não cortar imagens */
-    }
+        /* Rodapé: centralizar ícones e manter espaçamento consistente com outras telas */
+        .footer {
+            justify-content: center;
+            align-items: center;
+            gap: 120px; /* mesmo espaçamento definido fora da media query */
+            padding: 0;
+        }
+
+       .footer img {
+        width: 67px;
+        height: 62px;
+        }
+
+        /* Avatar circular com anel gradiente uniforme */
+        .footer a[href="avatar.html"] {
+            width: 62px;   
+            height: 62px;
+        }
 
 
-
-    }
+}
 
 
     </style>
@@ -477,9 +525,15 @@ body {
 
         <!-- Rodapé com três ícones (aumentados e centralizados corretamente) -->
         <div class="footer">
-            <img src="Imagens/perfil.png" alt="Perfil"> <!-- Ícone do perfil -->
-            <img src="Imagens/conquistas.png" alt="Conquistas"> <!-- Ícone das conquistas -->
-            <img src="Imagens/menu.png" alt="Menu"> <!-- Ícone do menu -->
+            <a href="avatar.html">
+            <img id="menuAvatar" src="Imagens/perfil.png" alt="Perfil"> <!-- Ícone do perfil -->
+            </a>
+
+            <a href="conquistas.html">
+             <img src="Imagens/conquistas.png" alt="Conquistas" style= "padding-left: 7px;"> <!-- Ícone das conquistas -->
+            </a>
+            
+            <img src="Imagens/menu.png" alt="Menu" style="width: 60px;"> <!-- Ícone do menu -->
         </div>
     </div>
 
@@ -512,6 +566,16 @@ body {
             mostrados[nome] = true;
             localStorage.setItem("boas_vindas_mostrada", JSON.stringify(mostrados));
         };
+        // Atualiza o avatar do rodapé com o valor salvo (se existir)
+        try {
+            const savedAvatar = localStorage.getItem('alunoAvatar');
+            if (savedAvatar) {
+                const menuImg = document.getElementById('menuAvatar');
+                if (menuImg) menuImg.src = savedAvatar;
+            }
+        } catch (e) {
+            console.warn('Erro ao carregar avatar do localStorage:', e);
+        }
     });
 </script>
 
