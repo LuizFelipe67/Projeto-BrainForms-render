@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\AlunoRequest;
 use Illuminate\Http\Request;
 use App\Models\Aluno;
+use App\Models\Conquista;
 use Illuminate\Support\Facades\Hash;
 
 class AlunoController extends Controller
@@ -28,6 +29,12 @@ class AlunoController extends Controller
             'email' => $request->email,
             'password' => Hash::make($request->password),
         ]);
+
+        // DESBLOQUEAR A PRIMEIRA CONQUISTA AUTOMATICAMENTE
+        $primeiraConquista = Conquista::find(1); // A Jornada
+        if ($primeiraConquista) {
+            $aluno->conquistas()->attach($primeiraConquista->id);
+        }
 
         return response()->json([
             'status' => 200,

@@ -20,4 +20,14 @@ class Aluno extends Model
     protected $hidden = [
         'password',
     ];
+
+    public function conquistas()
+    {
+        return $this->belongsToMany(Conquista::class, 'aluno_conquistas')
+                    ->withPivot('data_conquista')
+                    ->withTimestamps();
+    }
+
 }
+
+ 
