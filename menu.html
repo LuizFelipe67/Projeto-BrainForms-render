@@ -547,6 +547,7 @@ body {
         </div>
     </div>
 
+    <script src="js/conquistas-utils.js"></script>
 
 <script>
     document.addEventListener("DOMContentLoaded", () => {
@@ -557,7 +558,13 @@ body {
         } catch(e) {
             mostrados = {};
         }
-        if (nome && !mostrados[nome]) {
+        const alunoId = localStorage.getItem('alunoId');
+        const seenKey = alunoId ? `boas_vindas_vista_${alunoId}` : null;
+        const shouldShow = localStorage.getItem('show_boas_vindas');
+
+        // Mostrar overlay somente se foi marcado para mostrar e o usuário ainda não viu
+        const userAlreadySaw = seenKey ? !!localStorage.getItem(seenKey) : !!mostrados[nome];
+        if (nome && shouldShow && !userAlreadySaw) {
             document.getElementById("nome-usuario").textContent = nome;
             document.getElementById("start-overlay").style.display = "flex";
         }
@@ -565,6 +572,24 @@ body {
             document.getElementById("start-overlay").style.display = "none";
             mostrados[nome] = true;
             localStorage.setItem("boas_vindas_mostrada", JSON.stringify(mostrados));
+            // marcar que o usuário visualizou a boas-vindas (por id) e limpar flag temporária
+            if (alunoId) {
+                const key = `boas_vindas_vista_${alunoId}`;
+                localStorage.setItem(key, 'true');
+            }
+            localStorage.removeItem('show_boas_vindas');
+            // --- buscar conquistas e mostrar alertas (utilitário compartilhado) ---
+            (async () => {
+                try {
+                    const conquistas = await window.carregarConquistasAPI?.();
+                    if (conquistas && conquistas.length) {
+                        // mostra todas como novas na primeira vez
+                        window.mostrarNovasConquistasLocal?.(conquistas, true);
+                    }
+                } catch (e) {
+                    console.error('Erro ao buscar conquistas no menu:', e);
+                }
+            })();
         };
         // Atualiza o avatar do rodapé com o valor salvo (se existir)
         try {

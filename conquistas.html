@@ -353,170 +353,109 @@ hr {
   </div>
 </div>
 
+<script src="js/conquistas-utils.js"></script>
 <script>
-document.addEventListener("DOMContentLoaded", () => {
-  const name = localStorage.getItem("alunoname") || 'user';
-  document.getElementById("name-usuario-avatar").textContent = name;
+document.addEventListener("DOMContentLoaded", async () => {
+    const nome = localStorage.getItem("alunoNome") || "user";
+    const overlay = document.getElementById("start-overlay");
+    const nomeUsuarioSpan = document.getElementById("nome-usuario");
+    const menuAvatar = document.getElementById("conquistasAvatar"); // avatar na tela de conquistas
+    const modal = document.getElementById("modal");
+    const modalClose = document.getElementById("modal-close");
 
-  const savedAvatar = localStorage.getItem('alunoAvatar');
-  if (savedAvatar) document.getElementById('conquistasAvatar').src = savedAvatar;
-
-  const conquistas = [
-    {
-      id: 1,
-      name: "A Jornada",
-      cor: "#EDBCFF",
-      descricao: `Seja muito bem-vindo ao BrainForms.<br> 
-      Sua jornada começa aqui!!<br>
-      (essa é sua 1° conquista por acessar o sistema)` ,
-      icone: "Imagens/conquista1.png"
-    },
-    {
-      id: 2,
-      name: "Matemática Forms",
-      cor: "#3C71ED",
-      descricao: `Vamos explorar o Universo da Matemática.
-      Efetue um Cálculo em Fórmulas Matemáticas!`,
-      icone: "Imagens/conquista2.png"
-    },
-    {
-      id: 3,
-      name: "Em Prática",
-      cor: "#e74c3c",
-      descricao: `Conclua exercícios práticos para reforçar seu aprendizado.<br>
-      Finalize algum questionário do BrainForms!!`,
-      icone: "Imagens/conquista3.png"
-    },
-    {
-      id: 4,
-      name: "Game Maker",
-      cor: "#8e44ad",
-      descricao: `Estudar nem sempre é chato, ainda mais com o BrainForms.<br>
-      Finalize o TimeQuizz na zona de minigames!`,
-      icone: "Imagens/conquista4.png"
-    },
-    {
-      id: 5,
-      name: "Físico Forms",
-      cor: "#3CED68",
-      descricao: `Vamos explorar o Universo da Física.<br>
-      Efetue um Cálculo em Fórmulas Físicas!`,
-      icone: "Imagens/conquista5.png"
-    },
-    {
-      id: 6,
-      name: "Disciplinado",
-      cor: "#FFEB3C",
-      descricao: `O Foco e Disciplina movem montanhas.<br> 
-      Mantenha-se firme em seus estudos por 3 dias seguidos!`,
-      icone: "Imagens/conquista6.png"
-    },
-    {
-      id: 7,
-      name: "De Cara Nova",
-      cor: "#9747FF",
-      descricao: "QUE CHARME!!<br>Altere sua foto de perfil.",
-      icone: "Imagens/conquista7.png"
-    },
-    {
-      id: 8,
-      name: "Genio do Questionário",
-      cor: "linear-gradient(180deg, #00f7ff 0%, #6a00ff 55%)",
-      descricao: `Uau! Você é um gênio dos questionários!<br>
-      Complete um questionário com 100% de acertos.`,
-      icone: "Imagens/conquista8.png"
-    },
-    {
-      id: 9,
-      name: "Mestre Geométrico",
-      cor: "#001CD3",
-      descricao: `Aprender Geometria é divertido!<br>
-      Efetue um cálculo de Fórmulas Geométricas.`,
-      icone: "Imagens/conquista9.png"
-    },
-    {
-      id: 10,
-      name: "Mestre da Conversão",
-      cor: "#d35400",
-      descricao: `Aprender sobre temperaturas é incrivél!<br>
-      Efetue um cálculo de Conversão de Temperaturas .`,
-      icone: "Imagens/conquista10.png"
-    },
-    {
-      id: 11,
-      name: "Gênio do TimeQuizz",
-      cor: "linear-gradient(180deg, #B400D3 0%, #6a00ff 55%)",
-      descricao: `Ágil e Certeiro!!<br>
-      Um verdadeiro Gênio do TimeQuizz.<br>
-      Acerte todas as questões em um TimeQuizz.`,
-      icone: "Imagens/conquista11.png"
-    },
-    {
-      id: 12,
-      name: "Boa Tentativa",
-      cor: "#2980b9",
-      descricao: `Essa foi Quase!!<br>
-      Erre apena uma questão no TimeQuizz.`,
-      icone: "Imagens/conquista12.png"
-    }
-  ];
-
-
-  const totalConquistas = conquistas.length;
-  let conquistasConcluidas = JSON.parse(localStorage.getItem('conquistasConcluidas')) || [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
-
-  // Progresso
-  let progressoPercent = (conquistasConcluidas.length / totalConquistas) * 100;
-  document.getElementById('progress').style.width = progressoPercent + '%';
-  document.getElementById('progress-text').textContent = Math.round(progressoPercent) + '%';
-
-  const panel = document.getElementById('conquistas-panel');
-
-  conquistas.forEach(c => {
-    const div = document.createElement('div');
-    div.className = 'conquista';
-
-    const img = document.createElement('img');
-    img.src = c.icone;
-    img.alt = c.name;
-
-    if (conquistasConcluidas.includes(c.id)) {
-      img.style.backgroundColor = c.cor;
-      img.style.background = c.cor;
-      img.style.filter = 'none';
-    } else {
-      img.style.backgroundColor = '#D9D9D9';
-      img.style.filter = 'grayscale(100%)';
+    // --- Atualiza avatar da tela de conquistas ---
+    const savedAvatar = localStorage.getItem("alunoAvatar");
+    if (savedAvatar && menuAvatar) {
+        menuAvatar.src = savedAvatar;
     }
 
-    const span = document.createElement('span');
-    span.textContent = c.name;
+    // usamos carregarConquistasAPI() e mostrarNovasConquistasLocal() do utilitário js
 
-    div.appendChild(img);
-    div.appendChild(span);
-    panel.appendChild(div);
 
-    div.addEventListener('click', () => {
-      const modalImg = document.getElementById('modal-img');
-      modalImg.src = c.icone;
-      modalImg.style.filter = conquistasConcluidas.includes(c.id) ? 'none' : 'grayscale(100%)';
-      modalImg.style.background = c.cor; 
-      modalImg.style.backgroundColor = conquistasConcluidas.includes(c.id) ? c.cor : '#D9D9D9';
+    // --- Renderiza painel de conquistas ---
+    function renderizarPainel(conquistas) {
+        const panel = document.getElementById("conquistas-panel");
+        panel.innerHTML = "";
+        const conquistasConcluidas = conquistas.filter(c => c.concluida);
+        const totalConquistas = conquistas.length;
 
-      document.getElementById('modal-name').textContent = c.name;
-      document.getElementById('modal-descricao').innerHTML = c.descricao;
-      document.getElementById('modal-status').textContent = conquistasConcluidas.includes(c.id) ? "✅ Concluída" : "🔒 Bloqueada";
-      document.getElementById('modal').style.display = 'flex';
+        // Atualiza barra de progresso
+        const progressoPercent = (conquistasConcluidas.length / totalConquistas) * 100;
+        document.getElementById("progress").style.width = progressoPercent + "%";
+        document.getElementById("progress-text").textContent = Math.round(progressoPercent) + "%";
+
+        conquistas.forEach(c => {
+            const div = document.createElement("div");
+            div.className = "conquista";
+
+            const img = document.createElement("img");
+            img.src = c.icone || "Imagens/perfilDefault.png";
+            img.alt = c.name;
+
+            if (c.concluida) {
+                img.style.background = c.cor || "#fff";
+                img.style.filter = "none";
+            } else {
+                img.style.backgroundColor = "#D9D9D9";
+                img.style.filter = "grayscale(100%)";
+            }
+
+            const span = document.createElement("span");
+            span.textContent = c.name;
+
+            div.appendChild(img);
+            div.appendChild(span);
+            panel.appendChild(div);
+
+            // Modal ao clicar na conquista
+            div.addEventListener("click", () => {
+                document.getElementById("modal-img").src = c.icone || "Imagens/perfilDefault.png";
+                document.getElementById("modal-img").style.filter = c.concluida ? "none" : "grayscale(100%)";
+                document.getElementById("modal-img").style.background = c.cor || "#D9D9D9";
+                document.getElementById("modal-name").textContent = c.name;
+                document.getElementById("modal-descricao").innerHTML = c.descricao || "";
+                document.getElementById("modal-status").textContent = c.concluida ? "✅ Concluída" : "🔒 Bloqueada";
+                modal.style.display = "flex";
+            });
+        });
+
+        document.getElementById("conquista-total").textContent =
+            `${conquistasConcluidas.length} de ${totalConquistas} conquistas concluídas`;
+    }
+
+    // --- Fecha modal ---
+    modalClose.addEventListener("click", () => {
+        modal.style.display = "none";
     });
-  });
 
-  document.getElementById("conquista-total").textContent = 
-    `${conquistasConcluidas.length} de ${totalConquistas} conquistas concluídas`;
+    // --- Sequência principal ---
+    const conquistas = await window.carregarConquistasAPI?.();
+    renderizarPainel(conquistas || []);
 
-  document.getElementById('modal-close').addEventListener('click', () => {
-    document.getElementById('modal').style.display = 'none';
-  });
+    // Exibe overlay de boas-vindas se necessário
+    let mostrados = JSON.parse(localStorage.getItem("boas_vindas_mostrada") || "{}");
+        if (!mostrados[nome]) {
+            nomeUsuarioSpan.textContent = nome;
+            overlay.style.display = "flex";
+
+            window.startGame = async () => {
+                overlay.style.display = "none";
+                mostrados[nome] = true;
+                localStorage.setItem("boas_vindas_mostrada", JSON.stringify(mostrados));
+
+                // Mostra conquistas novas na primeira vez (utilitário)
+                window.mostrarNovasConquistasLocal?.(conquistas || [], true);
+            };
+        } else {
+            // Já viu overlay, mostra conquistas novas normalmente
+            window.mostrarNovasConquistasLocal?.(conquistas || [], false);
+        }
+
 });
 </script>
+
+
+
+
 </body>
 </html>
