@@ -1,11 +1,14 @@
 // Utilitários compartilhados para conquistas
+ const API_URL = "https://brainforms-api.onrender.com";
+
+
 (function () {
   async function carregarConquistasAPI() {
     try {
       const token = localStorage.getItem('token');
       if (!token) return [];
 
-      const res = await fetch('http://127.0.0.1:8000/api/alunos/conquistas', {
+  const res = await fetch(`${API_URL}/api/alunos/conquistas`, {
         headers: { 'Authorization': `Bearer ${token}` }
       });
 

@@ -383,6 +383,9 @@
 </div>
 
 <script>
+   const API_URL = "https://brainforms-api.onrender.com";
+
+
   const questions = [
     {
       text: 'Qual é o valor de sen(30°)?',
@@ -549,7 +552,7 @@
     };
 
     try {
-      const response = await fetch('http://localhost:8000/api/math-responses', {
+  const response = await fetch(`${API_URL}/api/math-responses`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

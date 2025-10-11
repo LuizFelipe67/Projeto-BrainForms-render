@@ -389,6 +389,8 @@
 </div>
 
 <script>
+   const API_URL = "https://brainforms-api.onrender.com";
+
   const questions = [
     {
       text: 'O que diz a Primeira Lei de Newton, conhecida como Lei da Inércia?',
@@ -576,7 +578,7 @@
     };
 
     try {
-      const response = await fetch('http://localhost:8000/api/fis-responses', {
+  const response = await fetch(`${API_URL}/api/fis-responses`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
