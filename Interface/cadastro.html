@@ -393,6 +393,9 @@
   </div>
 
  <script>
+   const API_URL = "https://brainforms-api.onrender.com";
+
+
   // Botão Cancelar
   document.getElementById("cancelar").onclick = function () {
     window.location.href = "login.html";
@@ -433,7 +436,7 @@
     }
 
 
-    fetch("http://localhost:8000/api/alunos/cadastrar", {
+  fetch(`${API_URL}/api/alunos/cadastrar`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

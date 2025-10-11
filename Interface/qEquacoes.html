@@ -382,6 +382,8 @@
 </div>
 
 <script>
+   const API_URL = "https://brainforms-api.onrender.com";
+
   const questions = [
     {
       text: '2x + 6 = 14. \nQual é o valor de x?',
@@ -558,7 +560,7 @@
     };
 
     try {
-      const response = await fetch('http://localhost:8000/api/math-responses', {
+  const response = await fetch(`${API_URL}/api/math-responses`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

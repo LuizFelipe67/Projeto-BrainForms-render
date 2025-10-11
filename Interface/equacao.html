@@ -414,6 +414,8 @@
     <script src="js/conquistas-utils.js"></script>
 
   <script>
+     const API_URL = "https://brainforms-api.onrender.com";
+
 // ===============================
 // FORMULÁRIO EQUAÇÃO (BHASKARA)
 // ===============================
@@ -483,7 +485,7 @@ document.addEventListener("DOMContentLoaded", () => {
       resultado: resultadoObj
     };
 
-    const res = await fetch('http://127.0.0.1:8000/api/historico-formulas', {
+  const res = await fetch(`${API_URL}/api/historico-formulas`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

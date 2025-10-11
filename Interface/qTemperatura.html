@@ -384,6 +384,9 @@
 </div>
 
 <script>
+   const API_URL = "https://brainforms-api.onrender.com";
+
+
   const questions = [
     {
       text: 'Qual é a temperatura equivalente a 0 °C na escala Fahrenheit?',
@@ -557,7 +560,7 @@
 
 
     try {
-      const response = await fetch('http://localhost:8000/api/fis-responses', {
+  const response = await fetch(`${API_URL}/api/fis-responses`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
