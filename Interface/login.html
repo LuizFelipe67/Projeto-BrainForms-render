@@ -626,6 +626,8 @@ button#cadastrar:hover {
 </div>
 
  <script>
+   const API_URL = "https://brainforms-api.onrender.com";
+
   // Função auxiliar para exibir erro em um input
   function mostrarErro(divId, inputId, mensagem) {
     const divErro = document.getElementById(divId);
@@ -661,7 +663,7 @@ button#cadastrar:hover {
       return;
     }
 
-    fetch("http://localhost:8000/api/alunos/login", {
+  fetch(`${API_URL}/api/alunos/login`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

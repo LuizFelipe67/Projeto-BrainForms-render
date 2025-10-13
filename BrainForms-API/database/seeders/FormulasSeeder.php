@@ -9,8 +9,7 @@ class FormulasSeeder extends Seeder
 {
     public function run()
     {
-        DB::table('formulas')->insert([
-
+        DB::table('formulas')->insertOrIgnore([
             // -------------------- MATEMÁTICA --------------------
             [
                 'name' => 'Cálculo de Equações 2º Grau (Bhaskara)',
