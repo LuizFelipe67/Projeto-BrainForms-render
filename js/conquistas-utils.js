@@ -23,6 +23,7 @@
       return [];
     }
   }
+  
 
   function criarModalConquista() {
     if (document.getElementById('conquista-modal')) return; // já existe
@@ -87,6 +88,8 @@
    * @param {boolean} primeiraVez - se true, mostra todas concluidas na primeira vez
    * @param {Array|null} novasIds - opcional, array de ids (do backend) que foram recém-desbloqueadas
    */
+
+
   function mostrarNovasConquistasLocal(conquistas, primeiraVez = false, novasIds = null) {
     const conquistasAntigas = JSON.parse(localStorage.getItem('conquistasAnteriores')) || [];
 
