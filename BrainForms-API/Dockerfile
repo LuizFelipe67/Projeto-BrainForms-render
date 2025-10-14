@@ -3,7 +3,7 @@
 # ======================================
 
 # Imagem base PHP com Apache
-FROM php:8.3-apache
+FROM php:8.2-apache
 
 # -------------------------------
 # Instala dependências do sistema
@@ -13,7 +13,17 @@ RUN apt-get update && apt-get install -y \
     unzip \
     git \
     libzip-dev \
-    && docker-php-ext-install pdo_pgsql zip
+    libpng-dev \
+    libjpeg-dev \
+    libfreetype6-dev \
+    zip \
+    curl \
+    && docker-php-ext-configure gd --with-freetype --with-jpeg \
+    && docker-php-ext-install -j$(nproc) \
+        pdo_pgsql \
+        zip \
+        gd \
+        bcmath
 
 # -------------------------------
 # Instala Composer
@@ -26,19 +36,34 @@ COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
 WORKDIR /var/www/html
 
 # -------------------------------
-# Copia os arquivos da API
+# Copia composer files
 # -------------------------------
-COPY . .
+COPY composer.json composer.lock ./
 
 # -------------------------------
 # Instala dependências do Laravel
 # -------------------------------
-RUN composer install --no-dev --optimize-autoloader
+RUN composer install --no-dev --no-scripts --prefer-dist --no-progress
+
+# -------------------------------
+# Copia o restante dos arquivos da API
+# -------------------------------
+COPY . .
+
+# -------------------------------
+# Finaliza setup do Laravel
+# -------------------------------
+RUN composer dump-autoload --optimize \
+    && php artisan config:cache \
+    && php artisan route:cache \
+    && php artisan view:cache
 
 # -------------------------------
 # Permissões para Laravel
 # -------------------------------
-RUN chown -R www-data:www-data storage bootstrap/cache
+RUN chown -R www-data:www-data /var/www/html \
+    && find /var/www/html/storage -type d -exec chmod 775 {} \; \
+    && find /var/www/html/storage -type f -exec chmod 664 {} \;
 
 # -------------------------------
 # Ativa mod_rewrite e headers do Apache
@@ -74,11 +99,23 @@ ENV APP_DEBUG=false
 ENV PORT=10000
 
 # -------------------------------
+# Configura o PHP para produção
+# -------------------------------
+RUN mv "$PHP_INI_DIR/php.ini-production" "$PHP_INI_DIR/php.ini" \
+    && sed -i 's/memory_limit = 128M/memory_limit = 256M/g' "$PHP_INI_DIR/php.ini"
+
+# -------------------------------
 # Expõe a porta
 # -------------------------------
 EXPOSE 10000
 
 # -------------------------------
-# Comando para iniciar Apache no foreground
+# Script de entrada para inicialização
 # -------------------------------
-CMD ["apache2-foreground"]
+COPY docker-entrypoint.sh /usr/local/bin/
+RUN chmod +x /usr/local/bin/docker-entrypoint.sh
+
+# -------------------------------
+# Define o comando de entrada
+# -------------------------------
+ENTRYPOINT ["docker-entrypoint.sh"]
