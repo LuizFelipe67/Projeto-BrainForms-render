@@ -42,6 +42,11 @@ WORKDIR /var/www/html
 COPY composer.json composer.lock ./
 
 # -------------------------------
+# Copia o .env.example para .env
+# -------------------------------
+COPY .env.example .env
+
+# -------------------------------
 # Instala dependências do Laravel
 # -------------------------------
 RUN composer install --no-dev --no-scripts --prefer-dist --no-progress
@@ -103,7 +108,12 @@ ENV PORT=10000
 # Configura o PHP para produção
 # -------------------------------
 RUN mv "$PHP_INI_DIR/php.ini-production" "$PHP_INI_DIR/php.ini" \
-    && sed -i 's/memory_limit = 128M/memory_limit = 256M/g' "$PHP_INI_DIR/php.ini"
+    && sed -i 's/memory_limit = 128M/memory_limit = 256M/g' "$PHP_INI_DIR/php.ini" \
+    && sed -i 's/display_errors = Off/display_errors = On/g' "$PHP_INI_DIR/php.ini" \
+    && sed -i 's/log_errors = Off/log_errors = On/g' "$PHP_INI_DIR/php.ini"
+
+# Habilita mod_headers para logs detalhados
+RUN a2enmod headers
 
 # -------------------------------
 # Expõe a porta
