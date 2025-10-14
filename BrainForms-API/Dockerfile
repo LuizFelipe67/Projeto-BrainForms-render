@@ -37,16 +37,31 @@ COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
 WORKDIR /var/www/html
 
 # -------------------------------
-# Copia arquivos de configuração
+# Configura ambiente
 # -------------------------------
-COPY docker/setup.sh /usr/local/bin/
 COPY composer.json composer.lock ./
 COPY .env.example .env
 
 # -------------------------------
-# Executa script de configuração
+# Script de configuração inline
 # -------------------------------
-RUN chmod +x /usr/local/bin/setup.sh && /usr/local/bin/setup.sh
+RUN echo '#!/bin/sh\n\
+sed -i "s|APP_KEY=|APP_KEY=base64:BTZGbtzJ2K93g96JL8B2v4/2dgZQC7KihgzsMxKVjJQ=|g" .env\n\
+sed -i "s|APP_ENV=.*|APP_ENV=production|g" .env\n\
+sed -i "s|APP_DEBUG=.*|APP_DEBUG=false|g" .env\n\
+sed -i "s|APP_URL=.*|APP_URL=https://brainforms-api.onrender.com|g" .env\n\
+sed -i "s|DB_CONNECTION=.*|DB_CONNECTION=pgsql|g" .env\n\
+sed -i "s|DB_HOST=.*|DB_HOST=dpg-d3l9u633fgac73ae3q6g-a.oregon-postgres.render.com|g" .env\n\
+sed -i "s|DB_PORT=.*|DB_PORT=5432|g" .env\n\
+sed -i "s|DB_DATABASE=.*|DB_DATABASE=brainforms_db|g" .env\n\
+sed -i "s|DB_USERNAME=.*|DB_USERNAME=brainforms_db_user|g" .env\n\
+sed -i "s|DB_PASSWORD=.*|DB_PASSWORD=XPtxXDozktdBbbVDZFfJpni5I6rKyahc|g" .env\n\
+sed -i "s|SESSION_DRIVER=.*|SESSION_DRIVER=database|g" .env\n\
+sed -i "s|CACHE_STORE=.*|CACHE_STORE=database|g" .env\n\
+sed -i "s|QUEUE_CONNECTION=.*|QUEUE_CONNECTION=database|g" .env\n\
+chmod -R 775 storage bootstrap/cache' > /usr/local/bin/setup.sh \
+    && chmod +x /usr/local/bin/setup.sh \
+    && /usr/local/bin/setup.sh
 
 # -------------------------------
 # Instala dependências do Laravel
