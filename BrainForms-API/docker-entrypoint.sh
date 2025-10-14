@@ -2,7 +2,7 @@
 set -e
 
 # Aguarda alguns segundos para garantir que o banco de dados esteja pronto
-sleep 5
+sleep 10
 
 # Gera APP_KEY se não existir
 if [ -z "$APP_KEY" ]; then
@@ -10,8 +10,14 @@ if [ -z "$APP_KEY" ]; then
     php artisan key:generate --force
 fi
 
-# Executa as migrações do banco de dados
-php artisan migrate --force
+# Executa as migrações do banco de dados (com refresh em produção)
+if [ "$APP_ENV" = "production" ]; then
+    echo "Running migrations in production mode..."
+    php artisan migrate:refresh --force --seed
+else
+    echo "Running migrations in development mode..."
+    php artisan migrate --force
+fi
 
 # Limpa e recria os caches
 php artisan config:cache
