@@ -1,5 +1,6 @@
 # ======================================
 # Dockerfile para Laravel (BrainForms API)
+# Versão: 1.0.1
 # ======================================
 
 # Imagem base PHP com Apache
