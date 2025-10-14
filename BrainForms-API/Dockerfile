@@ -9,7 +9,7 @@ FROM php:8.3-apache
 # Instala dependências do sistema
 # -------------------------------
 RUN apt-get update && apt-get install -y \
-    libpq-dev \        # PostgreSQL
+    libpq-dev \
     unzip \
     git \
     libzip-dev \
