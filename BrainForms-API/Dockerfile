@@ -41,16 +41,30 @@ RUN composer install --no-dev --optimize-autoloader
 RUN chown -R www-data:www-data storage bootstrap/cache
 
 # -------------------------------
-# Ativa mod_rewrite do Apache
-# Necessário para URLs amigáveis do Laravel
+# Ativa mod_rewrite e headers do Apache
+# Necessário para URLs amigáveis do Laravel e CORS
 # -------------------------------
-RUN a2enmod rewrite
+RUN a2enmod rewrite headers
 
 # -------------------------------
-# Configura DocumentRoot do Apache
-# para o diretório public do Laravel
+# Configura DocumentRoot e CORS no Apache
 # -------------------------------
 RUN sed -i 's|/var/www/html|/var/www/html/public|g' /etc/apache2/sites-available/000-default.conf
+
+# Adiciona configurações CORS
+RUN echo '<IfModule mod_headers.c>\n\
+    Header set Access-Control-Allow-Origin "*"\n\
+    Header set Access-Control-Allow-Methods "POST, GET, OPTIONS, DELETE, PUT"\n\
+    Header set Access-Control-Allow-Headers "X-Requested-With, Content-Type, X-Token-Auth, Authorization, Accept"\n\
+    Header set Access-Control-Max-Age "600"\n\
+    \n\
+    # Handle OPTIONS preflight requests\n\
+    RewriteEngine On\n\
+    RewriteCond %{REQUEST_METHOD} OPTIONS\n\
+    RewriteRule ^(.*)$ $1 [R=200,L]\n\
+</IfModule>' > /etc/apache2/conf-available/cors.conf
+
+RUN a2enconf cors
 
 # -------------------------------
 # Define variáveis de ambiente
