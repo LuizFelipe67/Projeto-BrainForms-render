@@ -37,14 +37,16 @@ COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
 WORKDIR /var/www/html
 
 # -------------------------------
-# Copia composer files
+# Copia arquivos de configuração
 # -------------------------------
+COPY docker/setup.sh /usr/local/bin/
 COPY composer.json composer.lock ./
+COPY .env.example .env
 
 # -------------------------------
-# Copia o .env.example para .env
+# Executa script de configuração
 # -------------------------------
-COPY .env.example .env
+RUN chmod +x /usr/local/bin/setup.sh && /usr/local/bin/setup.sh
 
 # -------------------------------
 # Instala dependências do Laravel
